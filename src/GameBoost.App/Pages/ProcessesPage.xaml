@@ -1,0 +1,370 @@
+﻿<UserControl x:Class="GameBoost.App.Pages.ProcessesPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:games="clr-namespace:GameBoost.App.Pages.Games">
+    <UserControl.Resources>
+        <games:GameIconConverter x:Key="RowIcon" />
+        <Style x:Key="RowBorder" TargetType="Border">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Padding" Value="6,7" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource CardHoverBrush}" />
+                    <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+                </DataTrigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource CardHoverBrush}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="HeaderButton" TargetType="Button" BasedOn="{StaticResource GhostButton}">
+            <Setter Property="HorizontalContentAlignment" Value="Right" />
+            <Setter Property="Padding" Value="6,4" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+        <Style x:Key="TagChip" TargetType="Border" BasedOn="{StaticResource CardFlat}">
+            <Setter Property="CornerRadius" Value="7" />
+            <Setter Property="Padding" Value="9,4" />
+            <Setter Property="Margin" Value="0,0,6,6" />
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Margin="26,22,26,24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Applications" Style="{StaticResource H1}" />
+                <TextBlock Style="{StaticResource BodyMuted}" Margin="0,6,0,0"
+                           Text="Processus en cours, ressources consommées et fermeture ciblée. Les processus critiques de Windows ne sont jamais fermés." />
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="1" Margin="0,16,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="240" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" Margin="0,0,10,0">
+                <TextBox x:Name="SearchBox" Style="{StaticResource SearchBox}"
+                         VerticalContentAlignment="Center" TextChanged="OnSearchChanged"
+                         ToolTip="Filtrer par nom de processus, titre de fenêtre ou éditeur" />
+                <TextBlock Text="&#xE721;" FontFamily="{StaticResource IconFont}" FontSize="13"
+                           Foreground="{DynamicResource TextMutedBrush}"
+                           HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"
+                           IsHitTestVisible="False" />
+            </Grid>
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,12,0">
+                <ToggleButton x:Name="AutoToggle" Style="{StaticResource Toggle}" IsChecked="True"
+                              Checked="OnAutoToggleChanged" Unchecked="OnAutoToggleChanged"
+                              ToolTip="Relever les processus toutes les 2 secondes" />
+                <TextBlock Text="Actualisation auto (2 s)" Style="{StaticResource Body}" Margin="9,0,0,0"
+                           VerticalAlignment="Center" />
+            </StackPanel>
+
+            <Button Grid.Column="2" Style="{StaticResource SecondaryButton}" Click="OnRefreshClick"
+                    ToolTip="Relever les processus immédiatement">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="&#xE768;" FontFamily="{StaticResource IconFont}" FontSize="13"
+                               Margin="0,0,8,0" VerticalAlignment="Center" />
+                    <TextBlock Text="Actualiser" />
+                </StackPanel>
+            </Button>
+
+            <Button Grid.Column="4" Style="{StaticResource GhostButton}" Click="OnSelectHungryClick"
+                    ToolTip="Coche uniquement les processus fermables qui utilisent plus de 10 % du processeur">
+                <TextBlock Text="Sélectionner les processus gourmands (CPU &gt; 10 %)" />
+            </Button>
+
+            <Button Grid.Column="5" Style="{StaticResource DangerButton}" Margin="12,0,0,0"
+                    x:Name="CloseSelectedButton" Click="OnCloseSelectedClick" IsEnabled="False"
+                    ToolTip="Ferme les processus cochés après confirmation">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="&#xE711;" FontFamily="{StaticResource IconFont}" FontSize="13"
+                               Margin="0,0,8,0" VerticalAlignment="Center" />
+                    <TextBlock Text="Fermer la sélection" />
+                </StackPanel>
+            </Button>
+        </Grid>
+
+        <TextBlock x:Name="SummaryText" Grid.Row="2" Style="{StaticResource Caption}" Margin="0,12,0,0"
+                   Text="Chargement des processus…" />
+
+        <Grid Grid.Row="3" Margin="0,12,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="330" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" Margin="0,0,12,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0" Background="{DynamicResource CardAltBrush}" CornerRadius="9"
+                        Padding="6,4">
+                    <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="74" />
+                        <ColumnDefinition Width="86" />
+                        <ColumnDefinition Width="64" />
+                        <ColumnDefinition Width="96" />
+                        <ColumnDefinition Width="140" />
+                        <ColumnDefinition Width="28" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="—" Style="{StaticResource Label}"
+                               HorizontalAlignment="Center"
+                               ToolTip="Sélection multiple" />
+                    <Button Grid.Column="1" Style="{StaticResource HeaderButton}"
+                            HorizontalContentAlignment="Left" Click="OnSortClick" Tag="name"
+                            x:Name="SortNameButton"
+                            ToolTip="Trier par nom de processus" />
+                    <Button Grid.Column="2" Style="{StaticResource HeaderButton}" Click="OnSortClick"
+                            Tag="cpu" x:Name="SortCpuButton"
+                            ToolTip="Trier par utilisation processeur" />
+                    <Button Grid.Column="3" Style="{StaticResource HeaderButton}" Click="OnSortClick"
+                            Tag="ram" x:Name="SortRamButton"
+                            ToolTip="Trier par mémoire vive utilisée" />
+                    <Button Grid.Column="4" Style="{StaticResource HeaderButton}" Click="OnSortClick"
+                            Tag="gpu" x:Name="SortGpuButton"
+                            ToolTip="Trier par utilisation du processeur graphique" />
+                    <TextBlock Grid.Column="5" Text="Disque" Style="{StaticResource Label}"
+                               HorizontalAlignment="Right" Margin="6,0,8,0" VerticalAlignment="Center"
+                               ToolTip="Lectures et écritures par seconde" />
+                    <TextBlock Grid.Column="6" Text="Éditeur" Style="{StaticResource Label}"
+                               HorizontalAlignment="Left" Margin="8,0,0,0" VerticalAlignment="Center"
+                               ToolTip="Éditeur du fichier exécutable" />
+                    <TextBlock Grid.Column="7" Text="!" Style="{StaticResource Label}"
+                               HorizontalAlignment="Center"
+                               ToolTip="Processus critique ou protégé" />
+                    </Grid>
+                </Border>
+
+                <ScrollViewer Grid.Row="1" x:Name="ProcessScroll"
+                              VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                              MaxHeight="520" Margin="0,6,0,0" Focusable="False">
+                    <ItemsControl x:Name="ProcessList">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{StaticResource RowBorder}" MouseLeftButtonDown="OnRowClick"
+                                        Tag="{Binding}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="30" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="74" />
+                                            <ColumnDefinition Width="86" />
+                                            <ColumnDefinition Width="64" />
+                                            <ColumnDefinition Width="96" />
+                                            <ColumnDefinition Width="140" />
+                                            <ColumnDefinition Width="28" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <CheckBox Grid.Column="0" IsChecked="{Binding IsChecked, Mode=TwoWay}"
+                                                  IsEnabled="{Binding CanClose}" ToolTip="{Binding CloseReason}"
+                                                  Tag="{Binding}" VerticalAlignment="Center"
+                                                  Checked="OnRowCheckChanged" Unchecked="OnRowCheckChanged"
+                                                  HorizontalAlignment="Center" />
+
+                                        <Grid Grid.Column="1" Margin="0,0,8,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="22" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0">
+                                                <TextBlock Text="&#xE7C5;" FontFamily="{StaticResource IconFont}"
+                                                           FontSize="13" Foreground="{DynamicResource TextMutedBrush}"
+                                                           HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding HasIcon}" Value="True">
+                                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                                <Image Width="16" Height="16" Stretch="Uniform"
+                                                       Source="{Binding Snapshot.IconPath, Converter={StaticResource RowIcon}}"
+                                                       Visibility="{Binding Snapshot.IconPath, Converter={StaticResource NullToCollapsed}}" />
+                                            </Grid>
+                                            <StackPanel Grid.Column="1" Margin="6,0,0,0">
+                                                <TextBlock Text="{Binding NameLabel}" Style="{StaticResource Body}"
+                                                           TextTrimming="CharacterEllipsis" />
+                                                <TextBlock Text="{Binding PidLabel}" Style="{StaticResource Label}" />
+                                            </StackPanel>
+                                        </Grid>
+
+                                        <TextBlock Grid.Column="2" Text="{Binding CpuLabel}"
+                                                   Style="{StaticResource Body}" HorizontalAlignment="Right"
+                                                   VerticalAlignment="Center" />
+                                        <TextBlock Grid.Column="3" Text="{Binding RamLabel}"
+                                                   Style="{StaticResource Body}" HorizontalAlignment="Right"
+                                                   VerticalAlignment="Center" />
+                                        <TextBlock Grid.Column="4" Text="{Binding GpuLabel}"
+                                                   Style="{StaticResource Body}" HorizontalAlignment="Right"
+                                                   VerticalAlignment="Center"
+                                                   ToolTip="Utilisation GPU du processus, si disponible" />
+                                        <TextBlock Grid.Column="5" Text="{Binding DiskLabel}"
+                                                   Style="{StaticResource Caption}" HorizontalAlignment="Right"
+                                                   Margin="0,0,8,0" VerticalAlignment="Center"
+                                                   ToolTip="Lectures + écritures par seconde" />
+                                        <TextBlock Grid.Column="6" Text="{Binding PublisherLabel}"
+                                                   Style="{StaticResource Caption}" Margin="8,0,0,0"
+                                                   VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+                                        <TextBlock Grid.Column="7" Text="&#xE7BA;"
+                                                   FontFamily="{StaticResource IconFont}" FontSize="13"
+                                                   Foreground="{DynamicResource WarnBrush}"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                   ToolTip="{Binding WarningTip}">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsCritical}" Value="True">
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+
+                <TextBlock x:Name="EmptyText" Grid.Row="2" Style="{StaticResource BodyMuted}"
+                           Margin="0,20,0,0" HorizontalAlignment="Center" Visibility="Collapsed"
+                           Text="Aucun processus ne correspond à ce filtre." />
+            </Grid>
+
+            <StackPanel Grid.Column="1">
+                <Border Style="{StaticResource Card}">
+                    <StackPanel>
+                        <TextBlock Text="Ne jamais fermer" Style="{StaticResource H3}" />
+                        <TextBlock Style="{StaticResource BodyMuted}" Margin="0,6,0,0"
+                                   Text="Ces processus ne peuvent jamais être fermés par GameBoost, même via la sélection multiple." />
+                        <ScrollViewer MaxHeight="170" Margin="0,10,0,0" VerticalScrollBarVisibility="Auto"
+                                      HorizontalScrollBarVisibility="Disabled">
+                            <ItemsControl x:Name="NeverCloseList">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Style="{StaticResource TagChip}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding}" Style="{StaticResource Caption}"
+                                                           VerticalAlignment="Center" />
+                                                <Button Style="{StaticResource GhostButton}" Padding="6,0"
+                                                        Margin="8,0,0,0" Click="OnRemoveNeverCloseClick"
+                                                        Tag="{Binding}"
+                                                        ToolTip="Retirer de la liste de protection">
+                                                    <TextBlock Text="&#xE711;" FontFamily="{StaticResource IconFont}"
+                                                               FontSize="12" />
+                                                </Button>
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                        <Grid Margin="0,8,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="NeverCloseBox" Grid.Column="0"
+                                     ToolTip="Nom du processus sans l'extension .exe" />
+                            <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Margin="8,0,0,0"
+                                    Click="OnAddNeverCloseClick"
+                                    ToolTip="Ajouter ce nom à la liste de protection">
+                                <TextBlock Text="Ajouter" />
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource Card}" Margin="0,14,0,0" VerticalAlignment="Top">
+                    <Grid>
+                    <StackPanel x:Name="DetailPlaceholder">
+                        <TextBlock Text="Détail du processus" Style="{StaticResource Label}" />
+                        <TextBlock Text="Cliquez sur une ligne pour voir son chemin, son éditeur et ouvrir son dossier."
+                                   Style="{StaticResource BodyMuted}" Margin="0,8,0,0" />
+                    </StackPanel>
+
+                    <StackPanel x:Name="DetailPanel" Visibility="Collapsed">
+                        <TextBlock x:Name="DetailName" Style="{StaticResource H3}" TextWrapping="Wrap" />
+                        <TextBlock x:Name="DetailTitle" Style="{StaticResource Caption}" Margin="0,4,0,0" />
+                        <Grid Margin="0,12,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="PID" Style="{StaticResource Label}" />
+                                <TextBlock x:Name="DetailPid" Style="{StaticResource Body}" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="Démarré le" Style="{StaticResource Label}" />
+                                <TextBlock x:Name="DetailStart" Style="{StaticResource Body}" />
+                            </StackPanel>
+                        </Grid>
+                        <Grid Margin="0,10,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Éditeur" Style="{StaticResource Label}" />
+                                <TextBlock x:Name="DetailPublisher" Style="{StaticResource Body}" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="Privilège" Style="{StaticResource Label}" />
+                                <TextBlock x:Name="DetailElevation" Style="{StaticResource Body}" />
+                            </StackPanel>
+                        </Grid>
+                        <TextBlock Text="Chemin du fichier" Style="{StaticResource Label}" Margin="0,12,0,0" />
+                        <TextBlock x:Name="DetailPath" Style="{StaticResource Mono}" TextWrapping="Wrap"
+                                   ToolTip="Chemin complet du fichier exécutable" />
+                        <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+                            <Button Style="{StaticResource SecondaryButton}" Click="OnOpenLocationClick"
+                                    ToolTip="Ouvrir l'explorateur sur le dossier de ce processus">
+                                <TextBlock Text="Ouvrir l'emplacement du fichier" />
+                            </Button>
+                            <Button Style="{StaticResource GhostButton}" Margin="8,0,0,0"
+                                    Click="OnCopyPathClick"
+                                    ToolTip="Copier le chemin complet dans le presse-papiers">
+                                <TextBlock Text="Copier le chemin" />
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                    </Grid>
+                </Border>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

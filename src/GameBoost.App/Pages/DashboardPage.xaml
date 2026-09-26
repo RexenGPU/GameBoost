@@ -1,0 +1,197 @@
+<UserControl x:Class="GameBoost.App.Pages.DashboardPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:GameBoost.App.Controls"
+             Loaded="OnLoaded"
+             Unloaded="OnUnloaded"
+             SizeChanged="OnPageSizeChanged">
+    <Grid Margin="26,22,26,24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="GameBoost" Style="{StaticResource H1}" />
+                <TextBlock Text="Analysez votre PC. Optimisez votre expérience."
+                           Style="{StaticResource BodyMuted}" Margin="0,6,0,0" />
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                <Button Content="ANALYSER" Style="{StaticResource AccentButton}" Click="OnAnalyzeClick"
+                        Padding="22,13" Margin="0,0,12,0"
+                        ToolTip="Lancer un diagnostic complet de votre PC et afficher les corrections proposées" />
+                <Button x:Name="BoosterButton" Content="BOOSTER LE JEU" Style="{StaticResource AccentButton}"
+                        Click="OnBoosterClick" Padding="22,13"
+                        ToolTip="Ouvrir l'assistant de boost : chaque étape est résumée avant toute modification" />
+            </StackPanel>
+        </Grid>
+
+        <Border x:Name="PendingBanner" Grid.Row="1" Style="{StaticResource CardFlat}"
+                Margin="0,16,0,0" Visibility="Collapsed"
+                Background="{DynamicResource WarnBgBrush}" BorderBrush="{DynamicResource WarnBrush}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="&#xE7BA;" FontFamily="{StaticResource IconFont}" FontSize="16"
+                           Foreground="{DynamicResource WarnBrush}" VerticalAlignment="Center" Margin="0,0,12,0" />
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock Text="Une session Boost précédente n'a pas été terminée"
+                               Style="{StaticResource Body}" FontWeight="SemiBold" />
+                    <TextBlock Text="Certains réglages de votre PC peuvent encore être modifiés. Terminez la session pour tout remettre dans l'état d'origine."
+                               Style="{StaticResource Caption}" Margin="0,3,0,0" />
+                </StackPanel>
+                <Button Grid.Column="2" Content="Restaurer maintenant" Style="{StaticResource SecondaryButton}"
+                        Click="OnRestorePendingClick" VerticalAlignment="Center" Margin="16,0,0,0"
+                        ToolTip="Terminer la session en attente et restaurer l'alimentation, le mode jeu, les priorités et l'overlay d'origine" />
+            </Grid>
+        </Border>
+
+        <StackPanel Grid.Row="2" Margin="0,24,0,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Temps réel" Style="{StaticResource H2}" VerticalAlignment="Center" />
+                <Button Grid.Column="1" Style="{StaticResource GhostButton}" Click="OnRefreshDisksClick"
+                        ToolTip="Relever à nouveau l'espace libre du volume système">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="&#xE768;" FontFamily="{StaticResource IconFont}" FontSize="13"
+                                   Margin="0,0,7,0" VerticalAlignment="Center"
+                                   Foreground="{DynamicResource TextMutedBrush}" />
+                        <TextBlock Text="Actualiser" Style="{StaticResource BodyMuted}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+
+            <UniformGrid x:Name="MetricsGrid" Columns="4" Margin="0,14,0,0">
+                <controls:StatCard x:Name="CpuUsageCard" Title="Utilisation CPU" Icon="&#xE9F0;" Unit="%"
+                                   Value="—" Margin="0,0,10,10"
+                                   ToolTip="Part des ressources du processeur utilisée, relevée chaque seconde" />
+                <controls:StatCard x:Name="GpuUsageCard" Title="Utilisation GPU" Icon="&#xE7F4;" Unit="%"
+                                   Value="—" Margin="0,0,10,10"
+                                   ToolTip="Part de la carte graphique utilisée, relevée chaque seconde" />
+                <controls:StatCard x:Name="CpuTempCard" Title="Température CPU" Icon="&#xE706;" Unit="°C"
+                                   Value="—" Margin="0,0,10,10"
+                                   ToolTip="Température du processeur : nécessite l'élévation des privilèges pour être lue" />
+                <controls:StatCard x:Name="GpuTempCard" Title="Température GPU" Icon="&#xE7C3;" Unit="°C"
+                                   Value="—" Margin="0,0,10,10"
+                                   ToolTip="Température de la carte graphique : nécessite l'élévation des privilèges pour être lue" />
+                <controls:StatCard x:Name="RamCard" Title="RAM utilisée" Icon="&#xE7C5;"
+                                   Value="—" Margin="0,0,10,10"
+                                   ToolTip="Mémoire vive occupée par les applications en cours" />
+                <controls:StatCard x:Name="VramCard" Title="VRAM utilisée" Icon="&#xE77B;"
+                                   Value="—" Margin="0,0,10,10"
+                                   ToolTip="Mémoire vidéo dédiée utilisée par la carte graphique" />
+                <controls:StatCard x:Name="DiskCard" Title="Espace disque libre" Icon="&#xE8B7;"
+                                   Value="—" Margin="0,0,10,10"
+                                   ToolTip="Espace libre du volume système (Windows), actualisable avec le bouton Actualiser" />
+                <controls:StatCard x:Name="NetFpsCard" Title="Réseau et images" Icon="&#xE9D9;"
+                                   Value="—" Margin="0,0,10,10"
+                                   ToolTip="Images par seconde du jeu suivi et débit réseau actuel (réception et émission)" />
+            </UniformGrid>
+        </StackPanel>
+
+        <Border Grid.Row="3" Style="{StaticResource Card}" Margin="0,8,0,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Matériel" Style="{StaticResource H3}" VerticalAlignment="Center" />
+                    <Button Grid.Column="1" Content="Fiche complète" Style="{StaticResource GhostButton}"
+                            Click="OnHardwareDetailsClick"
+                            ToolTip="Ouvrir la page « Mon PC » avec la fiche détaillée du matériel" />
+                </Grid>
+
+                <StackPanel x:Name="HardwareLoadingPanel" Grid.Row="1" Margin="0,16,0,0">
+                    <ProgressBar Style="{StaticResource SlimProgress}" IsIndeterminate="True" />
+                    <TextBlock Text="Détection du matériel…" Style="{StaticResource BodyMuted}" Margin="0,9,0,0" />
+                </StackPanel>
+
+                <StackPanel x:Name="HardwarePanel" Grid.Row="1" Margin="0,14,0,0" Visibility="Collapsed">
+                    <WrapPanel>
+                        <StackPanel Margin="0,0,28,12" MinWidth="190">
+                            <TextBlock Text="PROCESSEUR" Style="{StaticResource Label}" />
+                            <TextBlock x:Name="HwCpuText" Text="—" Style="{StaticResource Body}" Margin="0,4,0,0" />
+                        </StackPanel>
+                        <StackPanel Margin="0,0,28,12" MinWidth="190">
+                            <TextBlock Text="CARTE GRAPHIQUE" Style="{StaticResource Label}" />
+                            <TextBlock x:Name="HwGpuText" Text="—" Style="{StaticResource Body}" Margin="0,4,0,0" />
+                            <TextBlock x:Name="HwGpuSubText" Text="" Style="{StaticResource Caption}" Margin="0,3,0,0" />
+                        </StackPanel>
+                        <StackPanel Margin="0,0,28,12" MinWidth="190">
+                            <TextBlock Text="MÉMOIRE VIVE" Style="{StaticResource Label}" />
+                            <TextBlock x:Name="HwRamText" Text="—" Style="{StaticResource Body}" Margin="0,4,0,0" />
+                        </StackPanel>
+                        <StackPanel Margin="0,0,28,12" MinWidth="190">
+                            <TextBlock Text="SYSTÈME" Style="{StaticResource Label}" />
+                            <TextBlock x:Name="HwOsText" Text="—" Style="{StaticResource Body}" Margin="0,4,0,0" />
+                        </StackPanel>
+                        <StackPanel Margin="0,0,28,12" MinWidth="190">
+                            <TextBlock Text="ÉCRAN PRINCIPAL" Style="{StaticResource Label}" />
+                            <TextBlock x:Name="HwDisplayText" Text="—" Style="{StaticResource Body}" Margin="0,4,0,0" />
+                        </StackPanel>
+                    </WrapPanel>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="4" Margin="0,18,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Style="{StaticResource Card}" Margin="0,0,9,0">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Processus gourmands" Style="{StaticResource H3}" VerticalAlignment="Center" />
+                        <Button Grid.Column="1" Content="Tout gérer" Style="{StaticResource GhostButton}"
+                                Click="OnProcessesClick"
+                                ToolTip="Ouvrir la page « Applications » pour voir tous les processus et fermer ceux de votre choix" />
+                    </Grid>
+                    <StackPanel x:Name="ProcessList" Margin="0,14,0,0" />
+                    <TextBlock x:Name="ProcessEmpty" Text="Aucun processus n'utilise plus de 0,5 % de CPU pour l'instant."
+                               Style="{StaticResource BodyMuted}" Margin="0,4,0,0" Visibility="Collapsed" />
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="1" Style="{StaticResource Card}" Margin="9,0,0,0">
+                <StackPanel>
+                    <TextBlock Text="Mes jeux" Style="{StaticResource H3}" />
+                    <StackPanel x:Name="GamesList" Margin="0,14,0,0" />
+                    <StackPanel x:Name="GamesEmptyPanel" Margin="0,4,0,0" Visibility="Collapsed">
+                        <TextBlock Text="Aucun jeu détecté pour le moment. GameBoost cherche dans Steam, Epic, Ubisoft, Xbox, GOG, Battle.net et Riot, ainsi que dans les dossiers que vous avez ajoutés."
+                                   Style="{StaticResource BodyMuted}" />
+                        <Button x:Name="ScanGamesButton" Content="Scanner mes jeux" Style="{StaticResource AccentButton}"
+                                Click="OnScanGamesClick" Margin="0,12,0,0" HorizontalAlignment="Left"
+                                ToolTip="Recherche complète dans toutes les plateformes installées (environ 12 secondes)" />
+                        <ProgressBar x:Name="ScanProgress" Style="{StaticResource SlimProgress}" IsIndeterminate="True"
+                                     Margin="0,12,0,0" Visibility="Collapsed" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

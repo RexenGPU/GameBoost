@@ -1,0 +1,27 @@
+﻿<Application x:Class="GameBoost.App.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:GameBoost.App.Controls">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/Dark.xaml" />
+                <ResourceDictionary Source="Themes/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="ToolTip" BasedOn="{StaticResource Tip}" />
+            <Style TargetType="TextBox" BasedOn="{StaticResource Input}" />
+            <Style TargetType="Button" BasedOn="{StaticResource SecondaryButton}" />
+            <Style TargetType="CheckBox" BasedOn="{StaticResource Check}" />
+            <Style TargetType="ComboBox" BasedOn="{StaticResource Combo}" />
+
+            <controls:HealthToBrushConverter x:Key="HealthToBrush" />
+            <controls:HealthToTextConverter x:Key="HealthToText" />
+            <controls:BytesToSizeConverter x:Key="BytesToSize" />
+            <controls:BytesRateConverter x:Key="BytesRate" />
+            <controls:InverseBoolConverter x:Key="InverseBool" />
+            <controls:NullToCollapsedConverter x:Key="NullToCollapsed" />
+            <controls:DoubleFormatConverter x:Key="DoubleFormat" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
