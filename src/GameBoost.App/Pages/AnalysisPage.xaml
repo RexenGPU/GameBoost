@@ -1,7 +1,8 @@
 <UserControl x:Class="GameBoost.App.Pages.AnalysisPage"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:controls="clr-namespace:GameBoost.App.Controls">
+             xmlns:controls="clr-namespace:GameBoost.App.Controls"
+             xmlns:loc="clr-namespace:GameBoost.App.Localization">
     <UserControl.Resources>
         <Style x:Key="Chip" TargetType="RadioButton">
             <Setter Property="Cursor" Value="Hand" />
@@ -53,27 +54,27 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <StackPanel>
-                <TextBlock Text="Analyse" Style="{StaticResource H1}" />
-                <TextBlock Text="Vérifications automatiques de votre configuration"
+                <TextBlock Text="{loc:Text Anal_Title}" Style="{StaticResource H1}" />
+                <TextBlock Text="{loc:Text Anal_Subtitle}"
                            Style="{StaticResource BodyMuted}" Margin="0,6,0,0" />
             </StackPanel>
             <Button x:Name="AnalyzeButton" Grid.Column="1" Style="{StaticResource AccentButton}"
                     Click="OnAnalyzeClick" MinWidth="200" Height="48" VerticalAlignment="Top"
-                    ToolTip="Exécute toutes les vérifications (matériel, températures, pilotes, disque, Windows). Rien n'est modifié pendant l'analyse, seules des lectures sont faites.">
+                    ToolTip="{loc:Text Anal_RunTip}">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="&#xE895;" FontFamily="{StaticResource IconFont}" FontSize="15"
                                Margin="0,0,9,0" VerticalAlignment="Center" />
-                    <TextBlock Text="ANALYSER" VerticalAlignment="Center" />
+                    <TextBlock Text="{loc:Text Anal_Run}" VerticalAlignment="Center" />
                 </StackPanel>
             </Button>
         </Grid>
 
         <Border x:Name="ProgressPanel" Grid.Row="1" Style="{StaticResource CardFlat}"
                 Margin="0,14,0,0" Visibility="Collapsed"
-                ToolTip="Progression de l'analyse en cours : l'étape et le détail affichés proviennent du moteur d'analyse.">
+                ToolTip="{loc:Text Anal_ProgressTip}">
             <StackPanel>
                 <Grid>
-                    <TextBlock x:Name="StageText" Text="Analyse en cours…" Style="{StaticResource H3}" />
+                    <TextBlock x:Name="StageText" Text="{loc:Text Anal_Running}" Style="{StaticResource H3}" />
                     <TextBlock x:Name="PercentText" Text="0 %" Style="{StaticResource Mono}"
                                HorizontalAlignment="Right" />
                 </Grid>
@@ -93,18 +94,18 @@
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Border Style="{StaticResource CardFlat}" Padding="11,6" CornerRadius="999"
-                                ToolTip="Vérifications conformes : aucune action n'est nécessaire.">
-                            <TextBlock x:Name="GoodCountText" Text="🟢 0 optimal" Style="{StaticResource Caption}"
+                                ToolTip="{loc:Text Anal_GoodTip}">
+                            <TextBlock x:Name="GoodCountText" Text="{loc:Text Anal_GoodCount}" Style="{StaticResource Caption}"
                                        Foreground="{DynamicResource TextBrush}" />
                         </Border>
                         <Border Style="{StaticResource CardFlat}" Padding="11,6" CornerRadius="999" Margin="8,0,0,0"
-                                ToolTip="Vérifications à surveiller : le système fonctionne mais peut être amélioré.">
-                            <TextBlock x:Name="WarningCountText" Text="🟡 0 à surveiller" Style="{StaticResource Caption}"
+                                ToolTip="{loc:Text Anal_WatchTip}">
+                            <TextBlock x:Name="WarningCountText" Text="{loc:Text Anal_WatchCount}" Style="{StaticResource Caption}"
                                        Foreground="{DynamicResource TextBrush}" />
                         </Border>
                         <Border Style="{StaticResource CardFlat}" Padding="11,6" CornerRadius="999" Margin="8,0,0,0"
-                                ToolTip="Vérifications critiques : ces points limitent directement les performances.">
-                            <TextBlock x:Name="CriticalCountText" Text="🔴 0 problèmes" Style="{StaticResource Caption}"
+                                ToolTip="{loc:Text Anal_CriticalTip}">
+                            <TextBlock x:Name="CriticalCountText" Text="{loc:Text Anal_ProblemCount}" Style="{StaticResource Caption}"
                                        Foreground="{DynamicResource TextBrush}" />
                         </Border>
                     </StackPanel>
@@ -113,20 +114,20 @@
                 </StackPanel>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top">
                     <Button Style="{StaticResource SecondaryButton}" Click="OnRelaunchClick"
-                            ToolTip="Relance une analyse complète pour repartir de zéro.">
+                            ToolTip="{loc:Text Anal_RerunTip}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="&#xE72C;" FontFamily="{StaticResource IconFont}" FontSize="14"
                                        Margin="0,0,8,0" VerticalAlignment="Center" />
-                            <TextBlock Text="Relancer" VerticalAlignment="Center" />
+                            <TextBlock Text="{loc:Text Anal_Rerun}" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
                     <Button x:Name="ExportReportButton" Style="{StaticResource SecondaryButton}"
                             Click="OnExportReportClick" Margin="10,0,0,0" IsEnabled="False"
-                            ToolTip="Génère un fichier HTML lisible dans votre navigateur, à partir du rapport affiché et de vos dernières sessions.">
+                            ToolTip="{loc:Text Anal_ExportTip}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="&#xE74E;" FontFamily="{StaticResource IconFont}" FontSize="14"
                                        Margin="0,0,8,0" VerticalAlignment="Center" />
-                            <TextBlock Text="Générer un rapport" VerticalAlignment="Center" />
+                            <TextBlock Text="{loc:Text Anal_Export}" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
                 </StackPanel>
@@ -148,11 +149,11 @@
                            Margin="12,0,0,0" VerticalAlignment="Center" />
                 <Button Grid.Column="2" Style="{StaticResource AccentButton}" Click="OnRelaunchElevatedClick"
                         Margin="16,0,0,0"
-                        ToolTip="Redémarre GameBoost avec les droits administrateur, nécessaires pour appliquer certaines corrections système.">
+                        ToolTip="{loc:Text Anal_ElevateTip}">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="&#xE734;" FontFamily="{StaticResource IconFont}" FontSize="14"
                                    Margin="0,0,8,0" VerticalAlignment="Center" />
-                        <TextBlock Text="Relancer en administrateur" VerticalAlignment="Center" />
+                        <TextBlock Text="{loc:Text Anal_Elevate}" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button>
             </Grid>
@@ -164,15 +165,15 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal">
-                <RadioButton Style="{StaticResource Chip}" GroupName="analysisFilter" Content="Tous"
+                <RadioButton Style="{StaticResource Chip}" GroupName="analysisFilter" Content="{loc:Text Anal_FilterAll}"
                              IsChecked="True" Tag="all" Checked="OnFilterChecked"
-                             ToolTip="Affiche toutes les vérifications du rapport." />
-                <RadioButton Style="{StaticResource Chip}" GroupName="analysisFilter" Content="Problèmes"
+                             ToolTip="{loc:Text Anal_FilterAllTip}" />
+                <RadioButton Style="{StaticResource Chip}" GroupName="analysisFilter" Content="{loc:Text Anal_FilterProblems}"
                              Tag="problems" Checked="OnFilterChecked" Margin="8,0,0,0"
-                             ToolTip="N'affiche que les points à surveiller et les problèmes critiques." />
-                <RadioButton Style="{StaticResource Chip}" GroupName="analysisFilter" Content="Optimal"
+                             ToolTip="{loc:Text Anal_FilterProblemsTip}" />
+                <RadioButton Style="{StaticResource Chip}" GroupName="analysisFilter" Content="{loc:Text Anal_FilterGood}"
                              Tag="good" Checked="OnFilterChecked" Margin="8,0,0,0"
-                             ToolTip="N'affiche que les vérifications déjà conformes." />
+                             ToolTip="{loc:Text Anal_FilterGoodTip}" />
             </StackPanel>
             <TextBlock x:Name="FilterCountText" Grid.Column="1" Style="{StaticResource Caption}"
                        HorizontalAlignment="Right" VerticalAlignment="Center" />
@@ -181,9 +182,9 @@
         <ScrollViewer x:Name="ChecksScroll" Grid.Row="5" Margin="0,12,0,0" MaxHeight="500"
                       VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
                       Focusable="False"
-                      ToolTip="Les vérifications sont triées par sévérité : problèmes critiques d'abord.">
+                      ToolTip="{loc:Text Anal_SortTip}">
             <StackPanel>
-                <TextBlock x:Name="EmptyHintText" Text="Aucune analyse pour l'instant : cliquez sur ANALYSER pour obtenir un diagnostic complet de votre configuration."
+                <TextBlock x:Name="EmptyHintText" Text="{loc:Text Anal_EmptyHint}"
                            Style="{StaticResource BodyMuted}" Margin="0,4,0,8" />
                 <ItemsControl x:Name="ChecksList">
                     <ItemsControl.ItemTemplate>
@@ -210,13 +211,13 @@
                                         <TextBlock Text="{Binding Explanation}" Style="{StaticResource Body}" Margin="0,8,0,0" />
                                         <StackPanel Margin="0,10,0,0"
                                                     Visibility="{Binding ImpactLabel, Converter={StaticResource NullToCollapsed}}">
-                                            <TextBlock Text="Impact potentiel" Style="{StaticResource Label}" />
+                                            <TextBlock Text="{loc:Text Anal_Impact}" Style="{StaticResource Label}" />
                                             <TextBlock Text="{Binding ImpactLabel}" Style="{StaticResource Caption}"
                                                        Margin="0,3,0,0" />
                                         </StackPanel>
                                         <StackPanel Margin="0,10,0,0"
                                                     Visibility="{Binding SolutionLabel, Converter={StaticResource NullToCollapsed}}">
-                                            <TextBlock Text="Solution" Style="{StaticResource Label}" />
+                                            <TextBlock Text="{loc:Text Anal_Solution}" Style="{StaticResource Label}" />
                                             <TextBlock Text="{Binding SolutionLabel}" Style="{StaticResource BodyMuted}"
                                                        Margin="0,3,0,0" />
                                         </StackPanel>
@@ -238,14 +239,14 @@
                                         <Button Content="{Binding AutoFixLabel}" Style="{StaticResource AccentButton}"
                                                 Click="OnFixClick" Tag="{Binding}" MinWidth="190"
                                                 Visibility="{Binding AutoFixLabel, Converter={StaticResource NullToCollapsed}}"
-                                                ToolTip="Applique la correction proposée. GameBoost crée une sauvegarde lorsque Windows le permet." />
+                                                ToolTip="{loc:Text Anal_FixTip}" />
                                     </StackPanel>
                                 </Grid>
                             </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                <TextBlock x:Name="NoMatchText" Text="Aucune vérification ne correspond à ce filtre."
+                <TextBlock x:Name="NoMatchText" Text="{loc:Text Anal_NoMatch}"
                            Style="{StaticResource BodyMuted}" Visibility="Collapsed" />
             </StackPanel>
         </ScrollViewer>
@@ -253,23 +254,23 @@
         <Border x:Name="ExportPanel" Grid.Row="6" Style="{StaticResource CardFlat}"
                 Margin="0,12,0,0" Visibility="Collapsed">
             <StackPanel>
-                <TextBlock Text="Rapport HTML généré" Style="{StaticResource Label}" />
+                <TextBlock Text="{loc:Text Anal_ExportDone}" Style="{StaticResource Label}" />
                 <TextBlock x:Name="ExportPathText" Text="" Style="{StaticResource Mono}" Margin="0,4,0,0" />
                 <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                     <Button Style="{StaticResource SecondaryButton}" Click="OnOpenReportClick"
-                            ToolTip="Ouvre le fichier HTML généré dans votre navigateur par défaut.">
+                            ToolTip="{loc:Text Anal_OpenReportTip}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="&#xE774;" FontFamily="{StaticResource IconFont}" FontSize="14"
                                        Margin="0,0,8,0" VerticalAlignment="Center" />
-                            <TextBlock Text="Ouvrir le rapport" VerticalAlignment="Center" />
+                            <TextBlock Text="{loc:Text Anal_OpenReport}" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
                     <Button Style="{StaticResource GhostButton}" Click="OnOpenFolderClick" Margin="10,0,0,0"
-                            ToolTip="Ouvre le dossier contenant les rapports exportés.">
+                            ToolTip="{loc:Text Anal_OpenFolderTip}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="&#xE838;" FontFamily="{StaticResource IconFont}" FontSize="14"
                                        Margin="0,0,8,0" VerticalAlignment="Center" />
-                            <TextBlock Text="Ouvrir le dossier" VerticalAlignment="Center" />
+                            <TextBlock Text="{loc:Text Anal_OpenFolder}" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
                 </StackPanel>
@@ -277,8 +278,8 @@
         </Border>
 
         <StackPanel x:Name="RecentSection" Grid.Row="7" Margin="0,18,0,0" Visibility="Collapsed">
-            <TextBlock Text="Dernières analyses" Style="{StaticResource H2}" />
-            <TextBlock Text="Cliquez sur une analyse pour revoir son détail sans relancer de vérification."
+            <TextBlock Text="{loc:Text Anal_RecentTitle}" Style="{StaticResource H2}" />
+            <TextBlock Text="{loc:Text Anal_RecentHint}"
                        Style="{StaticResource Caption}" Margin="0,5,0,0" />
             <ScrollViewer MaxHeight="220" Margin="0,10,0,0" VerticalScrollBarVisibility="Auto"
                           HorizontalScrollBarVisibility="Disabled" Focusable="False">
@@ -287,7 +288,7 @@
                         <DataTemplate>
                             <Border Style="{StaticResource CardFlat}" Margin="0,0,0,8" Cursor="Hand"
                                     MouseLeftButtonUp="OnRecentClick" Tag="{Binding}"
-                                    ToolTip="Recharge ce rapport dans la vue : aucune nouvelle analyse n'est lancée.">
+                                    ToolTip="{loc:Text Anal_RecentTip}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />

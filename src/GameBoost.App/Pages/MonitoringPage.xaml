@@ -1,7 +1,8 @@
 ﻿<UserControl x:Class="GameBoost.App.Pages.MonitoringPage"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:controls="clr-namespace:GameBoost.App.Controls">
+             xmlns:controls="clr-namespace:GameBoost.App.Controls"
+             xmlns:loc="clr-namespace:GameBoost.App.Localization">
     <UserControl.Resources>
         <Style x:Key="Chip" TargetType="RadioButton">
             <Setter Property="Cursor" Value="Hand" />
@@ -49,28 +50,28 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <StackPanel>
-                <TextBlock Text="Monitoring" Style="{StaticResource H1}" />
-                <TextBlock Text="Mesures réelles de votre PC : FPS, frametime, températures et utilisation pendant le jeu."
+                <TextBlock Text="{loc:Text Mon_Title}" Style="{StaticResource H1}" />
+                <TextBlock Text="{loc:Text Mon_Subtitle}"
                            Style="{StaticResource BodyMuted}" Margin="0,6,0,0" />
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top">
                 <Border Style="{StaticResource CardFlat}" Padding="12,8" CornerRadius="999"
-                        ToolTip="Le moniteur échantillonne le PC toutes les secondes tant qu'il est actif.">
+                        ToolTip="{loc:Text Mon_MonitorBadgeTip}">
                     <StackPanel Orientation="Horizontal">
                         <Ellipse x:Name="MonitorDot" Width="9" Height="9" Fill="{DynamicResource TextFaintBrush}"
                                  VerticalAlignment="Center" />
-                        <TextBlock x:Name="MonitorStateText" Text="Monitoring inactif"
+                        <TextBlock x:Name="MonitorStateText" Text="{loc:Text Mon_MonitorInactive}"
                                    Style="{StaticResource Caption}" Foreground="{DynamicResource TextBrush}"
                                    Margin="8,0,0,0" VerticalAlignment="Center" />
                     </StackPanel>
                 </Border>
                 <Button x:Name="MonitorToggleButton" Style="{StaticResource AccentButton}"
                         Click="OnMonitorToggleClick" Margin="10,0,0,0"
-                        ToolTip="Démarre ou arrête la collecte des mesures (intervalle d'une seconde).">
+                        ToolTip="{loc:Text Mon_MonitorToggleTip}">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="&#xE768;" FontFamily="{StaticResource IconFont}" FontSize="14"
                                    Margin="0,0,8,0" VerticalAlignment="Center" />
-                        <TextBlock x:Name="MonitorToggleLabel" Text="Démarrer" VerticalAlignment="Center" />
+                        <TextBlock x:Name="MonitorToggleLabel" Text="{loc:Text Mon_Start}" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button>
             </StackPanel>
@@ -78,8 +79,8 @@
 
         <Border Grid.Row="1" Style="{StaticResource Card}" Margin="0,14,0,0">
             <StackPanel>
-                <TextBlock Text="Suivi du jeu" Style="{StaticResource H2}" />
-                <TextBlock Text="Choisissez un jeu pour mesurer ses FPS et sa frametime. Le suivi ne produit des images que si le jeu est en cours d'exécution."
+                <TextBlock Text="{loc:Text Mon_TrackingTitle}" Style="{StaticResource H2}" />
+                <TextBlock Text="{loc:Text Mon_TrackingNote}"
                            Style="{StaticResource BodyMuted}" Margin="0,5,0,0" />
                 <Grid Margin="0,12,0,0">
                     <Grid.ColumnDefinitions>
@@ -90,36 +91,36 @@
                     </Grid.ColumnDefinitions>
                     <ComboBox x:Name="GameCombo" Style="{StaticResource Combo}" MinWidth="240"
                               DisplayMemberPath="Name"
-                              ToolTip="Jeux détectés sur ce PC (page Jeux pour en ajouter d'autres)." />
+                              ToolTip="{loc:Text Mon_GameComboTip}" />
                     <Button Grid.Column="1" Style="{StaticResource AccentButton}" Click="OnTrackClick"
                             Margin="10,0,0,0"
-                            ToolTip="Recherche le processus du jeu sélectionné et mesure ses images par seconde.">
+                            ToolTip="{loc:Text Mon_TrackTip}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="&#xE724;" FontFamily="{StaticResource IconFont}" FontSize="14"
                                        Margin="0,0,8,0" VerticalAlignment="Center" />
-                            <TextBlock Text="Suivre ce jeu" VerticalAlignment="Center" />
+                            <TextBlock Text="{loc:Text Mon_TrackButton}" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
                     <Button Grid.Column="2" Style="{StaticResource SecondaryButton}" Click="OnUntrackClick"
                             Margin="10,0,0,0"
-                            ToolTip="Arrête la mesure des images du jeu suivi. Les statistiques déjà calculées sont conservées.">
+                            ToolTip="{loc:Text Mon_UntrackTip}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="&#xE71A;" FontFamily="{StaticResource IconFont}" FontSize="14"
                                        Margin="0,0,8,0" VerticalAlignment="Center" />
-                            <TextBlock Text="Arrêter le suivi" VerticalAlignment="Center" />
+                            <TextBlock Text="{loc:Text Mon_UntrackButton}" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
                     <Button Grid.Column="3" Style="{StaticResource GhostButton}" Click="OnOpenGamesClick"
                             Margin="10,0,0,0"
-                            ToolTip="Ouvre la bibliothèque de jeux pour ajouter ou modifier un jeu.">
+                            ToolTip="{loc:Text Mon_OpenGamesTip}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="&#xE7FC;" FontFamily="{StaticResource IconFont}" FontSize="14"
                                        Margin="0,0,8,0" VerticalAlignment="Center" />
-                            <TextBlock Text="Ouvrir la page Jeux" VerticalAlignment="Center" />
+                            <TextBlock Text="{loc:Text Mon_OpenGamesButton}" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
                 </Grid>
-                <TextBlock x:Name="TrackedText" Text="Suivi : aucun processus" Style="{StaticResource Mono}"
+                <TextBlock x:Name="TrackedText" Text="{loc:Text Mon_TrackedNone}" Style="{StaticResource Mono}"
                            Margin="0,11,0,0" />
             </StackPanel>
         </Border>
@@ -131,41 +132,41 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <StackPanel>
-                    <TextBlock Text="Images par seconde" Style="{StaticResource Label}" />
+                    <TextBlock Text="{loc:Text Mon_FpsTitle}" Style="{StaticResource Label}" />
                     <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
                         <TextBlock x:Name="FpsValueText" Text="—" Style="{StaticResource ValueBig}" FontSize="48" />
                         <TextBlock Text="FPS" Style="{StaticResource BodyMuted}" FontSize="18" Margin="10,26,0,0" />
                     </StackPanel>
-                    <TextBlock x:Name="FpsSourceText" Text="Aucune mesure d'image disponible pour l'instant."
+                    <TextBlock x:Name="FpsSourceText" Text="{loc:Text Mon_FpsNoMeasure}"
                                Style="{StaticResource Caption}" Margin="0,4,0,0" />
                     <UniformGrid Columns="3" Margin="0,14,0,0">
                         <StackPanel Margin="0,0,12,8">
-                            <TextBlock Text="Frametime actuel" Style="{StaticResource Label}" />
+                            <TextBlock Text="{loc:Text Mon_FrameTimeLabel}" Style="{StaticResource Label}" />
                             <TextBlock x:Name="FrameTimeValueText" Text="—" Style="{StaticResource Mono}"
                                        FontSize="14" Margin="0,3,0,0" />
                         </StackPanel>
                         <StackPanel Margin="0,0,12,8">
-                            <TextBlock Text="1 % low" Style="{StaticResource Label}" />
+                            <TextBlock Text="{loc:Text Mon_OnePercentLow}" Style="{StaticResource Label}" />
                             <TextBlock x:Name="OnePercentText" Text="—" Style="{StaticResource Mono}"
                                        FontSize="14" Margin="0,3,0,0" />
                         </StackPanel>
                         <StackPanel Margin="0,0,0,8">
-                            <TextBlock Text="Médiane" Style="{StaticResource Label}" />
+                            <TextBlock Text="{loc:Text Mon_Median}" Style="{StaticResource Label}" />
                             <TextBlock x:Name="MedianFpsText" Text="—" Style="{StaticResource Mono}"
                                        FontSize="14" Margin="0,3,0,0" />
                         </StackPanel>
                         <StackPanel Margin="0,0,12,8">
-                            <TextBlock Text="Minimum" Style="{StaticResource Label}" />
+                            <TextBlock Text="{loc:Text Mon_Minimum}" Style="{StaticResource Label}" />
                             <TextBlock x:Name="MinFpsText" Text="—" Style="{StaticResource Mono}"
                                        FontSize="14" Margin="0,3,0,0" />
                         </StackPanel>
                         <StackPanel Margin="0,0,12,8">
-                            <TextBlock Text="Maximum" Style="{StaticResource Label}" />
+                            <TextBlock Text="{loc:Text Mon_Maximum}" Style="{StaticResource Label}" />
                             <TextBlock x:Name="MaxFpsText" Text="—" Style="{StaticResource Mono}"
                                        FontSize="14" Margin="0,3,0,0" />
                         </StackPanel>
                         <StackPanel>
-                            <TextBlock Text="Échantillons" Style="{StaticResource Label}" />
+                            <TextBlock Text="{loc:Text Mon_Samples}" Style="{StaticResource Label}" />
                             <TextBlock x:Name="SampleCountText" Text="0" Style="{StaticResource Mono}"
                                        FontSize="14" Margin="0,3,0,0" />
                         </StackPanel>
@@ -173,11 +174,11 @@
                 </StackPanel>
                 <StackPanel Grid.Column="1" VerticalAlignment="Top" Margin="18,0,0,0">
                     <Button Style="{StaticResource SecondaryButton}" Click="OnResetFpsClick"
-                            ToolTip="Efface les statistiques d'images accumulées (moyenne, minimum, 1 % low) et repart à zéro.">
+                            ToolTip="{loc:Text Mon_ResetStatsTip}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="&#xE72C;" FontFamily="{StaticResource IconFont}" FontSize="14"
                                        Margin="0,0,8,0" VerticalAlignment="Center" />
-                            <TextBlock Text="Réinitialiser les statistiques" VerticalAlignment="Center" />
+                            <TextBlock Text="{loc:Text Mon_ResetStats}" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
                 </StackPanel>
@@ -191,46 +192,46 @@
             </Grid.ColumnDefinitions>
             <Border Style="{StaticResource Card}" Margin="0,0,7,0">
                 <StackPanel>
-                    <TextBlock Text="Frametime (ms)" Style="{StaticResource H3}" />
-                    <TextBlock Text="Temps écoulé entre deux images : plus il est bas et stable, plus le jeu est fluide."
+                    <TextBlock Text="{loc:Text Mon_FrameTimeChartTitle}" Style="{StaticResource H3}" />
+                    <TextBlock Text="{loc:Text Mon_FrameTimeChartNote}"
                                Style="{StaticResource Caption}" Margin="0,4,0,0" />
                     <controls:LineChart x:Name="FrameTimeChart" Height="170" Margin="0,10,0,0"
                                         MaxPoints="300" ShowGrid="True"
-                                        ToolTip="Mesures relevées chaque seconde, 300 derniers points." />
+                                        ToolTip="{loc:Text Mon_ChartTip}" />
                 </StackPanel>
             </Border>
             <Border Grid.Column="1" Style="{StaticResource Card}" Margin="7,0,0,0">
                 <StackPanel>
                     <TextBlock Text="FPS" Style="{StaticResource H3}" />
-                    <TextBlock Text="Images par seconde mesurées sur le jeu suivi. Aucune valeur n'est estimée."
+                    <TextBlock Text="{loc:Text Mon_FpsChartNote}"
                                Style="{StaticResource Caption}" Margin="0,4,0,0" />
                     <controls:LineChart x:Name="FpsChart" Height="170" Margin="0,10,0,0"
                                         MaxPoints="300" ShowGrid="True"
-                                        ToolTip="Mesures relevées chaque seconde, 300 derniers points." />
+                                        ToolTip="{loc:Text Mon_ChartTip}" />
                 </StackPanel>
             </Border>
         </Grid>
 
         <Grid Grid.Row="4" Margin="0,14,0,0">
             <UniformGrid Columns="3">
-                <controls:StatCard x:Name="CardCpu" Title="Utilisation CPU" Icon="&#xE9F0;" Unit="%"
+                <controls:StatCard x:Name="CardCpu" Title="{loc:Text Mon_CpuUsage}" Icon="&#xE9F0;" Unit="%"
                                    Value="—" Margin="0,0,10,10"
-                                   ToolTip="Part du processeur utilisée, relevée chaque seconde." />
-                <controls:StatCard x:Name="CardGpu" Title="Utilisation GPU" Icon="&#xE7F4;" Unit="%"
+                                   ToolTip="{loc:Text Mon_CpuUsageTip}" />
+                <controls:StatCard x:Name="CardGpu" Title="{loc:Text Mon_GpuUsage}" Icon="&#xE7F4;" Unit="%"
                                    Value="—" Margin="0,0,10,10"
-                                   ToolTip="Part de la carte graphique utilisée, relevée chaque seconde." />
-                <controls:StatCard x:Name="CardRam" Title="RAM utilisée" Icon="&#xE7C5;" Value="—"
+                                   ToolTip="{loc:Text Mon_GpuUsageTip}" />
+                <controls:StatCard x:Name="CardRam" Title="{loc:Text Mon_RamUsage}" Icon="&#xE7C5;" Value="—"
                                    Margin="0,0,10,10"
-                                   ToolTip="Mémoire vive occupée par l'ensemble des applications en cours." />
-                <controls:StatCard x:Name="CardCpuTemp" Title="Température CPU" Icon="&#xE706;" Unit="°C"
+                                   ToolTip="{loc:Text Mon_RamUsageTip}" />
+                <controls:StatCard x:Name="CardCpuTemp" Title="{loc:Text Mon_CpuTemp}" Icon="&#xE706;" Unit="°C"
                                    Value="—" Margin="0,0,10,0"
-                                   ToolTip="Température du processeur : indisponible si aucun capteur n'est lisible." />
-                <controls:StatCard x:Name="CardGpuTemp" Title="Température GPU" Icon="&#xE7C3;" Unit="°C"
+                                   ToolTip="{loc:Text Mon_CpuTempTip}" />
+                <controls:StatCard x:Name="CardGpuTemp" Title="{loc:Text Mon_GpuTemp}" Icon="&#xE7C3;" Unit="°C"
                                    Value="—" Margin="0,0,10,0"
-                                   ToolTip="Température de la carte graphique : indisponible si aucun capteur n'est lisible." />
-                <controls:StatCard x:Name="CardVram" Title="VRAM utilisée" Icon="&#xE77B;" Value="—"
+                                   ToolTip="{loc:Text Mon_GpuTempTip}" />
+                <controls:StatCard x:Name="CardVram" Title="{loc:Text Mon_VramUsage}" Icon="&#xE77B;" Value="—"
                                    Margin="0,0,0,0"
-                                   ToolTip="Mémoire vidéo dédiée utilisée par la carte graphique." />
+                                   ToolTip="{loc:Text Mon_VramUsageTip}" />
             </UniformGrid>
         </Grid>
 
@@ -242,45 +243,45 @@
 
             <Border Style="{StaticResource Card}" Margin="0,10,7,0" VerticalAlignment="Top">
                 <StackPanel>
-                    <TextBlock Text="Enregistrement de session" Style="{StaticResource H2}" />
-                    <TextBlock Text="La session capture FPS, températures et utilisation pour les comparer ultérieurement dans l'historique."
+                    <TextBlock Text="{loc:Text Mon_SessionTitle}" Style="{StaticResource H2}" />
+                    <TextBlock Text="{loc:Text Mon_SessionNote}"
                                Style="{StaticResource BodyMuted}" Margin="0,5,0,0" />
                     <Border x:Name="SessionStateBadge" Style="{StaticResource CardFlat}" CornerRadius="9"
                             Padding="11,8" Margin="0,12,0,0">
                         <StackPanel>
-                            <TextBlock x:Name="SessionStateText" Text="Aucune session en cours."
+                            <TextBlock x:Name="SessionStateText" Text="{loc:Text Mon_SessionNone}"
                                        Style="{StaticResource Body}" />
-                            <TextBlock x:Name="SessionGameText" Text="Jeu : aucun sélectionné"
+                            <TextBlock x:Name="SessionGameText" Text="{loc:Text Mon_SessionGameNone}"
                                        Style="{StaticResource Caption}" Margin="0,4,0,0" />
                         </StackPanel>
                     </Border>
                     <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
                         <Button x:Name="StartSessionButton" Style="{StaticResource AccentButton}"
                                 Click="OnStartSessionClick"
-                                ToolTip="Démarre l'enregistrement des mesures pour le jeu sélectionné ou suivi.">
+                                ToolTip="{loc:Text Mon_StartRecordingTip}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="&#xE768;" FontFamily="{StaticResource IconFont}" FontSize="14"
                                            Margin="0,0,8,0" VerticalAlignment="Center" />
-                                <TextBlock Text="Démarrer l'enregistrement" VerticalAlignment="Center" />
+                                <TextBlock Text="{loc:Text Mon_StartRecording}" VerticalAlignment="Center" />
                             </StackPanel>
                         </Button>
                         <Button x:Name="StopSessionButton" Style="{StaticResource SecondaryButton}"
                                 Click="OnStopSessionClick" Margin="10,0,0,0" IsEnabled="False"
-                                ToolTip="Arrête l'enregistrement, calcule les statistiques et enregistre la session localement.">
+                                ToolTip="{loc:Text Mon_StopRecordingTip}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="&#xE71A;" FontFamily="{StaticResource IconFont}" FontSize="14"
                                            Margin="0,0,8,0" VerticalAlignment="Center" />
-                                <TextBlock Text="Arrêter et sauvegarder" VerticalAlignment="Center" />
+                                <TextBlock Text="{loc:Text Mon_StopRecording}" VerticalAlignment="Center" />
                             </StackPanel>
                         </Button>
                     </StackPanel>
                     <Button Style="{StaticResource GhostButton}" Click="OnOpenHistoryClick" Margin="0,8,0,0"
                             HorizontalAlignment="Left"
-                            ToolTip="Ouvre la page Historique pour consulter et comparer les sessions enregistrées.">
+                            ToolTip="{loc:Text Mon_OpenHistoryTip}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="&#xE81C;" FontFamily="{StaticResource IconFont}" FontSize="14"
                                        Margin="0,0,8,0" VerticalAlignment="Center" />
-                            <TextBlock Text="Voir l'historique des sessions" VerticalAlignment="Center" />
+                            <TextBlock Text="{loc:Text Mon_OpenHistory}" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
                 </StackPanel>
@@ -289,122 +290,122 @@
             <Border Grid.Column="1" Style="{StaticResource Card}" Margin="7,10,0,0" VerticalAlignment="Top">
                 <StackPanel>
                     <Grid>
-                        <TextBlock Text="Overlay" Style="{StaticResource H2}" />
+                        <TextBlock Text="{loc:Text Mon_OverlayTitle}" Style="{StaticResource H2}" />
                         <Border Style="{StaticResource CardFlat}" CornerRadius="999" Padding="10,4"
                                 HorizontalAlignment="Right"
-                                ToolTip="État de l'overlay GameBoost pendant le jeu.">
+                                ToolTip="{loc:Text Mon_OverlayStateTip}">
                             <StackPanel Orientation="Horizontal">
                                 <Ellipse x:Name="OverlayDot" Width="8" Height="8"
                                          Fill="{DynamicResource TextFaintBrush}" VerticalAlignment="Center" />
-                                <TextBlock x:Name="OverlayBadgeText" Text="Overlay : inactif"
+                                <TextBlock x:Name="OverlayBadgeText" Text="{loc:Text Mon_OverlayInactive}"
                                            Style="{StaticResource Caption}" Foreground="{DynamicResource TextBrush}"
                                            Margin="7,0,0,0" VerticalAlignment="Center" />
                             </StackPanel>
                         </Border>
                     </Grid>
-                    <TextBlock Text="Affichez vos mesures par-dessus le jeu, sans quitter la fenêtre de jeu."
+                    <TextBlock Text="{loc:Text Mon_OverlayNote}"
                                Style="{StaticResource BodyMuted}" Margin="0,5,0,0" />
 
                     <Grid Margin="0,12,0,0">
-                        <TextBlock Text="Afficher l'overlay pendant le jeu"
+                        <TextBlock Text="{loc:Text Mon_ShowOverlayInGame}"
                                    Style="{StaticResource Body}" VerticalAlignment="Center" />
                         <ToggleButton x:Name="OverlayEnabledToggle" Style="{StaticResource Toggle}"
                                       HorizontalAlignment="Right" Checked="OnOverlayOptionChanged"
                                       Unchecked="OnOverlayOptionChanged"
-                                      ToolTip="Active la recherche automatique d'un jeu lancé et l'affichage de l'overlay." />
+                                      ToolTip="{loc:Text Mon_OverlayEnabledTip}" />
                     </Grid>
 
-                    <TextBlock Text="Contenu affiché" Style="{StaticResource Label}" Margin="0,12,0,0" />
+                    <TextBlock Text="{loc:Text Mon_ContentLabel}" Style="{StaticResource Label}" Margin="0,12,0,0" />
                     <UniformGrid Columns="2" Margin="0,6,0,0">
                         <Grid Margin="0,0,8,7">
                             <TextBlock Text="FPS" Style="{StaticResource Body}" VerticalAlignment="Center" />
                             <ToggleButton x:Name="OverlayFpsToggle" Style="{StaticResource Toggle}"
                                           HorizontalAlignment="Right" Checked="OnOverlayOptionChanged"
                                           Unchecked="OnOverlayOptionChanged"
-                                          ToolTip="Affiche les images par seconde mesurées et le 1 % low." />
+                                          ToolTip="{loc:Text Mon_OverlayFpsTip}" />
                         </Grid>
                         <Grid Margin="8,0,0,7">
-                            <TextBlock Text="Frametime" Style="{StaticResource Body}" VerticalAlignment="Center" />
+                            <TextBlock Text="{loc:Text Mon_LblFrametime}" Style="{StaticResource Body}" VerticalAlignment="Center" />
                             <ToggleButton x:Name="OverlayFrameTimeToggle" Style="{StaticResource Toggle}"
                                           HorizontalAlignment="Right" Checked="OnOverlayOptionChanged"
                                           Unchecked="OnOverlayOptionChanged"
-                                          ToolTip="Affiche le temps entre deux images en millisecondes." />
+                                          ToolTip="{loc:Text Mon_OverlayFrameTimeTip}" />
                         </Grid>
                         <Grid Margin="0,0,8,7">
                             <TextBlock Text="CPU" Style="{StaticResource Body}" VerticalAlignment="Center" />
                             <ToggleButton x:Name="OverlayCpuToggle" Style="{StaticResource Toggle}"
                                           HorizontalAlignment="Right" Checked="OnOverlayOptionChanged"
                                           Unchecked="OnOverlayOptionChanged"
-                                          ToolTip="Affiche l'utilisation du processeur." />
+                                          ToolTip="{loc:Text Mon_OverlayCpuTip}" />
                         </Grid>
                         <Grid Margin="8,0,0,7">
                             <TextBlock Text="GPU" Style="{StaticResource Body}" VerticalAlignment="Center" />
                             <ToggleButton x:Name="OverlayGpuToggle" Style="{StaticResource Toggle}"
                                           HorizontalAlignment="Right" Checked="OnOverlayOptionChanged"
                                           Unchecked="OnOverlayOptionChanged"
-                                          ToolTip="Affiche l'utilisation de la carte graphique." />
+                                          ToolTip="{loc:Text Mon_OverlayGpuTip}" />
                         </Grid>
                         <Grid Margin="0,0,8,7">
                             <TextBlock Text="RAM" Style="{StaticResource Body}" VerticalAlignment="Center" />
                             <ToggleButton x:Name="OverlayRamToggle" Style="{StaticResource Toggle}"
                                           HorizontalAlignment="Right" Checked="OnOverlayOptionChanged"
                                           Unchecked="OnOverlayOptionChanged"
-                                          ToolTip="Affiche la mémoire vive utilisée." />
+                                          ToolTip="{loc:Text Mon_OverlayRamTip}" />
                         </Grid>
                         <Grid Margin="8,0,0,7">
-                            <TextBlock Text="Températures" Style="{StaticResource Body}" VerticalAlignment="Center" />
+                            <TextBlock Text="{loc:Text Mon_Temperatures}" Style="{StaticResource Body}" VerticalAlignment="Center" />
                             <ToggleButton x:Name="OverlayTempToggle" Style="{StaticResource Toggle}"
                                           HorizontalAlignment="Right" Checked="OnOverlayOptionChanged"
                                           Unchecked="OnOverlayOptionChanged"
-                                          ToolTip="Affiche les températures CPU et GPU quand elles sont mesurables." />
+                                          ToolTip="{loc:Text Mon_OverlayTempTip}" />
                         </Grid>
                     </UniformGrid>
 
                     <Grid Margin="0,8,0,0">
-                        <TextBlock Text="Opacité" Style="{StaticResource Label}" VerticalAlignment="Center" />
+                        <TextBlock Text="{loc:Text Mon_OpacityLabel}" Style="{StaticResource Label}" VerticalAlignment="Center" />
                         <TextBlock x:Name="OpacityValueText" Text="85 %" Style="{StaticResource Caption}"
                                    Foreground="{DynamicResource TextBrush}" HorizontalAlignment="Right"
                                    VerticalAlignment="Center" />
                     </Grid>
                     <Slider x:Name="OpacitySlider" Style="{StaticResource Slider}" Minimum="30" Maximum="100"
                             Value="85" Margin="0,4,0,0" ValueChanged="OnOpacityChanged"
-                            ToolTip="Transparence de la fenêtre d'overlay : 30 % = très translucide, 100 % = opaque." />
+                            ToolTip="{loc:Text Mon_OpacityTip}" />
 
-                    <TextBlock Text="Position à l'écran" Style="{StaticResource Label}" Margin="0,10,0,0" />
+                    <TextBlock Text="{loc:Text Mon_PositionLabel}" Style="{StaticResource Label}" Margin="0,10,0,0" />
                     <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
                         <RadioButton x:Name="CornerTopLeft" Style="{StaticResource Chip}" GroupName="overlayCorner"
-                                     Content="Haut gauche" Tag="tl" Checked="OnCornerChecked"
-                                     ToolTip="En haut à gauche de l'écran." />
+                                     Content="{loc:Text Mon_CornerTopLeft}" Tag="tl" Checked="OnCornerChecked"
+                                     ToolTip="{loc:Text Mon_CornerTopLeftTip}" />
                         <RadioButton x:Name="CornerTopRight" Style="{StaticResource Chip}" GroupName="overlayCorner"
-                                     Content="Haut droite" Tag="tr" Checked="OnCornerChecked" Margin="7,0,0,0"
-                                     ToolTip="En haut à droite de l'écran." />
+                                     Content="{loc:Text Mon_CornerTopRight}" Tag="tr" Checked="OnCornerChecked" Margin="7,0,0,0"
+                                     ToolTip="{loc:Text Mon_CornerTopRightTip}" />
                         <RadioButton x:Name="CornerBottomLeft" Style="{StaticResource Chip}"
-                                     GroupName="overlayCorner" Content="Bas gauche" Tag="bl" Checked="OnCornerChecked"
-                                     Margin="7,0,0,0" ToolTip="En bas à gauche de l'écran." />
+                                     GroupName="overlayCorner" Content="{loc:Text Mon_CornerBottomLeft}" Tag="bl" Checked="OnCornerChecked"
+                                     Margin="7,0,0,0" ToolTip="{loc:Text Mon_CornerBottomLeftTip}" />
                         <RadioButton x:Name="CornerBottomRight" Style="{StaticResource Chip}"
-                                     GroupName="overlayCorner" Content="Bas droite" Tag="br" Checked="OnCornerChecked"
-                                     Margin="7,0,0,0" ToolTip="En bas à droite de l'écran." />
+                                     GroupName="overlayCorner" Content="{loc:Text Mon_CornerBottomRight}" Tag="br" Checked="OnCornerChecked"
+                                     Margin="7,0,0,0" ToolTip="{loc:Text Mon_CornerBottomRightTip}" />
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" Margin="0,14,0,0">
                         <Button Style="{StaticResource SecondaryButton}" Click="OnPreviewOverlayClick"
-                                ToolTip="Affiche ou masque immédiatement l'overlay avec les réglages du jeu sélectionné.">
+                                ToolTip="{loc:Text Mon_PreviewTip}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="&#xE7F4;" FontFamily="{StaticResource IconFont}" FontSize="14"
                                            Margin="0,0,8,0" VerticalAlignment="Center" />
-                                <TextBlock Text="Prévisualiser l'overlay" VerticalAlignment="Center" />
+                                <TextBlock Text="{loc:Text Mon_Preview}" VerticalAlignment="Center" />
                             </StackPanel>
                         </Button>
                         <Button Style="{StaticResource GhostButton}" Click="OnOpenGamesClick" Margin="10,0,0,0"
-                                ToolTip="Ouvre la bibliothèque de jeux.">
+                                ToolTip="{loc:Text Mon_OpenLibraryTip}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="&#xE7FC;" FontFamily="{StaticResource IconFont}" FontSize="14"
                                            Margin="0,0,8,0" VerticalAlignment="Center" />
-                                <TextBlock Text="Ouvrir la page Jeux" VerticalAlignment="Center" />
+                                <TextBlock Text="{loc:Text Mon_OpenGamesButton}" VerticalAlignment="Center" />
                             </StackPanel>
                         </Button>
                     </StackPanel>
-                    <TextBlock Text="Les réglages d'overlay sont enregistrés pour le jeu sélectionné, ou comme valeur par défaut si aucun jeu n'est choisi."
+                    <TextBlock Text="{loc:Text Mon_OverlaySaveNote}"
                                Style="{StaticResource Caption}" Margin="0,10,0,0" />
                 </StackPanel>
             </Border>

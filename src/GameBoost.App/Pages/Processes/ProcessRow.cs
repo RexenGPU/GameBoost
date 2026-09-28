@@ -2,6 +2,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using GameBoost.App.Controls;
+using GameBoost.Core.Localization;
 using GameBoost.Core.Models;
 
 namespace GameBoost.App.Pages.Processes;
@@ -15,7 +16,7 @@ public sealed class ProcessRow : INotifyPropertyChanged
     {
         Snapshot = snapshot;
         CanClose = canClose;
-        CloseReason = canClose ? "Sélectionner pour fermer ce processus" : closeReason;
+        CloseReason = canClose ? Loc.T("Proc_SelectToClose") : closeReason;
     }
 
     public ProcessSnapshot Snapshot { get; }
@@ -48,7 +49,9 @@ public sealed class ProcessRow : INotifyPropertyChanged
 
     public int Pid => Snapshot.ProcessId;
 
-    public string NameLabel => string.IsNullOrWhiteSpace(Snapshot.Name) ? "Processus " + Snapshot.ProcessId : Snapshot.Name;
+    public string NameLabel => string.IsNullOrWhiteSpace(Snapshot.Name)
+        ? Loc.T("Proc_ProcessName", Snapshot.ProcessId)
+        : Snapshot.Name;
 
     public string PidLabel => "PID " + Snapshot.ProcessId.ToString(CultureInfo.InvariantCulture);
 
@@ -76,22 +79,22 @@ public sealed class ProcessRow : INotifyPropertyChanged
     public bool IsCritical => Snapshot.IsCritical;
 
     public string WarningTip => Snapshot.IsCritical
-        ? "Processus critique ou protégé : GameBoost ne le fermera jamais"
+        ? Loc.T("Proc_CriticalProtected")
         : string.Empty;
 
     public bool HasIcon => !string.IsNullOrWhiteSpace(Snapshot.IconPath);
 
     public string StartTimeLabel => Snapshot.StartTime == default(DateTime)
-        ? "Heure de démarrage inconnue"
+        ? Loc.T("Proc_StartUnknown")
         : Snapshot.StartTime.ToString("dd/MM/yyyy HH:mm");
 
-    public string PathLabel => string.IsNullOrWhiteSpace(Snapshot.Path) ? "Chemin inaccessible" : Snapshot.Path;
+    public string PathLabel => string.IsNullOrWhiteSpace(Snapshot.Path) ? Loc.T("Proc_NoPath") : Snapshot.Path;
 
-    public string TitleLabel => string.IsNullOrWhiteSpace(Snapshot.Title) ? "Aucune fenêtre active" : Snapshot.Title;
+    public string TitleLabel => string.IsNullOrWhiteSpace(Snapshot.Title) ? Loc.T("Proc_NoWindow") : Snapshot.Title;
 
     public bool IsElevated => Snapshot.IsElevated;
 
-    public string ElevationLabel => Snapshot.IsElevated ? "Administrateur" : "Utilisateur standard";
+    public string ElevationLabel => Snapshot.IsElevated ? Loc.T("Proc_Admin") : Loc.T("Proc_StandardUser");
 
     public event PropertyChangedEventHandler? PropertyChanged;
 

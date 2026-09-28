@@ -2,6 +2,7 @@ using System.Windows;
 using System.Windows.Threading;
 using GameBoost.App.Services;
 using GameBoost.Core.Games;
+using GameBoost.Core.Localization;
 using GameBoost.Core.Logging;
 using GameBoost.Core.Models;
 using GameBoost.Core.Overlay;
@@ -43,7 +44,7 @@ public sealed class OverlayController
         }
         catch (Exception ex)
         {
-            Fail("demarrage", ex);
+            Fail(Loc.T("Ov_CtxStart"), ex);
         }
     }
 
@@ -55,7 +56,7 @@ public sealed class OverlayController
         }
         catch (Exception ex)
         {
-            Fail("arret", ex);
+            Fail(Loc.T("Ov_CtxStop"), ex);
         }
     }
 
@@ -77,7 +78,7 @@ public sealed class OverlayController
         }
         catch (Exception ex)
         {
-            Fail("bascule", ex);
+            Fail(Loc.T("Ov_CtxToggle"), ex);
         }
     }
 
@@ -89,7 +90,7 @@ public sealed class OverlayController
         }
         catch (Exception ex)
         {
-            Fail("rafraichissement", ex);
+            Fail(Loc.T("Ov_CtxRefresh"), ex);
         }
     }
 
@@ -107,7 +108,7 @@ public sealed class OverlayController
         }
         catch (Exception ex)
         {
-            Fail("affichage", ex);
+            Fail(Loc.T("Ov_CtxShow"), ex);
         }
     }
 
@@ -123,7 +124,7 @@ public sealed class OverlayController
         }
         catch (Exception ex)
         {
-            Fail("arret", ex);
+            Fail(Loc.T("Ov_CtxStop"), ex);
         }
     }
 
@@ -140,7 +141,7 @@ public sealed class OverlayController
         }
         catch (Exception ex)
         {
-            Fail("rafraichissement", ex);
+            Fail(Loc.T("Ov_CtxRefresh"), ex);
         }
     }
 
@@ -163,7 +164,7 @@ public sealed class OverlayController
             }
             catch (Exception ex)
             {
-                Fail("demarrage de la surveillance", ex);
+                Fail(Loc.T("Ov_CtxDetectionStart"), ex);
             }
         });
     }
@@ -200,7 +201,7 @@ public sealed class OverlayController
         }
         catch (Exception ex)
         {
-            Fail("surveillance des jeux", ex);
+            Fail(Loc.T("Ov_CtxLibrary"), ex);
         }
         finally
         {
@@ -249,7 +250,7 @@ public sealed class OverlayController
         }
         catch (Exception ex)
         {
-            Fail("masquage", ex);
+            Fail(Loc.T("Ov_CtxHide"), ex);
         }
     }
 
@@ -281,6 +282,6 @@ public sealed class OverlayController
     private static void Fail(string context, Exception ex)
     {
         Log.Error("Overlay", "Echec de " + context, ex);
-        ShellState.Status("Overlay impossible (" + context + ") : " + ex.Message);
+        ShellState.Status(Loc.T("Ov_StatusFail", context, ex.Message));
     }
 }

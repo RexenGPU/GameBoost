@@ -6,6 +6,7 @@ using GameBoost.App.Services;
 using GameBoost.Core.Data;
 using GameBoost.Core.Games;
 using GameBoost.Core.Hardware;
+using GameBoost.Core.Localization;
 using GameBoost.Core.Logging;
 using GameBoost.Core.Models;
 using GameBoost.Core.Profiles;
@@ -15,7 +16,7 @@ namespace GameBoost.App.Pages;
 public partial class ProfilesPage : UserControl
 {
     private static readonly string[] ResolutionOptions =
-        { "Conserver la résolution du jeu", "1920×1080", "2560×1440", "3840×2160", "1280×720" };
+        { "KEEP", "1920×1080", "2560×1440", "3840×2160", "1280×720" };
 
     private static readonly string[] QualityOptions = { "Non défini", "Faible", "Moyen", "Élevé", "Ultra" };
 
@@ -33,7 +34,7 @@ public partial class ProfilesPage : UserControl
     public ProfilesPage()
     {
         InitializeComponent();
-        ResolutionCombo.ItemsSource = ResolutionOptions;
+        RefreshResolutionOptions(null);
         TextureCombo.ItemsSource = QualityOptions;
         ShadowCombo.ItemsSource = QualityOptions;
         LightingCombo.ItemsSource = QualityOptions;
@@ -47,6 +48,14 @@ public partial class ProfilesPage : UserControl
             Log.Error("UI", "Lecture du matériel pour les profils", ex);
             _hardwareTask = null;
         }
+    }
+
+    private void RefreshResolutionOptions(string? extra)
+    {
+        var options = new List<string> { Loc.T("Prof_ResolutionKeep") };
+        for (var i = 1; i < ResolutionOptions.Length; i++) options.Add(ResolutionOptions[i]);
+        if (extra is not null && !options.Contains(extra)) options.Add(extra);
+        ResolutionCombo.ItemsSource = options;
     }
 
     private void OnLoaded(object sender, RoutedEventArgs e)
@@ -72,16 +81,16 @@ public partial class ProfilesPage : UserControl
                 _game = null;
                 ResetSelection();
                 LoadProfiles();
-                ShellState.Status("Aucun jeu : rien à configurer pour l'instant.");
+                ShellState.Status(Loc.T("Prof_StatusNoGames"));
                 return;
             }
             if (GameCombo.SelectedIndex < 0) GameCombo.SelectedIndex = 0;
-            ShellState.Status(_games.Count + " jeu(s) disponible(s) pour les profils.");
+            ShellState.Status(Loc.T("Prof_StatusGamesCount", _games.Count));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Chargement des jeux pour les profils", ex);
-            ShellState.Status("Chargement des jeux impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Prof_StatusGamesFail", ex.Message));
         }
     }
 
@@ -143,7 +152,7 @@ public partial class ProfilesPage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Lecture des profils du jeu", ex);
-            ShellState.Status("Lecture des profils impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Prof_StatusProfilesFail", ex.Message));
         }
     }
 
@@ -154,14 +163,14 @@ public partial class ProfilesPage : UserControl
         {
             var created = ProfileService.Instance.CreatePresets(_game.Id, _game.Name);
             ShellState.Status(created.Count <= 1
-                ? created.Count + " profil(s) créé(s)."
-                : created.Count + " profils créés pour « " + _game.Name + " ».");
+                ? Loc.T("Prof_StatusCreated1", created.Count)
+                : Loc.T("Prof_StatusCreatedMany", created.Count, _game.Name));
             LoadProfiles();
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Création des profils par défaut", ex);
-            ShellState.Status("Création impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Prof_StatusCreateFail", ex.Message));
         }
     }
 
@@ -210,18 +219,18 @@ public partial class ProfilesPage : UserControl
             var ok = ProfileService.Instance.SetActive(card.Profile.Id);
             if (!ok)
             {
-                ShellState.Status("Activation du profil impossible.");
+                ShellState.Status(Loc.T("Prof_StatusActiveFail"));
                 LoadProfiles();
                 return;
             }
             _activeId = card.Profile.Id;
-            ShellState.Status("Profil actif : " + card.Profile.Name);
+            ShellState.Status(Loc.T("Prof_StatusActive", card.Profile.Name));
             LoadProfiles();
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Activation du profil", ex);
-            ShellState.Status("Activation impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Prof_StatusActiveFail2", ex.Message));
         }
     }
 
@@ -236,7 +245,7 @@ public partial class ProfilesPage : UserControl
                 Id = Guid.NewGuid(),
                 GameId = source.GameId,
                 GameName = source.GameName,
-                Name = source.Name + " (copie)",
+                Name = source.Name + Loc.T("Prof_CopySuffix"),
                 Preset = source.Preset,
                 Settings = CloneSettings(source.Settings),
                 IsActiveForBoost = false,
@@ -244,7 +253,7 @@ public partial class ProfilesPage : UserControl
                 ConfigFileHint = source.ConfigFileHint
             };
             ProfileService.Instance.Save(copy);
-            ShellState.Status("Profil dupliqué : " + copy.Name);
+            ShellState.Status(Loc.T("Prof_StatusDuplicated", copy.Name));
             _editingId = copy.Id;
             LoadProfiles();
             var created = _cards.FirstOrDefault(c => c.Profile.Id == copy.Id);
@@ -253,7 +262,7 @@ public partial class ProfilesPage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Duplication du profil", ex);
-            ShellState.Status("Duplication impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Prof_StatusDuplicateFail", ex.Message));
         }
     }
 
@@ -289,15 +298,13 @@ public partial class ProfilesPage : UserControl
 
             var resolution = settings.ResolutionWidth is int w && settings.ResolutionHeight is int h
                 ? w + "×" + h
-                : ResolutionOptions[0];
-            var options = new List<string>(ResolutionOptions);
-            if (!options.Contains(resolution)) options.Add(resolution);
-            ResolutionCombo.ItemsSource = options;
+                : Loc.T("Prof_ResolutionKeep");
+            RefreshResolutionOptions(resolution);
             ResolutionCombo.SelectedItem = resolution;
 
-            TextureCombo.SelectedItem = settings.TextureQuality ?? "Non défini";
-            ShadowCombo.SelectedItem = settings.ShadowQuality ?? "Non défini";
-            LightingCombo.SelectedItem = settings.LightingQuality ?? "Non défini";
+            TextureCombo.SelectedItem = settings.TextureQuality ?? QualityOptions[0];
+            ShadowCombo.SelectedItem = settings.ShadowQuality ?? QualityOptions[0];
+            LightingCombo.SelectedItem = settings.LightingQuality ?? QualityOptions[0];
 
             RtToggle.IsChecked = settings.RayTracing;
             DlssToggle.IsChecked = settings.Dlss;
@@ -341,7 +348,7 @@ public partial class ProfilesPage : UserControl
             }
 
             var missing = new List<string>();
-            if (RtToggle.IsChecked == true && !capabilities.RayTracing) missing.Add("le ray tracing");
+            if (RtToggle.IsChecked == true && !capabilities.RayTracing) missing.Add(Loc.T("Prof_CapRt"));
             if (DlssToggle.IsChecked == true && !capabilities.Dlss) missing.Add("DLSS");
             if (FsrToggle.IsChecked == true && !capabilities.Fsr) missing.Add("FSR");
             if (XessToggle.IsChecked == true && !capabilities.Xess) missing.Add("XeSS");
@@ -352,8 +359,7 @@ public partial class ProfilesPage : UserControl
                 return;
             }
 
-            CapabilityText.Text = string.Join(", ", missing) +
-                                  " : ce réglage n'est pas disponible sur votre matériel — le jeu l'ignorera probablement.";
+            CapabilityText.Text = string.Join(", ", missing) + Loc.T("Prof_CapabilitySuffix");
             CapabilityBanner.Visibility = Visibility.Visible;
         }
         catch (Exception ex)
@@ -398,18 +404,18 @@ public partial class ProfilesPage : UserControl
             var stored = ProfileService.Instance.GetProfile(_editing.Id);
             if (stored is null)
             {
-                ShellState.Status("Profil introuvable : réinitialisation impossible.");
+                ShellState.Status(Loc.T("Prof_StatusProfileMissing"));
                 return;
             }
             _editing = stored;
             var card = new ProfileCard(stored);
             LoadEditor(card);
-            ShellState.Status("Modifications non enregistrées annulées.");
+            ShellState.Status(Loc.T("Prof_StatusResetDone"));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Réinitialisation du profil", ex);
-            ShellState.Status("Réinitialisation impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Prof_StatusResetFail", ex.Message));
         }
     }
 
@@ -421,8 +427,8 @@ public partial class ProfilesPage : UserControl
             var settings = _editing.Settings ?? new ProfileSettings();
             _editing.Settings = settings;
 
-            var resolution = ResolutionCombo.SelectedItem as string ?? ResolutionOptions[0];
-            if (resolution == ResolutionOptions[0])
+            var resolution = ResolutionCombo.SelectedItem as string ?? Loc.T("Prof_ResolutionKeep");
+            if (resolution == Loc.T("Prof_ResolutionKeep"))
             {
                 settings.ResolutionWidth = null;
                 settings.ResolutionHeight = null;
@@ -442,9 +448,9 @@ public partial class ProfilesPage : UserControl
                 }
             }
 
-            settings.TextureQuality = TextureCombo.SelectedItem as string ?? "Non défini";
-            settings.ShadowQuality = ShadowCombo.SelectedItem as string ?? "Non défini";
-            settings.LightingQuality = LightingCombo.SelectedItem as string ?? "Non défini";
+            settings.TextureQuality = TextureCombo.SelectedItem as string ?? QualityOptions[0];
+            settings.ShadowQuality = ShadowCombo.SelectedItem as string ?? QualityOptions[0];
+            settings.LightingQuality = LightingCombo.SelectedItem as string ?? QualityOptions[0];
             settings.RayTracing = RtToggle.IsChecked;
             settings.Dlss = DlssToggle.IsChecked;
             settings.Fsr = FsrToggle.IsChecked;
@@ -465,17 +471,17 @@ public partial class ProfilesPage : UserControl
             else
             {
                 settings.FpsLimit = null;
-                ShellState.Status("Limite FPS invalide : valeur ignorée, enregistrement effectué sans limite.");
+                ShellState.Status(Loc.T("Prof_StatusBadFps"));
             }
 
             ProfileService.Instance.Save(_editing);
-            ShellState.Status("Profil enregistré : " + _editing.Name);
+            ShellState.Status(Loc.T("Prof_StatusSaved", _editing.Name));
             LoadProfiles();
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Enregistrement du profil", ex);
-            ShellState.Status("Enregistrement impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Prof_StatusSaveFail", ex.Message));
         }
     }
 
@@ -492,7 +498,7 @@ public partial class ProfilesPage : UserControl
         ElevationNote.Visibility = AppPaths.IsElevated ? Visibility.Collapsed : Visibility.Visible;
         DryRunButton.IsEnabled = false;
         ApplyButton.IsEnabled = false;
-        ApplySupportText.Text = "Analyse des fichiers de configuration de « " + game.Name + " »…";
+        ApplySupportText.Text = Loc.T("Prof_ApplyChecking", game.Name);
 
         try
         {
@@ -503,21 +509,21 @@ public partial class ProfilesPage : UserControl
 
             if (supported.Item1)
             {
-                ApplySupportText.Text = "Configuration prise en charge : GameBoost peut écrire les réglages de ce profil dans les fichiers de « " + game.Name + " ».";
+                ApplySupportText.Text = Loc.T("Prof_ApplySupported", game.Name);
                 ApplySupportDetail.Visibility = Visibility.Collapsed;
                 DryRunButton.IsEnabled = true;
                 ApplyButton.IsEnabled = true;
             }
             else
             {
-                ApplySupportText.Text = "Non applicable : " + supported.Item2;
+                ApplySupportText.Text = Loc.T("Prof_ApplyUnsupported", supported.Item2);
                 ApplySupportDetail.Visibility = Visibility.Visible;
             }
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Vérification de la prise en charge du jeu", ex);
-            ApplySupportText.Text = "Vérification impossible : " + ex.Message;
+            ApplySupportText.Text = Loc.T("Prof_ApplyCheckFail", ex.Message);
         }
     }
 
@@ -536,9 +542,9 @@ public partial class ProfilesPage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Simulation d'application du profil", ex);
-            ApplyMessage.Text = "Simulation impossible : " + ex.Message;
+            ApplyMessage.Text = Loc.T("Prof_DryRunFail", ex.Message);
             ApplyMessage.Visibility = Visibility.Visible;
-            ShellState.Status("Simulation impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Prof_DryRunFail", ex.Message));
         }
         finally
         {
@@ -557,16 +563,14 @@ public partial class ProfilesPage : UserControl
             var preview = await Task.Run(() => ProfileApplier.Instance.Apply(profile, game, true));
             var keys = preview.ChangedKeys.Count > 0
                 ? preview.ChangedKeys.Take(12).Aggregate("- ", (current, key) => current + "\n- " + key)
-                : "- Aucune modification identifiée pour l'instant";
+                : "- " + Loc.T("Prof_NoChanges");
 
             var answer = MessageBox.Show(
-                "Appliquer le profil « " + profile.Name + " » à « " + game.Name + " » ?\n\n" +
-                "Réglages qui seraient écrits :\n" + keys + "\n\n" +
-                "Une sauvegarde sera créée avant toute modification, et pourra être restaurée depuis cette page.",
-                "Appliquer le profil", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                Loc.T("Prof_ApplyBody", profile.Name, game.Name, keys),
+                Loc.T("Prof_ApplyTitle2"), MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (answer != MessageBoxResult.Yes)
             {
-                ShellState.Status("Application annulée : rien n'a été modifié.");
+                ShellState.Status(Loc.T("Prof_StatusApplyCancelled"));
                 return;
             }
 
@@ -583,9 +587,9 @@ public partial class ProfilesPage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Application du profil", ex);
-            ApplyMessage.Text = "Application impossible : " + ex.Message;
+            ApplyMessage.Text = Loc.T("Prof_ApplyFail", ex.Message);
             ApplyMessage.Visibility = Visibility.Visible;
-            ShellState.Status("Application impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Prof_ApplyFail", ex.Message));
         }
         finally
         {
@@ -597,17 +601,16 @@ public partial class ProfilesPage : UserControl
     {
         if (string.IsNullOrWhiteSpace(_lastBackupPath))
         {
-            ShellState.Status("Aucune sauvegarde à restaurer pour cette session.");
+            ShellState.Status(Loc.T("Prof_NoBackup"));
             return;
         }
 
         var answer = MessageBox.Show(
-            "Restaurer les fichiers de configuration enregistrés dans :\n" + _lastBackupPath + "\n\n" +
-            "Les modifications appliquées par GameBoost seront annulées.",
-            "Restaurer la sauvegarde", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            Loc.T("Prof_RevertBody", _lastBackupPath),
+            Loc.T("Prof_RevertTitle"), MessageBoxButton.YesNo, MessageBoxImage.Question);
         if (answer != MessageBoxResult.Yes)
         {
-            ShellState.Status("Restauration annulée.");
+            ShellState.Status(Loc.T("Prof_StatusRevertCancelled"));
             return;
         }
 
@@ -625,7 +628,7 @@ public partial class ProfilesPage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Restauration de la sauvegarde", ex);
-            ShellState.Status("Restauration impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Prof_StatusRevertFail", ex.Message));
         }
         finally
         {
@@ -646,7 +649,7 @@ public partial class ProfilesPage : UserControl
         }
         else
         {
-            BackupPathText.Text = "Sauvegarde : " + result.BackupPath;
+            BackupPathText.Text = Loc.T("Prof_BackupLabel", result.BackupPath);
             BackupPathText.Visibility = Visibility.Visible;
             _lastBackupPath = result.BackupPath;
             RevertButton.Visibility = Visibility.Visible;

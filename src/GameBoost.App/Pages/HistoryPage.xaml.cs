@@ -7,6 +7,7 @@ using System.Windows.Media;
 using GameBoost.App.Controls;
 using GameBoost.App.Services;
 using GameBoost.Core.History;
+using GameBoost.Core.Localization;
 using GameBoost.Core.Logging;
 using GameBoost.Core.Models;
 using GameBoost.Core.Reports;
@@ -56,7 +57,7 @@ public partial class HistoryPage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Lecture de l'historique", ex);
-            ShellState.Status("Historique indisponible : " + ex.Message);
+            ShellState.Status(Loc.T("Hist_StatusLoadFail", ex.Message));
         }
     }
 
@@ -68,7 +69,7 @@ public partial class HistoryPage : UserControl
 
         if (_sessions.Count == 0)
         {
-            SessionsPanel.Children.Add(StyleText("Aucune session à afficher pour le moment.", "BodyMuted"));
+            SessionsPanel.Children.Add(StyleText(Loc.T("Hist_EmptyList"), "BodyMuted"));
             return;
         }
 
@@ -106,7 +107,7 @@ public partial class HistoryPage : UserControl
 
         var identity = new StackPanel { VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(0, 0, 16, 0) };
         identity.Children.Add(StyleText(
-            string.IsNullOrWhiteSpace(session.GameName) ? "Session" : session.GameName, "H3"));
+            string.IsNullOrWhiteSpace(session.GameName) ? Loc.T("Hist_SessionTitle") : session.GameName, "H3"));
         identity.Children.Add(StyleText(
             session.StartTime.ToString("dd/MM/yyyy HH:mm", French) + " · " + Duration(session.StartTime, session.EndTime),
             "Caption"));
@@ -127,7 +128,7 @@ public partial class HistoryPage : UserControl
         grid.Children.Add(identity);
 
         grid.Children.Add(ValueCell(session.AverageFps is null ? null : session.AverageFps.Value.ToString("F1"),
-            session.AverageFps is null ? "FPS non enregistrés" : null, 2));
+            session.AverageFps is null ? Loc.T("Hist_FpsNotRecorded") : null, 2));
         grid.Children.Add(ValueCell(
             FormatPair(session.OnePercentLowFps, session.MinimumFps, session.MaximumFps), null, 3));
         grid.Children.Add(ValueCell(
@@ -147,8 +148,8 @@ public partial class HistoryPage : UserControl
             Margin = new Thickness(0, 0, 6, 0),
             VerticalAlignment = VerticalAlignment.Center,
             ToolTip = isA
-                ? "Désigne cette session comme session A de la comparaison."
-                : "Désigne cette session comme session B de la comparaison."
+                ? Loc.T("Hist_RadioATip")
+                : Loc.T("Hist_RadioBTip")
         };
         radio.SetResourceReference(RadioButton.StyleProperty, "Chip");
         if (isA)
@@ -196,7 +197,7 @@ public partial class HistoryPage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Selection de la session A", ex);
-            ShellState.Status("Sélection impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Hist_StatusSelectFail", ex.Message));
         }
     }
 
@@ -213,19 +214,19 @@ public partial class HistoryPage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Selection de la session B", ex);
-            ShellState.Status("Sélection impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Hist_StatusSelectFail", ex.Message));
         }
     }
 
     private void UpdateSelectionUi()
     {
-        SelectionCountText.Text = "A : " + Label(_selectedA) + " · B : " + Label(_selectedB);
+        SelectionCountText.Text = Loc.T("Hist_SelectionSummary", Label(_selectedA), Label(_selectedB));
         CompareButton.IsEnabled = _selectedA is not null && _selectedB is not null;
 
         static string Label(SessionRecord? session) => session is null
-            ? "aucune"
+            ? Loc.T("Hist_SelectionNone")
             : session.StartTime.ToString("dd/MM HH:mm", French) + " " +
-              (string.IsNullOrWhiteSpace(session.GameName) ? "session" : session.GameName);
+              (string.IsNullOrWhiteSpace(session.GameName) ? Loc.T("Hist_SessionWord") : session.GameName);
     }
 
     private void OnSessionRowClick(object sender, MouseButtonEventArgs e)
@@ -239,7 +240,7 @@ public partial class HistoryPage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Affichage du detail de la session", ex);
-            ShellState.Status("Détail impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Hist_StatusDetailFail", ex.Message));
         }
     }
 
@@ -263,12 +264,15 @@ public partial class HistoryPage : UserControl
     private void RenderDetail(SessionRecord session)
     {
         _detail = session;
-        DetailTitle.Text = string.IsNullOrWhiteSpace(session.GameName) ? "Session" : session.GameName;
+        DetailTitle.Text = string.IsNullOrWhiteSpace(session.GameName) ? Loc.T("Hist_SessionTitle") : session.GameName;
         DetailMeta.Text = session.StartTime.ToString("dddd d MMMM yyyy 'à' HH:mm", French) +
                           " · " + Duration(session.StartTime, session.EndTime) +
-                          " · profil : " + (string.IsNullOrWhiteSpace(session.ProfileUsed) ? "aucun" : session.ProfileUsed);
+                          " · " + Loc.T("Hist_MetaProfile",
+                              string.IsNullOrWhiteSpace(session.ProfileUsed)
+                                  ? Loc.T("Hist_ProfileNone")
+                                  : session.ProfileUsed);
 
-        DetailFps.Text = session.AverageFps is double fps ? fps.ToString("F1") + " FPS" : "FPS non enregistrés";
+        DetailFps.Text = session.AverageFps is double fps ? fps.ToString("F1") + " FPS" : Loc.T("Hist_FpsNotRecorded");
         DetailLow.Text = Format(session.OnePercentLowFps);
         DetailMinMax.Text = session.MinimumFps is double min && session.MaximumFps is double max
             ? min.ToString("F0") + " · " + max.ToString("F0")
@@ -307,7 +311,7 @@ public partial class HistoryPage : UserControl
         var optimizations = session.OptimizationsApplied ?? new List<string>();
         if (optimizations.Count == 0)
         {
-            DetailOptimizationsPanel.Children.Add(StyleText("Aucune optimisation appliquée pendant cette session.", "BodyMuted"));
+            DetailOptimizationsPanel.Children.Add(StyleText(Loc.T("Hist_NoOptimizations"), "BodyMuted"));
         }
         else
         {
@@ -318,7 +322,7 @@ public partial class HistoryPage : UserControl
             }
         }
 
-        DetailNotes.Text = string.IsNullOrWhiteSpace(session.Notes) ? "Aucune note pour cette session." : session.Notes;
+        DetailNotes.Text = string.IsNullOrWhiteSpace(session.Notes) ? Loc.T("Hist_NoNotes") : session.Notes;
         DetailPanel.Visibility = Visibility.Visible;
     }
 
@@ -330,12 +334,12 @@ public partial class HistoryPage : UserControl
             var comparison = HistoryService.Instance.Compare(_selectedA.Id, _selectedB.Id);
             RenderComparison(comparison);
             ComparisonPanel.Visibility = Visibility.Visible;
-            ShellState.Status("Comparaison affichée entre deux sessions.");
+            ShellState.Status(Loc.T("Hist_StatusCompared"));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Comparaison des sessions", ex);
-            ShellState.Status("Comparaison impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Hist_StatusCompareFail", ex.Message));
         }
     }
 
@@ -353,19 +357,19 @@ public partial class HistoryPage : UserControl
         ComparisonTable.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
         ComparisonTable.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
 
-        AddComparisonCell(0, 0, "Mesure", "Label", null, null, 0);
-        AddComparisonCell(1, 0, "Session A", "H3", null, SessionHeader(a), 0);
-        AddComparisonCell(2, 0, "Session B", "H3", null, SessionHeader(b), 0);
-        AddComparisonCell(3, 0, "Écart (B − A)", "H3", null, null, 0);
+        AddComparisonCell(0, 0, Loc.T("Hist_Metric"), "Label", null, null, 0);
+        AddComparisonCell(1, 0, Loc.T("Hist_SessionA"), "H3", null, SessionHeader(a), 0);
+        AddComparisonCell(2, 0, Loc.T("Hist_SessionB"), "H3", null, SessionHeader(b), 0);
+        AddComparisonCell(3, 0, Loc.T("Hist_Delta"), "H3", null, null, 0);
 
         var rows = new (string Label, string A, string B, double? Delta, string Unit, bool HigherIsBetter)[]
         {
-            ("FPS moyen", Format(a.AverageFps), Format(b.AverageFps), comparison.AvgFpsDelta, string.Empty, true),
-            ("1 % low", Format(a.OnePercentLowFps), Format(b.OnePercentLowFps), comparison.OnePercentLowDelta, string.Empty, true),
-            ("Utilisation GPU moyenne", Format(a.AverageGpuUsagePercent, " %"), Format(b.AverageGpuUsagePercent, " %"), comparison.GpuUsageDelta, " %", false),
-            ("Température GPU max", Format(a.MaxGpuTemperatureC, " °C", "F0"), Format(b.MaxGpuTemperatureC, " °C", "F0"), comparison.MaxGpuTempDelta, " °C", false),
-            ("Utilisation CPU moyenne", Format(a.AverageCpuUsagePercent, " %"), Format(b.AverageCpuUsagePercent, " %"), comparison.AvgCpuUsageDelta, " %", false),
-            ("Température CPU max", Format(a.MaxCpuTemperatureC, " °C", "F0"), Format(b.MaxCpuTemperatureC, " °C", "F0"), comparison.MaxCpuTempDelta, " °C", false)
+            (Loc.T("Hist_AvgFps"), Format(a.AverageFps), Format(b.AverageFps), comparison.AvgFpsDelta, string.Empty, true),
+            (Loc.T("Hist_OnePercentLow"), Format(a.OnePercentLowFps), Format(b.OnePercentLowFps), comparison.OnePercentLowDelta, string.Empty, true),
+            (Loc.T("Hist_AvgGpuUsage"), Format(a.AverageGpuUsagePercent, " %"), Format(b.AverageGpuUsagePercent, " %"), comparison.GpuUsageDelta, " %", false),
+            (Loc.T("Hist_MaxGpuTemp"), Format(a.MaxGpuTemperatureC, " °C", "F0"), Format(b.MaxGpuTemperatureC, " °C", "F0"), comparison.MaxGpuTempDelta, " °C", false),
+            (Loc.T("Hist_AvgCpuUsage"), Format(a.AverageCpuUsagePercent, " %"), Format(b.AverageCpuUsagePercent, " %"), comparison.AvgCpuUsageDelta, " %", false),
+            (Loc.T("Hist_MaxCpuTemp"), Format(a.MaxCpuTemperatureC, " °C", "F0"), Format(b.MaxCpuTemperatureC, " °C", "F0"), comparison.MaxCpuTempDelta, " °C", false)
         };
 
         for (var i = 0; i < rows.Length; i++)
@@ -390,7 +394,7 @@ public partial class HistoryPage : UserControl
         {
             CompareChart.Series = null;
             CompareChart.Visibility = Visibility.Collapsed;
-            CompareChartHint.Text = "Comparaison graphique indisponible : au moins une des deux sessions ne contient pas de série de FPS.";
+            CompareChartHint.Text = Loc.T("Hist_CompareChartUnavailable");
             CompareChartHint.Visibility = Visibility.Visible;
         }
     }
@@ -398,7 +402,7 @@ public partial class HistoryPage : UserControl
     private static string SessionHeader(SessionRecord session)
     {
         return session.StartTime.ToString("dd/MM HH:mm", French) + " · " +
-               (string.IsNullOrWhiteSpace(session.GameName) ? "session" : session.GameName);
+               (string.IsNullOrWhiteSpace(session.GameName) ? Loc.T("Hist_SessionWord") : session.GameName);
     }
 
     private void AddComparisonCell(int column, int row, string text, string styleKey, string? brushKey,
@@ -468,7 +472,7 @@ public partial class HistoryPage : UserControl
     private void OnRefreshClick(object sender, RoutedEventArgs e)
     {
         LoadSessions();
-        ShellState.Status(_sessions.Count + " session(s) dans l'historique.");
+        ShellState.Status(Loc.T("Hist_StatusCount", _sessions.Count));
     }
 
     private void OnExportSelectionClick(object sender, RoutedEventArgs e)
@@ -480,22 +484,22 @@ public partial class HistoryPage : UserControl
             if (_selectedB is not null && selected.All(s => s.Id != _selectedB.Id)) selected.Add(_selectedB);
             if (selected.Count == 0)
             {
-                ShellState.Status("Sélectionnez une session en A et/ou en B avant d'exporter.");
+                ShellState.Status(Loc.T("Hist_StatusSelectBeforeExport"));
                 return;
             }
 
             var result = ReportGenerator.Instance.ExportSessionHtml(selected);
             if (!result.Success)
             {
-                ShellState.Status("Export impossible : " + result.Error);
+                ShellState.Status(Loc.T("Hist_StatusExportFail", result.Error));
                 return;
             }
-            ShellState.Status("Sélection exportée : " + result.FilePath);
+            ShellState.Status(Loc.T("Hist_StatusSelectionExported", result.FilePath));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Export de la selection", ex);
-            ShellState.Status("Export impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Hist_StatusExportFail", ex.Message));
         }
     }
 
@@ -503,7 +507,7 @@ public partial class HistoryPage : UserControl
     {
         if (_detail is null)
         {
-            ShellState.Status("Aucune session sélectionnée à exporter.");
+            ShellState.Status(Loc.T("Hist_StatusNoDetailExport"));
             return;
         }
         try
@@ -511,16 +515,16 @@ public partial class HistoryPage : UserControl
             var result = ReportGenerator.Instance.ExportSessionHtml(new List<SessionRecord> { _detail });
             if (!result.Success)
             {
-                ShellState.Status("Export impossible : " + result.Error);
+                ShellState.Status(Loc.T("Hist_StatusExportFail", result.Error));
                 return;
             }
             Process.Start(new ProcessStartInfo(result.FilePath) { UseShellExecute = true });
-            ShellState.Status("Session exportée : " + result.FilePath);
+            ShellState.Status(Loc.T("Hist_StatusSessionExported", result.FilePath));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Export de la session", ex);
-            ShellState.Status("Export impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Hist_StatusExportFail", ex.Message));
         }
     }
 
@@ -529,20 +533,20 @@ public partial class HistoryPage : UserControl
         try
         {
             var first = MessageBox.Show(
-                "Vider tout l'historique des sessions ?\n\nLes mesures enregistrées seront supprimées de ce PC.",
-                "Vider l'historique", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                Loc.T("Hist_ConfirmClearBody"),
+                Loc.T("Hist_Clear"), MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (first != MessageBoxResult.Yes)
             {
-                ShellState.Status("Effacement annulé.");
+                ShellState.Status(Loc.T("Hist_StatusClearCancelled"));
                 return;
             }
 
             var second = MessageBox.Show(
-                "Confirmation définitive : toutes les sessions seront supprimées et ne pourront pas être récupérées.\n\nContinuer ?",
-                "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                Loc.T("Hist_ConfirmClearFinalBody"),
+                Loc.T("Hist_ConfirmTitle"), MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (second != MessageBoxResult.Yes)
             {
-                ShellState.Status("Effacement annulé.");
+                ShellState.Status(Loc.T("Hist_StatusClearCancelled"));
                 return;
             }
 
@@ -553,19 +557,19 @@ public partial class HistoryPage : UserControl
             DetailPanel.Visibility = Visibility.Collapsed;
             ComparisonPanel.Visibility = Visibility.Collapsed;
             LoadSessions();
-            ShellState.Status("Historique vidé.");
+            ShellState.Status(Loc.T("Hist_StatusCleared"));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Effacement de l'historique", ex);
-            ShellState.Status("Effacement impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Hist_StatusClearFail", ex.Message));
         }
     }
 
     private void OnHowToRecordClick(object sender, RoutedEventArgs e)
     {
         NavigationService.Navigate("monitoring");
-        ShellState.Status("Ouverture du Monitoring : utilisez « Démarrer l'enregistrement » pendant votre partie.");
+        ShellState.Status(Loc.T("Hist_StatusGoMonitor"));
     }
 
     private static string Format(double? value, string suffix = "", string format = "0.##")

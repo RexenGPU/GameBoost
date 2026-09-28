@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
+using GameBoost.Core.Localization;
 using GameBoost.Core.Models;
 
 namespace GameBoost.App.Controls;
@@ -41,10 +42,10 @@ public sealed class HealthToTextConverter : IValueConverter
     {
         return value switch
         {
-            HealthLevel.Good => "Optimal",
-            HealthLevel.Warning => "À surveiller",
-            HealthLevel.Critical => "Problème détecté",
-            _ => "Indisponible"
+            HealthLevel.Good => Loc.T("Ctrl_Good"),
+            HealthLevel.Warning => Loc.T("Ctrl_Warning"),
+            HealthLevel.Critical => Loc.T("Ctrl_Critical"),
+            _ => Loc.T("Ctrl_Unknown")
         };
     }
 
@@ -69,15 +70,15 @@ public sealed class BytesToSizeConverter : IValueConverter
 
     public static string Format(double bytes)
     {
-        string[] units = { "o", "Ko", "Mo", "Go", "To" };
+        string[] unitKeys = { "Unit_B", "Unit_KB", "Unit_MB", "Unit_GB", "Unit_TB" };
         var unit = 0;
-        while (bytes >= 1024 && unit < units.Length - 1)
+        while (bytes >= 1024 && unit < unitKeys.Length - 1)
         {
             bytes /= 1024;
             unit++;
         }
         var digits = unit == 0 ? 0 : bytes >= 100 ? 0 : 1;
-        return bytes.ToString("F" + digits, CultureInfo.CurrentCulture) + " " + units[unit];
+        return bytes.ToString("F" + digits, CultureInfo.CurrentCulture) + " " + Loc.T(unitKeys[unit]);
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
@@ -89,11 +90,11 @@ public sealed class BytesRateConverter : IValueConverter
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         double bytes = value is long l ? l : value is double d ? d : 0;
-        if (bytes <= 0) return "0 o/s";
-        if (bytes < 1024) return bytes.ToString("F0") + " o/s";
-        if (bytes < 1024 * 1024) return (bytes / 1024).ToString("F0") + " Ko/s";
-        if (bytes < 1024d * 1024 * 1024) return (bytes / 1024 / 1024).ToString("F1") + " Mo/s";
-        return (bytes / 1024 / 1024 / 1024).ToString("F2") + " Go/s";
+        if (bytes <= 0) return "0 " + Loc.T("Unit_Bs");
+        if (bytes < 1024) return bytes.ToString("F0") + " " + Loc.T("Unit_Bs");
+        if (bytes < 1024 * 1024) return (bytes / 1024).ToString("F0") + " " + Loc.T("Unit_KBs");
+        if (bytes < 1024d * 1024 * 1024) return (bytes / 1024 / 1024).ToString("F1") + " " + Loc.T("Unit_MBs");
+        return (bytes / 1024 / 1024 / 1024).ToString("F2") + " " + Loc.T("Unit_GBs");
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>

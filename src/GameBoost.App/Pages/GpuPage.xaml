@@ -2,6 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="clr-namespace:GameBoost.App.Controls"
+             xmlns:loc="clr-namespace:GameBoost.App.Localization"
              Loaded="OnLoaded"
              Unloaded="OnUnloaded"
              SizeChanged="OnSizeChanged">
@@ -20,34 +21,34 @@
             </Grid.ColumnDefinitions>
             <StackPanel VerticalAlignment="Center">
                 <TextBlock Text="GPU" Style="{StaticResource H1}" />
-                <TextBlock Text="Carte graphique, pilote, mesures en direct et technologies compatibles"
+                <TextBlock Text="{loc:Text Gpu_Subtitle}"
                            Style="{StaticResource BodyMuted}" Margin="0,6,0,0" />
             </StackPanel>
             <Button x:Name="RefreshButton" Grid.Column="1" Style="{StaticResource SecondaryButton}"
                     VerticalAlignment="Top" Click="OnRefreshClick"
-                    ToolTip="Relancer la détection de la carte graphique. L'opération prend environ 5 secondes.">
+                    ToolTip="{loc:Text Gpu_RefreshTip}">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="&#xE768;" FontFamily="{StaticResource IconFont}" FontSize="13"
                                Margin="0,0,8,0" VerticalAlignment="Center"
                                Foreground="{DynamicResource TextMutedBrush}" />
-                    <TextBlock Text="Actualiser" VerticalAlignment="Center" />
+                    <TextBlock Text="{loc:Text Gpu_Refresh}" VerticalAlignment="Center" />
                 </StackPanel>
             </Button>
         </Grid>
 
         <StackPanel x:Name="LoadingPanel" Grid.Row="1" Margin="0,18,0,0" Visibility="Collapsed">
             <ProgressBar Style="{StaticResource SlimProgress}" IsIndeterminate="True" />
-            <TextBlock Text="Détection de la carte graphique en cours…" Style="{StaticResource BodyMuted}" Margin="0,9,0,0" />
+            <TextBlock Text="{loc:Text Gpu_Loading}" Style="{StaticResource BodyMuted}" Margin="0,9,0,0" />
         </StackPanel>
 
         <Border x:Name="EmptyPanel" Grid.Row="2" Style="{StaticResource Card}" Margin="0,18,0,0" Visibility="Collapsed">
             <StackPanel>
-                <TextBlock Text="Aucune carte graphique n'a été identifiée" Style="{StaticResource H3}" />
-                <TextBlock Text="La détection n'a renvoyé aucun modèle de carte graphique. Cela arrive quand Windows utilise un pilote d'affichage générique, ou quand la lecture du registre a échoué. Aucune valeur n'est inventée : rien ne sera affiché tant que la détection n'a pas de résultat."
+                <TextBlock Text="{loc:Text Gpu_EmptyTitle}" Style="{StaticResource H3}" />
+                <TextBlock Text="{loc:Text Gpu_EmptyNote}"
                            Style="{StaticResource BodyMuted}" Margin="0,8,0,0" />
-                <Button Content="Actualiser" Style="{StaticResource AccentButton}" HorizontalAlignment="Left"
+                <Button Content="{loc:Text Gpu_Refresh}" Style="{StaticResource AccentButton}" HorizontalAlignment="Left"
                         Margin="0,14,0,0" Click="OnRefreshClick"
-                        ToolTip="Relancer la détection du matériel pour obtenir le modèle exact de la carte graphique" />
+                        ToolTip="{loc:Text Gpu_EmptyRefreshTip}" />
             </StackPanel>
         </Border>
 
@@ -65,33 +66,33 @@
                 </StackPanel>
             </Border>
 
-            <TextBlock Text="Mesures en direct" Style="{StaticResource H2}" Margin="0,26,0,0" />
-            <TextBlock Text="Relevées automatiquement, environ une fois par seconde."
+            <TextBlock Text="{loc:Text Gpu_LiveTitle}" Style="{StaticResource H2}" Margin="0,26,0,0" />
+            <TextBlock Text="{loc:Text Gpu_LiveNote}"
                        Style="{StaticResource BodyMuted}" Margin="0,6,0,0" />
             <UniformGrid x:Name="LiveGrid" Columns="4" Margin="0,14,0,0">
-                <controls:StatCard x:Name="TempCard" Title="Température GPU" Icon="&#xE7C3;" Unit="°C" Value="—"
+                <controls:StatCard x:Name="TempCard" Title="{loc:Text Gpu_TempTitle}" Icon="&#xE7C3;" Unit="°C" Value="—"
                                    Margin="0,0,10,10"
-                                   ToolTip="Température du processeur graphique. La lecture demande les droits administrateur ; le point chaud est la zone la plus chaude du silicium." />
-                <controls:StatCard x:Name="LoadCard" Title="Charge GPU" Icon="&#xE7F4;" Unit="%" Value="—"
+                                   ToolTip="{loc:Text Gpu_TempTip}" />
+                <controls:StatCard x:Name="LoadCard" Title="{loc:Text Gpu_LoadTitle}" Icon="&#xE7F4;" Unit="%" Value="—"
                                    Margin="0,0,10,10"
-                                   ToolTip="Part des capacités de la carte graphique utilisée par les jeux et les applications." />
-                <controls:StatCard x:Name="ClockCard" Title="Fréquence" Icon="&#xE74E;" Unit="MHz" Value="—"
+                                   ToolTip="{loc:Text Gpu_LoadTip}" />
+                <controls:StatCard x:Name="ClockCard" Title="{loc:Text Gpu_ClockTitle}" Icon="&#xE74E;" Unit="MHz" Value="—"
                                    Margin="0,0,10,10"
-                                   ToolTip="Fréquence actuelle du processeur graphique, en mégahertz. Elle varie selon la charge et la température." />
-                <controls:StatCard x:Name="FanCard" Title="Ventilateur" Icon="&#xE706;" Unit="%" Value="—"
+                                   ToolTip="{loc:Text Gpu_ClockTip}" />
+                <controls:StatCard x:Name="FanCard" Title="{loc:Text Gpu_FanTitle}" Icon="&#xE706;" Unit="%" Value="—"
                                    Margin="0,0,10,10"
-                                   ToolTip="Vitesse du ventilateur de la carte, en pourcentage de sa vitesse maximale." />
+                                   ToolTip="{loc:Text Gpu_FanTip}" />
             </UniformGrid>
             <UniformGrid x:Name="VramGrid" Columns="2">
-                <controls:StatCard x:Name="VramUsedCard" Title="VRAM utilisée" Icon="&#xE77B;" Value="—"
+                <controls:StatCard x:Name="VramUsedCard" Title="{loc:Text Gpu_VramUsedTitle}" Icon="&#xE77B;" Value="—"
                                    Margin="0,0,10,10"
-                                   ToolTip="Mémoire vidéo occupée par les textures et images en cours, relevée en continu." />
-                <controls:StatCard x:Name="VramTotalCard" Title="Mémoire vidéo dédiée" Icon="&#xE7C5;" Value="—"
+                                   ToolTip="{loc:Text Gpu_VramUsedTip}" />
+                <controls:StatCard x:Name="VramTotalCard" Title="{loc:Text Gpu_VramTotalTitle}" Icon="&#xE7C5;" Value="—"
                                    Margin="0,0,10,10"
-                                   ToolTip="Quantité de mémoire vidéo dédiée annoncée par le pilote de la carte." />
+                                   ToolTip="{loc:Text Gpu_VramTotalTip}" />
             </UniformGrid>
 
-            <TextBlock Text="Technologies compatibles" Style="{StaticResource H2}" Margin="0,26,0,0" />
+            <TextBlock Text="{loc:Text Gpu_TechTitle}" Style="{StaticResource H2}" Margin="0,26,0,0" />
             <Border Style="{StaticResource Card}" Margin="0,14,0,0">
                 <StackPanel>
                     <WrapPanel x:Name="TechPanel" />
@@ -104,11 +105,11 @@
             <Border Style="{StaticResource CardFlat}" Margin="0,12,0,0"
                     Background="{DynamicResource InfoBgBrush}" BorderBrush="{DynamicResource InfoBrush}">
                 <TextBlock Style="{StaticResource Body}" TextWrapping="Wrap"
-                           Text="GameBoost détecte la compatibilité matérielle. L'activation se fait dans les jeux ou le panneau du constructeur (GeForce Experience / AMD Software)." />
+                           Text="{loc:Text Gpu_TechNote}" />
             </Border>
 
-            <TextBlock Text="Adaptateurs" Style="{StaticResource H2}" Margin="0,26,0,0" />
-            <TextBlock Text="Toutes les cartes graphiques visibles par Windows, y compris les puces intégrées."
+            <TextBlock Text="{loc:Text Gpu_AdaptersTitle}" Style="{StaticResource H2}" Margin="0,26,0,0" />
+            <TextBlock Text="{loc:Text Gpu_AdaptersNote}"
                        Style="{StaticResource BodyMuted}" Margin="0,6,0,0" />
             <StackPanel x:Name="AdaptersList" Margin="0,14,0,0" />
         </StackPanel>

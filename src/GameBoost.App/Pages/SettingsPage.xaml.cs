@@ -7,6 +7,7 @@ using GameBoost.App.Pages.Settings;
 using GameBoost.App.Services;
 using GameBoost.Core.Data;
 using GameBoost.Core.History;
+using GameBoost.Core.Localization;
 using GameBoost.Core.Logging;
 using GameBoost.Core.Models;
 using GameBoost.Core.Overlay;
@@ -26,7 +27,28 @@ public partial class SettingsPage : UserControl
     {
         InitializeComponent();
         Loaded += OnLoaded;
+        LocManager.Instance.PropertyChanged += OnCultureChanged;
+        Unloaded += OnCultureUnloaded;
     }
+
+    private void OnCultureChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (_loading) return;
+        _loading = true;
+        try
+        {
+            ThemeCombo.ItemsSource = new[] { Loc.T("Settings_ThemeDark"), Loc.T("Settings_ThemeLight") };
+            ThemeCombo.SelectedIndex = SettingsService.Current.Theme.Equals("Light", StringComparison.OrdinalIgnoreCase) ? 1 : 0;
+            LoadLanguages(Loc.CultureCode);
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private void OnCultureUnloaded(object sender, RoutedEventArgs e) =>
+        LocManager.Instance.PropertyChanged -= OnCultureChanged;
 
     private void OnLoaded(object sender, RoutedEventArgs e) => LoadAll();
 
@@ -37,7 +59,8 @@ public partial class SettingsPage : UserControl
         {
             var settings = SettingsService.Current;
 
-            ThemeCombo.ItemsSource = new[] { "Sombre", "Clair" };
+            LoadLanguages(Loc.CultureCode);
+            ThemeCombo.ItemsSource = new[] { Loc.T("Settings_ThemeDark"), Loc.T("Settings_ThemeLight") };
             ThemeCombo.SelectedIndex = settings.Theme.Equals("Light", StringComparison.OrdinalIgnoreCase) ? 1 : 0;
             StartWithWindowsCheck.IsChecked = StartupRegistration.IsEnabled();
             StartElevatedToggle.IsChecked = settings.StartElevated;
@@ -74,7 +97,7 @@ public partial class SettingsPage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Lecture des paramètres", ex);
-            ShellState.Status("Lecture des paramètres impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Settings_StatusReadFail", ex.Message));
         }
         finally
         {
@@ -82,12 +105,37 @@ public partial class SettingsPage : UserControl
         }
     }
 
+    private void LoadLanguages(string current)
+    {
+        var codes = new List<string>();
+        var labels = new List<string>();
+        foreach (var language in Loc.Languages)
+        {
+            codes.Add(language.Code);
+            labels.Add(language.Code == "auto" ? Loc.T("Settings_LanguageAuto") : language.NativeName);
+        }
+        LanguageCombo.ItemsSource = labels;
+        LanguageCombo.Tag = codes;
+        LanguageCombo.SelectedIndex = Math.Max(0, codes.IndexOf(current));
+    }
+
+    private void OnLanguageChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (_loading) return;
+        if (LanguageCombo.Tag is not List<string> codes || LanguageCombo.SelectedIndex < 0) return;
+        var code = codes[LanguageCombo.SelectedIndex];
+        Loc.SetCulture(code);
+        SettingsService.Update(s => s.Language = code);
+        ShellState.Status(Loc.T("Settings_StatusLanguage"));
+    }
+
     private void LoadIntervals(int current)
     {
         var values = new List<int>(IntervalValues);
         if (!values.Contains(current)) values.Add(current);
         values.Sort();
-        IntervalCombo.ItemsSource = values.Select(value => value + (value > 1 ? " minutes" : " minute")).ToList();
+        IntervalCombo.ItemsSource = values.Select(value =>
+            Loc.T(value > 1 ? "Settings_Minutes" : "Settings_Minute", value)).ToList();
         IntervalCombo.Tag = values;
         IntervalCombo.SelectedIndex = Math.Max(0, values.IndexOf(current));
     }
@@ -97,7 +145,8 @@ public partial class SettingsPage : UserControl
         var values = new List<int>(RetentionValues);
         if (!values.Contains(current)) values.Add(current);
         values.Sort();
-        RetentionCombo.ItemsSource = values.Select(value => value + (value > 1 ? " jours" : " jour")).ToList();
+        RetentionCombo.ItemsSource = values.Select(value =>
+            Loc.T(value > 1 ? "Settings_Days" : "Settings_Day", value)).ToList();
         RetentionCombo.Tag = values;
         RetentionCombo.SelectedIndex = Math.Max(0, values.IndexOf(current));
     }
@@ -115,12 +164,12 @@ public partial class SettingsPage : UserControl
         try
         {
             SettingsService.Update(mutate);
-            ShellState.Status("Modifié : " + label);
+            ShellState.Status(Loc.T("Settings_StatusSaved", label));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Sauvegarde des paramètres", ex);
-            ShellState.Status("Sauvegarde impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Settings_StatusSaveFail", ex.Message));
         }
     }
 
@@ -132,12 +181,12 @@ public partial class SettingsPage : UserControl
             var overlay = OverlayService.Instance.GetDefault();
             mutate(overlay);
             OverlayService.Instance.SaveDefault(overlay);
-            ShellState.Status("Modifié : " + label);
+            ShellState.Status(Loc.T("Settings_StatusSaved", label));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Sauvegarde de l'overlay", ex);
-            ShellState.Status("Sauvegarde impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Settings_StatusSaveFail", ex.Message));
         }
     }
 
@@ -146,7 +195,7 @@ public partial class SettingsPage : UserControl
         if (_loading) return;
         var light = ThemeCombo.SelectedIndex == 1;
         ThemeService.Apply(light ? "Light" : "Dark");
-        ShellState.Status("Modifié : thème " + (light ? "clair" : "sombre"));
+        ShellState.Status(Loc.T("Settings_StatusSaved", Loc.T(light ? "Settings_ThemeLight" : "Settings_ThemeDark")));
     }
 
     private void OnStartWithWindowsChanged(object sender, RoutedEventArgs e)
@@ -156,12 +205,12 @@ public partial class SettingsPage : UserControl
         try
         {
             StartupRegistration.SetEnabled(enabled);
-            SaveSetting("démarrage avec Windows", settings => settings.StartWithWindows = enabled);
+            SaveSetting(Loc.T("Settings_LblStartWithWindows"), settings => settings.StartWithWindows = enabled);
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Modification du démarrage avec Windows", ex);
-            ShellState.Status("Démarrage avec Windows impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Settings_StatusStartWinFail", ex.Message));
             _loading = true;
             StartWithWindowsCheck.IsChecked = StartupRegistration.IsEnabled();
             _loading = false;
@@ -171,7 +220,7 @@ public partial class SettingsPage : UserControl
     private void OnStartElevatedChanged(object sender, RoutedEventArgs e)
     {
         var enabled = StartElevatedToggle.IsChecked == true;
-        SaveSetting("démarrage en administrateur", settings => settings.StartElevated = enabled);
+        SaveSetting(Loc.T("Settings_LblStartElevated"), settings => settings.StartElevated = enabled);
     }
 
     private void OnRelaunchAdminClick(object sender, RoutedEventArgs e)
@@ -181,54 +230,54 @@ public partial class SettingsPage : UserControl
             var path = Environment.ProcessPath;
             if (string.IsNullOrWhiteSpace(path))
             {
-                ShellState.Status("Chemin de l'application introuvable : relance impossible.");
+                ShellState.Status(Loc.T("Settings_StatusNoPath"));
                 return;
             }
             Process.Start(new ProcessStartInfo(path) { UseShellExecute = true, Verb = "runas" });
-            ShellState.Status("Relance en administrateur demandée.");
+            ShellState.Status(Loc.T("Settings_StatusRelaunchAsked"));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Relance en administrateur", ex);
-            ShellState.Status("Relance annulée ou impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Settings_StatusRelaunchFail", ex.Message));
         }
     }
 
     private void OnNotificationsChanged(object sender, RoutedEventArgs e)
     {
         var enabled = NotificationsCheck.IsChecked == true;
-        SaveSetting("notifications", settings => settings.NotificationsEnabled = enabled);
+        SaveSetting(Loc.T("Settings_LblNotifications"), settings => settings.NotificationsEnabled = enabled);
     }
 
     private void OnIntervalChanged(object sender, SelectionChangedEventArgs e)
     {
         if (_loading) return;
         var minutes = SelectedValue(IntervalCombo, 30);
-        SaveSetting("fréquence des analyses (" + minutes + " min)", settings => settings.AnalysisIntervalMinutes = minutes);
+        SaveSetting(Loc.T("Settings_LblInterval", minutes), settings => settings.AnalysisIntervalMinutes = minutes);
     }
 
     private void OnConfirmBeforeBoostChanged(object sender, RoutedEventArgs e)
     {
         var enabled = ConfirmBeforeBoostCheck.IsChecked == true;
-        SaveSetting("confirmation avant boost", settings => settings.ConfirmBeforeBoost = enabled);
+        SaveSetting(Loc.T("Settings_LblConfirmBoost"), settings => settings.ConfirmBeforeBoost = enabled);
     }
 
     private void OnRelaunchClosedAppsChanged(object sender, RoutedEventArgs e)
     {
         var enabled = RelaunchClosedAppsCheck.IsChecked == true;
-        SaveSetting("relance des applications fermées", settings => settings.RelaunchClosedApps = enabled);
+        SaveSetting(Loc.T("Settings_LblRelaunchClosed"), settings => settings.RelaunchClosedApps = enabled);
     }
 
     private void OnClearTempChanged(object sender, RoutedEventArgs e)
     {
         var enabled = ClearTempCheck.IsChecked == true;
-        SaveSetting("nettoyage temporaire au boost", settings => settings.ClearTempOnBoost = enabled);
+        SaveSetting(Loc.T("Settings_LblClearTemp"), settings => settings.ClearTempOnBoost = enabled);
     }
 
     private void OnAutoCloseEnabledChanged(object sender, RoutedEventArgs e)
     {
         var enabled = AutoCloseEnabledCheck.IsChecked == true;
-        SaveSetting("fermeture automatique des applications", settings => settings.AutoCloseAppsEnabled = enabled);
+        SaveSetting(Loc.T("Settings_LblAutoClose"), settings => settings.AutoCloseAppsEnabled = enabled);
     }
 
     private void OnAddAutoCloseClick(object sender, RoutedEventArgs e)
@@ -236,14 +285,14 @@ public partial class SettingsPage : UserControl
         var name = (AutoCloseBox.Text ?? string.Empty).Trim();
         if (name.Length == 0)
         {
-            ShellState.Status("Saisissez le nom d'une application à fermer.");
+            ShellState.Status(Loc.T("Settings_StatusEnterName"));
             return;
         }
 
         try
         {
             var added = false;
-            SaveSetting("applications fermées automatiquement", settings =>
+            SaveSetting(Loc.T("Settings_LblAutoClose"), settings =>
             {
                 if (settings.AutoCloseApps.Any(entry => string.Equals(entry, name, StringComparison.OrdinalIgnoreCase)))
                     return;
@@ -257,20 +306,20 @@ public partial class SettingsPage : UserControl
             }
             else
             {
-                ShellState.Status("« " + name + " » est déjà dans la liste.");
+                ShellState.Status(Loc.T("Settings_StatusAlreadyListed", name));
             }
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Ajout d'une application à fermer", ex);
-            ShellState.Status("Ajout impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Settings_StatusAddFail", ex.Message));
         }
     }
 
     private void OnRemoveAutoCloseClick(object sender, RoutedEventArgs e)
     {
         if (sender is not Button { Tag: string name }) return;
-        SaveSetting("applications fermées automatiquement", settings =>
+        SaveSetting(Loc.T("Settings_LblAutoClose"), settings =>
             settings.AutoCloseApps.RemoveAll(entry => string.Equals(entry, name, StringComparison.OrdinalIgnoreCase)));
         RefreshAutoCloseList();
     }
@@ -292,14 +341,14 @@ public partial class SettingsPage : UserControl
         var name = (ExclusionBox.Text ?? string.Empty).Trim();
         if (name.Length == 0)
         {
-            ShellState.Status("Saisissez un élément à exclure.");
+            ShellState.Status(Loc.T("Settings_StatusEnterExclusion"));
             return;
         }
 
         try
         {
             var added = false;
-            SaveSetting("exclusions", settings =>
+            SaveSetting(Loc.T("Settings_LblExclusions"), settings =>
             {
                 if (settings.Exclusions.Any(entry => string.Equals(entry, name, StringComparison.OrdinalIgnoreCase)))
                     return;
@@ -313,20 +362,20 @@ public partial class SettingsPage : UserControl
             }
             else
             {
-                ShellState.Status("« " + name + " » est déjà exclu.");
+                ShellState.Status(Loc.T("Settings_StatusAlreadyExcluded", name));
             }
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Ajout d'une exclusion", ex);
-            ShellState.Status("Ajout impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Settings_StatusAddFail", ex.Message));
         }
     }
 
     private void OnRemoveExclusionClick(object sender, RoutedEventArgs e)
     {
         if (sender is not Button { Tag: string name }) return;
-        SaveSetting("exclusions", settings =>
+        SaveSetting(Loc.T("Settings_LblExclusions"), settings =>
             settings.Exclusions.RemoveAll(entry => string.Equals(entry, name, StringComparison.OrdinalIgnoreCase)));
         RefreshExclusionList();
     }
@@ -343,14 +392,14 @@ public partial class SettingsPage : UserControl
         {
             var dialog = new OpenFolderDialog
             {
-                Title = "Choisir un dossier de jeux",
+                Title = Loc.T("Settings_DialogGameFolder"),
                 Multiselect = false
             };
             if (dialog.ShowDialog() != true) return;
 
             var folder = dialog.FolderName;
             var added = false;
-            SaveSetting("dossiers de jeux personnalisés", settings =>
+            SaveSetting(Loc.T("Settings_LblCustomFolders"), settings =>
             {
                 if (settings.CustomGameFolders.Any(entry => string.Equals(entry, folder, StringComparison.OrdinalIgnoreCase)))
                     return;
@@ -360,24 +409,24 @@ public partial class SettingsPage : UserControl
             if (added)
             {
                 RefreshFolderList();
-                ShellState.Status("Dossier ajouté : il sera scanné au prochain scan des jeux.");
+                ShellState.Status(Loc.T("Settings_StatusFolderAdded"));
             }
             else
             {
-                ShellState.Status("Ce dossier est déjà dans la liste.");
+                ShellState.Status(Loc.T("Settings_StatusFolderDup"));
             }
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Ajout d'un dossier de jeux", ex);
-            ShellState.Status("Ajout impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Settings_StatusAddFail", ex.Message));
         }
     }
 
     private void OnRemoveFolderClick(object sender, RoutedEventArgs e)
     {
         if (sender is not Button { Tag: string folder }) return;
-        SaveSetting("dossiers de jeux personnalisés", settings =>
+        SaveSetting(Loc.T("Settings_LblCustomFolders"), settings =>
             settings.CustomGameFolders.RemoveAll(entry => string.Equals(entry, folder, StringComparison.OrdinalIgnoreCase)));
         RefreshFolderList();
     }
@@ -392,19 +441,19 @@ public partial class SettingsPage : UserControl
     {
         if (_loading) return;
         if (sender == OverlayEnabledToggle)
-            SaveOverlay("overlay", o => o.Enabled = OverlayEnabledToggle.IsChecked == true);
+            SaveOverlay(Loc.T("Settings_LblOverlay"), o => o.Enabled = OverlayEnabledToggle.IsChecked == true);
         else if (sender == ShowFpsToggle)
-            SaveOverlay("overlay : FPS", o => o.ShowFps = ShowFpsToggle.IsChecked == true);
+            SaveOverlay(Loc.T("Settings_LblOverlayFps"), o => o.ShowFps = ShowFpsToggle.IsChecked == true);
         else if (sender == ShowFrameTimeToggle)
-            SaveOverlay("overlay : temps par image", o => o.ShowFrameTime = ShowFrameTimeToggle.IsChecked == true);
+            SaveOverlay(Loc.T("Settings_LblOverlayFrameTime"), o => o.ShowFrameTime = ShowFrameTimeToggle.IsChecked == true);
         else if (sender == ShowCpuToggle)
-            SaveOverlay("overlay : CPU", o => o.ShowCpu = ShowCpuToggle.IsChecked == true);
+            SaveOverlay(Loc.T("Settings_LblOverlayCpu"), o => o.ShowCpu = ShowCpuToggle.IsChecked == true);
         else if (sender == ShowGpuToggle)
-            SaveOverlay("overlay : GPU", o => o.ShowGpu = ShowGpuToggle.IsChecked == true);
+            SaveOverlay(Loc.T("Settings_LblOverlayGpu"), o => o.ShowGpu = ShowGpuToggle.IsChecked == true);
         else if (sender == ShowRamToggle)
-            SaveOverlay("overlay : RAM", o => o.ShowRam = ShowRamToggle.IsChecked == true);
+            SaveOverlay(Loc.T("Settings_LblOverlayRam"), o => o.ShowRam = ShowRamToggle.IsChecked == true);
         else if (sender == ShowTempToggle)
-            SaveOverlay("overlay : températures", o => o.ShowTemperatures = ShowTempToggle.IsChecked == true);
+            SaveOverlay(Loc.T("Settings_LblOverlayTemp"), o => o.ShowTemperatures = ShowTempToggle.IsChecked == true);
     }
 
     private void OnOpacityChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -414,20 +463,20 @@ public partial class SettingsPage : UserControl
         OpacityLabel.Text = value + " %";
         if (value == _savedOpacity) return;
         _savedOpacity = value;
-        SaveOverlay("opacité de l'overlay", o => o.Opacity = value);
+        SaveOverlay(Loc.T("Settings_LblOpacity"), o => o.Opacity = value);
     }
 
     private void OnRecordSessionsChanged(object sender, RoutedEventArgs e)
     {
         var enabled = RecordSessionsCheck.IsChecked == true;
-        SaveSetting("enregistrement des sessions", settings => settings.RecordSessions = enabled);
+        SaveSetting(Loc.T("Settings_LblSessions"), settings => settings.RecordSessions = enabled);
     }
 
     private void OnRetentionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (_loading) return;
         var days = SelectedValue(RetentionCombo, 90);
-        SaveSetting("rétention de l'historique (" + days + " j)", settings => settings.HistoryRetentionDays = days);
+        SaveSetting(Loc.T("Settings_LblRetention", days), settings => settings.HistoryRetentionDays = days);
     }
 
     private void OnPruneHistoryClick(object sender, RoutedEventArgs e)
@@ -435,13 +484,12 @@ public partial class SettingsPage : UserControl
         try
         {
             HistoryService.Instance.PruneOldSessions();
-            ShellState.Status("Historique nettoyé selon la rétention de " +
-                              SettingsService.Current.HistoryRetentionDays + " jours.");
+            ShellState.Status(Loc.T("Settings_StatusPruned", SettingsService.Current.HistoryRetentionDays));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Nettoyage de l'historique", ex);
-            ShellState.Status("Nettoyage impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Settings_StatusPruneFail", ex.Message));
         }
     }
 
@@ -449,7 +497,7 @@ public partial class SettingsPage : UserControl
     {
         if (_loading) return;
         var path = (BackupBox.Text ?? string.Empty).Trim();
-        SaveSetting("emplacement des sauvegardes", settings => settings.BackupLocation = path);
+        SaveSetting(Loc.T("Settings_LblBackupLocation"), settings => settings.BackupLocation = path);
     }
 
     private void OnBrowseBackupClick(object sender, RoutedEventArgs e)
@@ -458,7 +506,7 @@ public partial class SettingsPage : UserControl
         {
             var dialog = new OpenFolderDialog
             {
-                Title = "Choisir le dossier des sauvegardes",
+                Title = Loc.T("Settings_DialogBackupFolder"),
                 Multiselect = false
             };
             if (dialog.ShowDialog() != true) return;
@@ -467,7 +515,7 @@ public partial class SettingsPage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Choix du dossier des sauvegardes", ex);
-            ShellState.Status("Sélection impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Settings_StatusAddFail", ex.Message));
         }
     }
 
@@ -475,10 +523,10 @@ public partial class SettingsPage : UserControl
     {
         var path = SettingsService.Current.BackupLocation;
         if (string.IsNullOrWhiteSpace(path)) path = AppPaths.BackupsDir;
-        OpenFolder(path, "dossier des sauvegardes");
+        OpenFolder(path, Loc.T("Settings_LblBackupFolder"));
     }
 
-    private void OnOpenLogsClick(object sender, RoutedEventArgs e) => OpenFolder(AppPaths.LogsDir, "dossier des journaux");
+    private void OnOpenLogsClick(object sender, RoutedEventArgs e) => OpenFolder(AppPaths.LogsDir, Loc.T("Settings_LblLogsFolder"));
 
     private static void OpenFolder(string path, string label)
     {
@@ -486,17 +534,17 @@ public partial class SettingsPage : UserControl
         {
             if (string.IsNullOrWhiteSpace(path))
             {
-                ShellState.Status("Chemin vide pour " + label + ".");
+                ShellState.Status(Loc.T("Settings_StatusEmptyPath", label));
                 return;
             }
             Directory.CreateDirectory(path);
             Process.Start(new ProcessStartInfo("explorer.exe", "\"" + path + "\"") { UseShellExecute = true });
-            ShellState.Status("Ouverture du " + label + ".");
+            ShellState.Status(Loc.T("Settings_StatusOpening", label));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Ouverture du " + label, ex);
-            ShellState.Status("Ouverture impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Settings_StatusOpenFail", ex.Message));
         }
     }
 
@@ -512,12 +560,12 @@ public partial class SettingsPage : UserControl
             var lines = Log.ReadRecent(200);
             LogList.ItemsSource = lines.ToList();
             LogPanel.Visibility = Visibility.Visible;
-            ShellState.Status(lines.Count + " ligne(s) de journal affichée(s).");
+            ShellState.Status(Loc.T("Settings_StatusLogLines", lines.Count));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Lecture des journaux", ex);
-            ShellState.Status("Lecture des journaux impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Settings_StatusLogReadFail", ex.Message));
         }
     }
 
@@ -528,16 +576,16 @@ public partial class SettingsPage : UserControl
             var lines = LogList.ItemsSource as IEnumerable<string>;
             if (lines is null)
             {
-                ShellState.Status("Aucun journal à copier.");
+                ShellState.Status(Loc.T("Settings_StatusNoLogCopy"));
                 return;
             }
             Clipboard.SetText(string.Join(Environment.NewLine, lines));
-            ShellState.Status("Journal copié dans le presse-papiers.");
+            ShellState.Status(Loc.T("Settings_StatusCopied"));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Copie des journaux", ex);
-            ShellState.Status("Copie impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Settings_StatusCopyFail", ex.Message));
         }
     }
 
@@ -547,12 +595,12 @@ public partial class SettingsPage : UserControl
         {
             var days = SettingsService.Current.LogRetentionDays;
             Log.TrimAll(days);
-            ShellState.Status("Journaux nettoyés : conservation de " + days + " jours.");
+            ShellState.Status(Loc.T("Settings_StatusLogsTrimmed", days));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Nettoyage des journaux", ex);
-            ShellState.Status("Nettoyage impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Settings_StatusPruneFail", ex.Message));
         }
     }
 

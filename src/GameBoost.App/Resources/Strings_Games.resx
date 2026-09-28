@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Games_Title" xml:space="preserve"><value>Detected games</value></data>
+  <data name="Games_Subtitle" xml:space="preserve"><value>Local library: installed games found on this PC, manually added ones, launch and shortcut to profiles.</value></data>
+  <data name="Games_ScanTip" xml:space="preserve"><value>Full scan of platforms (Steam, Epic, Ubisoft, Xbox, GOG, Battle.net, Riot). Takes about 12 seconds.</value></data>
+  <data name="Games_Scan" xml:space="preserve"><value>Scan</value></data>
+  <data name="Games_AddTip" xml:space="preserve"><value>Add a game manually from its executable file</value></data>
+  <data name="Games_AddExe" xml:space="preserve"><value>Add a .exe</value></data>
+  <data name="Games_SearchTip" xml:space="preserve"><value>Filter by game name or install path</value></data>
+  <data name="Games_PlatformTip" xml:space="preserve"><value>Show only games from one platform</value></data>
+  <data name="Games_LocalNote" xml:space="preserve"><value>Everything is stored on this PC</value></data>
+  <data name="Games_RunningTip" xml:space="preserve"><value>This game is currently open</value></data>
+  <data name="Games_LastLaunch" xml:space="preserve"><value>Last launch</value></data>
+  <data name="Games_Size" xml:space="preserve"><value>Size</value></data>
+  <data name="Games_Launch" xml:space="preserve"><value>Launch</value></data>
+  <data name="Games_ProfilesBtn" xml:space="preserve"><value>Profiles</value></data>
+  <data name="Games_ProfilesBtnTip" xml:space="preserve"><value>Open the graphics profiles page</value></data>
+  <data name="Games_OpenFolderBtn" xml:space="preserve"><value>Open folder</value></data>
+  <data name="Games_OpenFolderTip" xml:space="preserve"><value>Open File Explorer on this game</value></data>
+  <data name="Games_RemoveTip" xml:space="preserve"><value>Remove this game from GameBoost (files are not deleted)</value></data>
+  <data name="Games_EmptyTitle" xml:space="preserve"><value>No games to show</value></data>
+  <data name="Games_EmptyHint" xml:space="preserve"><value>Run a scan to discover the games installed on this PC, or add an executable manually. Nothing is sent: the library stays on your machine.</value></data>
+  <data name="Games_EmptyScanTip" xml:space="preserve"><value>Full scan of installed platforms</value></data>
+  <data name="Games_DetailTitle" xml:space="preserve"><value>Game details</value></data>
+  <data name="Games_DetailHint" xml:space="preserve"><value>Select a game in the list to see its path, launch arguments, overlay and known configuration.</value></data>
+  <data name="Games_RunningBadge" xml:space="preserve"><value>Currently running</value></data>
+  <data name="Games_RunningBadgeTip" xml:space="preserve"><value>This game is currently running</value></data>
+  <data name="Games_InstallDir" xml:space="preserve"><value>Install folder</value></data>
+  <data name="Games_Executable" xml:space="preserve"><value>Executable</value></data>
+  <data name="Games_InstallSize" xml:space="preserve"><value>Install size</value></data>
+  <data name="Games_InternalId" xml:space="preserve"><value>Internal identifier</value></data>
+  <data name="Games_OverlayForGame" xml:space="preserve"><value>FPS overlay for this game</value></data>
+  <data name="Games_OverlayTip" xml:space="preserve"><value>Show or hide the FPS, temperature and load overlay while this game runs</value></data>
+  <data name="Games_OverlayEnabled" xml:space="preserve"><value>Overlay enabled</value></data>
+  <data name="Games_OverlayDisabled" xml:space="preserve"><value>Overlay disabled</value></data>
+  <data name="Games_LaunchArgs" xml:space="preserve"><value>Launch arguments</value></data>
+  <data name="Games_ArgsTip" xml:space="preserve"><value>Options passed to the game at startup, for example: -windowed -novid</value></data>
+  <data name="Games_Save" xml:space="preserve"><value>Save</value></data>
+  <data name="Games_SaveTip" xml:space="preserve"><value>Save the arguments and overlay state for this game</value></data>
+  <data name="Games_KnownConfig" xml:space="preserve"><value>Known configuration</value></data>
+  <data name="Games_ViewProfiles" xml:space="preserve"><value>View profiles</value></data>
+  <data name="Games_ViewProfilesTip" xml:space="preserve"><value>See the graphics profiles available for this game</value></data>
+  <data name="Games_StatusReading" xml:space="preserve"><value>Reading the game library…</value></data>
+  <data name="Games_StatusNoGames" xml:space="preserve"><value>No game registered: run a scan.</value></data>
+  <data name="Games_StatusCount" xml:space="preserve"><value>{0} game(s) in the library.</value></data>
+  <data name="Games_StatusLibFail" xml:space="preserve"><value>Could not read the library: {0}</value></data>
+  <data name="Games_StatusScanning" xml:space="preserve"><value>Scanning platforms (about 12 seconds)…</value></data>
+  <data name="Games_StatusScanDone" xml:space="preserve"><value>Scan completed: {0} game(s) detected.</value></data>
+  <data name="Games_StatusScanFail" xml:space="preserve"><value>Scan failed: {0}</value></data>
+  <data name="Games_DialogExeTitle" xml:space="preserve"><value>Choose the game executable</value></data>
+  <data name="Games_DialogExeFilter" xml:space="preserve"><value>Application (*.exe)|*.exe</value></data>
+  <data name="Games_AddFailTitle" xml:space="preserve"><value>Could not add</value></data>
+  <data name="Games_AddFailBody" xml:space="preserve"><value>This file could not be added.
+
+Check that it is an existing .exe file on this PC.</value></data>
+  <data name="Games_StatusAddRefused" xml:space="preserve"><value>Add refused: invalid executable.</value></data>
+  <data name="Games_StatusAdded" xml:space="preserve"><value>Game added: {0}</value></data>
+  <data name="Games_StatusAddFail" xml:space="preserve"><value>Could not add: {0}</value></data>
+  <data name="Games_PlatformAll" xml:space="preserve"><value>All</value></data>
+  <data name="Games_PlatformManual" xml:space="preserve"><value>Added manually</value></data>
+  <data name="Games_PlatformOther" xml:space="preserve"><value>Other</value></data>
+  <data name="Games_CountOne" xml:space="preserve"><value>{0} game</value></data>
+  <data name="Games_CountMany" xml:space="preserve"><value>{0} games</value></data>
+  <data name="Games_ConfigUnknown" xml:space="preserve"><value>No known information for this game: GameBoost changes nothing as long as no recognized configuration file has been found.</value></data>
+  <data name="Games_StatusOverlayOn" xml:space="preserve"><value>FPS overlay enabled for “{0}”.</value></data>
+  <data name="Games_StatusOverlayOff" xml:space="preserve"><value>FPS overlay disabled for “{0}”.</value></data>
+  <data name="Games_StatusOverlayFail" xml:space="preserve"><value>Could not save the overlay: {0}</value></data>
+  <data name="Games_StatusGameSaved" xml:space="preserve"><value>Game saved: {0}</value></data>
+  <data name="Games_StatusSaveFail" xml:space="preserve"><value>Save failed: {0}</value></data>
+  <data name="Games_StatusNoExe" xml:space="preserve"><value>No readable executable for “{0}”.</value></data>
+  <data name="Games_StatusLaunching" xml:space="preserve"><value>Launching “{0}”.</value></data>
+  <data name="Games_StatusLaunchFail" xml:space="preserve"><value>Launch failed: {0}</value></data>
+  <data name="Games_StatusProfilesPage" xml:space="preserve"><value>Graphics profiles page.</value></data>
+  <data name="Games_StatusFolderMissing" xml:space="preserve"><value>Folder not found for “{0}”.</value></data>
+  <data name="Games_StatusExplorerOpened" xml:space="preserve"><value>Explorer opened on “{0}”.</value></data>
+  <data name="Games_StatusOpenFail" xml:space="preserve"><value>Could not open the folder: {0}</value></data>
+  <data name="Games_RemoveTitle" xml:space="preserve"><value>Remove the game</value></data>
+  <data name="Games_RemoveBody" xml:space="preserve"><value>Remove “{0}” from GameBoost?
+
+Only the library entry is deleted: no game file is touched.</value></data>
+  <data name="Games_StatusRemoveCancelled" xml:space="preserve"><value>Removal cancelled.</value></data>
+  <data name="Games_StatusRemoveFail2" xml:space="preserve"><value>Could not remove “{0}”.</value></data>
+  <data name="Games_StatusRemoved" xml:space="preserve"><value>“{0}” removed from the library.</value></data>
+  <data name="Games_StatusRemoveFail" xml:space="preserve"><value>Removal failed: {0}</value></data>
+  <data name="Games_Never" xml:space="preserve"><value>Never / unknown</value></data>
+  <data name="Games_LaunchTip" xml:space="preserve"><value>Launch “{0}”</value></data>
+  <data name="Games_NoExeTip" xml:space="preserve"><value>No known executable for this game: add one manually</value></data>
+  <data name="Games_UnknownInstallDir" xml:space="preserve"><value>Install folder unknown</value></data>
+  <data name="Games_UnknownExe" xml:space="preserve"><value>Executable unknown</value></data>
+  <data name="Prof_Title" xml:space="preserve"><value>Profiles</value></data>
+  <data name="Prof_Subtitle" xml:space="preserve"><value>Four profiles per game: maximum quality, balanced, performance and custom. They are saved locally, in the GameBoost database.</value></data>
+  <data name="Prof_ComboTip" xml:space="preserve"><value>Game concerned by the displayed profiles</value></data>
+  <data name="Prof_RefreshTip" xml:space="preserve"><value>Reload the installed games list</value></data>
+  <data name="Prof_NoGames" xml:space="preserve"><value>No game in the library. Open the “Games” page to run a scan, then come back here.</value></data>
+  <data name="Prof_ActiveChip" xml:space="preserve"><value>Active</value></data>
+  <data name="Prof_ActiveChipTip" xml:space="preserve"><value>This profile is the one used for the boost</value></data>
+  <data name="Prof_ActiveRadio" xml:space="preserve"><value>Active profile</value></data>
+  <data name="Prof_ActiveRadioTip" xml:space="preserve"><value>This profile will be applied during a boost</value></data>
+  <data name="Prof_Edit" xml:space="preserve"><value>Edit</value></data>
+  <data name="Prof_EditTip" xml:space="preserve"><value>Edit the settings of this profile</value></data>
+  <data name="Prof_Duplicate" xml:space="preserve"><value>Duplicate</value></data>
+  <data name="Prof_DuplicateTip" xml:space="preserve"><value>Create an editable copy of this profile</value></data>
+  <data name="Prof_NoProfilesTitle" xml:space="preserve"><value>No profile for this game</value></data>
+  <data name="Prof_NoProfilesHint" xml:space="preserve"><value>Create the four default profiles: their settings are generated from what GameBoost knows about your graphics card, and you can adjust them afterwards.</value></data>
+  <data name="Prof_CreatePresetsTip" xml:space="preserve"><value>Create Maximum quality, Balanced, Performance and Custom</value></data>
+  <data name="Prof_CreatePresets" xml:space="preserve"><value>Create the 4 default profiles</value></data>
+  <data name="Prof_EditorTitle" xml:space="preserve"><value>Profile editor</value></data>
+  <data name="Prof_CloseEditorTip" xml:space="preserve"><value>Close the editor</value></data>
+  <data name="Prof_Resolution" xml:space="preserve"><value>Resolution</value></data>
+  <data name="Prof_ResolutionKeep" xml:space="preserve"><value>Keep the game resolution</value></data>
+  <data name="Prof_Textures" xml:space="preserve"><value>Textures</value></data>
+  <data name="Prof_Shadows" xml:space="preserve"><value>Shadows</value></data>
+  <data name="Prof_Lighting" xml:space="preserve"><value>Lighting</value></data>
+  <data name="Prof_RtTip" xml:space="preserve"><value>More realistic reflections and shadows, but very costly in FPS</value></data>
+  <data name="Prof_DlssTip" xml:space="preserve"><value>Nvidia upscaling: more FPS at equal quality</value></data>
+  <data name="Prof_FsrTip" xml:space="preserve"><value>AMD upscaling: more FPS</value></data>
+  <data name="Prof_XessTip" xml:space="preserve"><value>Intel upscaling: more FPS</value></data>
+  <data name="Prof_VsyncTip" xml:space="preserve"><value>Prevents screen tearing, may add latency</value></data>
+  <data name="Prof_Fullscreen" xml:space="preserve"><value>Fullscreen</value></data>
+  <data name="Prof_FullscreenTip" xml:space="preserve"><value>Fullscreen instead of windowed: often faster</value></data>
+  <data name="Prof_FpsLimit" xml:space="preserve"><value>FPS limit</value></data>
+  <data name="Prof_FpsBoxTip" xml:space="preserve"><value>Leave empty for no frames-per-second limit</value></data>
+  <data name="Prof_TriState" xml:space="preserve"><value>Three-state switches</value></data>
+  <data name="Prof_TriStateHint" xml:space="preserve"><value>Off = disabled. An original profile can leave a setting “undefined”: it shows as off until you touch it.</value></data>
+  <data name="Prof_Notes" xml:space="preserve"><value>Notes</value></data>
+  <data name="Prof_NotesTip" xml:space="preserve"><value>Free-form comments kept with this profile</value></data>
+  <data name="Prof_Reset" xml:space="preserve"><value>Reset</value></data>
+  <data name="Prof_ResetTip" xml:space="preserve"><value>Cancel unsaved changes</value></data>
+  <data name="Prof_Save" xml:space="preserve"><value>Save</value></data>
+  <data name="Prof_SaveTip" xml:space="preserve"><value>Save this profile in the local database</value></data>
+  <data name="Prof_ApplyTitle" xml:space="preserve"><value>Applying to the game</value></data>
+  <data name="Prof_ApplyDetail" xml:space="preserve"><value>Your profile stays saved as a reference. GameBoost only edits the configuration files it knows (Unreal Engine, Unity engines and generic INI/CFG files).</value></data>
+  <data name="Prof_ElevationNote" xml:space="preserve"><value>GameBoost runs without administrator rights: some protected configuration files will not be editable. Relaunch GameBoost as administrator from the Settings page.</value></data>
+  <data name="Prof_DryRun" xml:space="preserve"><value>Check what would change</value></data>
+  <data name="Prof_DryRunTip" xml:space="preserve"><value>Simulation: lists the settings that would be written, without changing anything</value></data>
+  <data name="Prof_Apply" xml:space="preserve"><value>Apply</value></data>
+  <data name="Prof_ApplyTip" xml:space="preserve"><value>Write the settings into the game configuration files, after confirmation</value></data>
+  <data name="Prof_Revert" xml:space="preserve"><value>Restore backup</value></data>
+  <data name="Prof_RevertTip" xml:space="preserve"><value>Put the configuration files back to their pre-apply state</value></data>
+  <data name="Prof_StatusNoGames" xml:space="preserve"><value>No game: nothing to configure for now.</value></data>
+  <data name="Prof_StatusGamesCount" xml:space="preserve"><value>{0} game(s) available for profiles.</value></data>
+  <data name="Prof_StatusGamesFail" xml:space="preserve"><value>Could not load games: {0}</value></data>
+  <data name="Prof_StatusProfilesFail" xml:space="preserve"><value>Could not read the profiles: {0}</value></data>
+  <data name="Prof_StatusCreated1" xml:space="preserve"><value>{0} profile(s) created.</value></data>
+  <data name="Prof_StatusCreatedMany" xml:space="preserve"><value>{0} profiles created for “{1}”.</value></data>
+  <data name="Prof_StatusCreateFail" xml:space="preserve"><value>Creation failed: {0}</value></data>
+  <data name="Prof_StatusActiveFail" xml:space="preserve"><value>Could not activate the profile.</value></data>
+  <data name="Prof_StatusActive" xml:space="preserve"><value>Active profile: {0}</value></data>
+  <data name="Prof_StatusActiveFail2" xml:space="preserve"><value>Activation failed: {0}</value></data>
+  <data name="Prof_CopySuffix" xml:space="preserve"><value> (copy)</value></data>
+  <data name="Prof_StatusDuplicated" xml:space="preserve"><value>Profile duplicated: {0}</value></data>
+  <data name="Prof_StatusDuplicateFail" xml:space="preserve"><value>Duplication failed: {0}</value></data>
+  <data name="Prof_CapRt" xml:space="preserve"><value>ray tracing</value></data>
+  <data name="Prof_CapabilitySuffix" xml:space="preserve"><value>: this setting is not available on your hardware — the game will probably ignore it.</value></data>
+  <data name="Prof_StatusProfileMissing" xml:space="preserve"><value>Profile not found: reset impossible.</value></data>
+  <data name="Prof_StatusResetDone" xml:space="preserve"><value>Unsaved changes cancelled.</value></data>
+  <data name="Prof_StatusResetFail" xml:space="preserve"><value>Reset failed: {0}</value></data>
+  <data name="Prof_StatusBadFps" xml:space="preserve"><value>Invalid FPS limit: value ignored, saved without a limit.</value></data>
+  <data name="Prof_StatusSaved" xml:space="preserve"><value>Profile saved: {0}</value></data>
+  <data name="Prof_StatusSaveFail" xml:space="preserve"><value>Save failed: {0}</value></data>
+  <data name="Prof_ApplyChecking" xml:space="preserve"><value>Analyzing the configuration files of “{0}”…</value></data>
+  <data name="Prof_ApplySupported" xml:space="preserve"><value>Configuration supported: GameBoost can write this profile's settings into the files of “{0}”.</value></data>
+  <data name="Prof_ApplyUnsupported" xml:space="preserve"><value>Not applicable: {0}</value></data>
+  <data name="Prof_ApplyCheckFail" xml:space="preserve"><value>Check failed: {0}</value></data>
+  <data name="Prof_DryRunFail" xml:space="preserve"><value>Simulation failed: {0}</value></data>
+  <data name="Prof_NoChanges" xml:space="preserve"><value>No change identified for now</value></data>
+  <data name="Prof_ApplyTitle2" xml:space="preserve"><value>Apply the profile</value></data>
+  <data name="Prof_ApplyBody" xml:space="preserve"><value>Apply profile “{0}” to “{1}”?
+
+Settings that would be written:
+{2}
+
+A backup will be created before any modification and can be restored from this page.</value></data>
+  <data name="Prof_StatusApplyCancelled" xml:space="preserve"><value>Application cancelled: nothing was changed.</value></data>
+  <data name="Prof_ApplyFail" xml:space="preserve"><value>Application failed: {0}</value></data>
+  <data name="Prof_NoBackup" xml:space="preserve"><value>No backup to restore for this session.</value></data>
+  <data name="Prof_RevertTitle" xml:space="preserve"><value>Restore the backup</value></data>
+  <data name="Prof_RevertBody" xml:space="preserve"><value>Restore the configuration files saved in:
+{0}
+
+The changes applied by GameBoost will be undone.</value></data>
+  <data name="Prof_StatusRevertCancelled" xml:space="preserve"><value>Restore cancelled.</value></data>
+  <data name="Prof_StatusRevertFail" xml:space="preserve"><value>Restore failed: {0}</value></data>
+  <data name="Prof_BackupLabel" xml:space="preserve"><value>Backup: {0}</value></data>
+  <data name="Prof_PresetQuality" xml:space="preserve"><value>Maximum quality</value></data>
+  <data name="Prof_PresetBalanced" xml:space="preserve"><value>Balanced</value></data>
+  <data name="Prof_PresetPerformance" xml:space="preserve"><value>Performance</value></data>
+  <data name="Prof_PresetCustom" xml:space="preserve"><value>Custom</value></data>
+  <data name="Prof_LabelActive" xml:space="preserve"><value>Active profile</value></data>
+  <data name="Prof_LabelInactive" xml:space="preserve"><value>Inactive</value></data>
+  <data name="Prof_UpdatedLabel" xml:space="preserve"><value>Updated on {0}</value></data>
+  <data name="Prof_BulletResolution" xml:space="preserve"><value>Resolution: {0}×{1}</value></data>
+  <data name="Prof_BulletResKeep" xml:space="preserve"><value>Resolution: kept in the game</value></data>
+  <data name="Prof_LblTextures" xml:space="preserve"><value>Textures</value></data>
+  <data name="Prof_LblShadows" xml:space="preserve"><value>Shadows</value></data>
+  <data name="Prof_LblLighting" xml:space="preserve"><value>Lighting</value></data>
+  <data name="Prof_LblFullscreen" xml:space="preserve"><value>Fullscreen</value></data>
+  <data name="Prof_BulletFps" xml:space="preserve"><value>FPS limit: {0}</value></data>
+  <data name="Prof_BulletNotes" xml:space="preserve"><value>Notes: {0}</value></data>
+  <data name="Prof_NoSettings" xml:space="preserve"><value>No setting defined</value></data>
+  <data name="Prof_FlagOn" xml:space="preserve"><value>enabled</value></data>
+  <data name="Prof_FlagOff" xml:space="preserve"><value>disabled</value></data>
+</root>

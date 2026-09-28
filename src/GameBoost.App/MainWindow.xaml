@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="clr-namespace:GameBoost.App.Controls"
         xmlns:services="clr-namespace:GameBoost.App.Services"
+        xmlns:loc="clr-namespace:GameBoost.App.Localization"
         Title="GameBoost"
         Width="1440" Height="900" MinWidth="1000" MinHeight="640"
         WindowStartupLocation="CenterScreen"
@@ -49,7 +50,7 @@
                             Margin="0,0,12,0">
                     <Border x:Name="ChipCpu" Style="{StaticResource CardFlat}" Padding="9,3"
                             CornerRadius="7" Margin="0,0,6,0"
-                            ToolTip="Utilisation du processeur (mise à jour chaque seconde)">
+                            ToolTip="{loc:Text Shell_CpuTip}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="CPU" Style="{StaticResource Label}" Margin="0,0,5,0"
                                        VerticalAlignment="Center" />
@@ -59,7 +60,7 @@
                     </Border>
                     <Border x:Name="ChipRam" Style="{StaticResource CardFlat}" Padding="9,3"
                             CornerRadius="7" Margin="0,0,6,0"
-                            ToolTip="Mémoire vive utilisée">
+                            ToolTip="{loc:Text Shell_RamTip}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="RAM" Style="{StaticResource Label}" Margin="0,0,5,0"
                                        VerticalAlignment="Center" />
@@ -69,7 +70,7 @@
                     </Border>
                     <Border x:Name="ChipGpu" Style="{StaticResource CardFlat}" Padding="9,3"
                             CornerRadius="7"
-                            ToolTip="Température et charge du processeur graphique">
+                            ToolTip="{loc:Text Shell_GpuTip}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="GPU" Style="{StaticResource Label}" Margin="0,0,5,0"
                                        VerticalAlignment="Center" />
@@ -82,21 +83,21 @@
                 <StackPanel Grid.Column="4" Orientation="Horizontal">
                     <Button x:Name="ThemeButton" Style="{StaticResource WindowButton}"
                             Click="OnThemeClick" FontFamily="{StaticResource IconFont}" FontSize="13"
-                            ToolTip="Basculer entre le thème sombre et le thème clair">
+                            ToolTip="{loc:Text Shell_ThemeTip}">
                         <TextBlock Text="&#xE706;" />
                     </Button>
                     <Button Style="{StaticResource WindowButton}" Click="OnMinimize"
                             FontFamily="{StaticResource IconFont}" FontSize="11"
-                            ToolTip="Réduire">
+                            ToolTip="{loc:Text Shell_MinimizeTip}">
                         <TextBlock Text="&#xE921;" />
                     </Button>
                     <Button x:Name="MaxButton" Style="{StaticResource WindowButton}" Click="OnMaximize"
                             FontFamily="{StaticResource IconFont}" FontSize="11"
-                            ToolTip="Agrandir ou restaurer">
+                            ToolTip="{loc:Text Shell_MaximizeTip}">
                         <TextBlock x:Name="MaxGlyph" Text="&#xE922;" />
                     </Button>
                     <Button Style="{StaticResource WindowCloseButton}" Click="OnClose"
-                            FontFamily="{StaticResource IconFont}" FontSize="11" ToolTip="Fermer">
+                            FontFamily="{StaticResource IconFont}" FontSize="11" ToolTip="{loc:Text Shell_CloseTip}">
                         <TextBlock Text="&#xE8BB;" />
                     </Button>
                 </StackPanel>
@@ -114,19 +115,19 @@
                     BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,1,0">
                 <DockPanel LastChildFill="True">
                     <StackPanel DockPanel.Dock="Top" Margin="0,14,0,6">
-                        <TextBlock Text="ANALYSER · OPTIMISER"
+                        <TextBlock Text="{loc:Text Shell_Tagline}"
                                    Style="{StaticResource Label}" Margin="18,0,0,8"
                                    Visibility="{Binding LabelsVisible, Source={x:Static services:ShellState.Instance}}" />
                     </StackPanel>
 
                     <StackPanel DockPanel.Dock="Bottom" Margin="10,0,10,12">
                         <Border Style="{StaticResource CardFlat}" Padding="10,9" CornerRadius="10"
-                                ToolTip="Niveau de privilège actuel. Sans administrateur, les températures, certaines priorités et la santé SMART sont indisponibles. La page Paramètres propose une relance élevée.">
+                                ToolTip="{loc:Text Shell_ElevationTip}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="&#xE72E;" FontFamily="{StaticResource IconFont}" FontSize="13"
                                            VerticalAlignment="Center"
                                            Foreground="{DynamicResource TextMutedBrush}" />
-                                <TextBlock x:Name="ElevationLabel" Text="Utilisateur" Margin="8,0,0,0"
+                                <TextBlock x:Name="ElevationLabel" Text="{loc:Text Shell_User}" Margin="8,0,0,0"
                                            Style="{StaticResource Caption}"
                                            Visibility="{Binding LabelsVisible, Source={x:Static services:ShellState.Instance}}" />
                             </StackPanel>
@@ -135,41 +136,41 @@
 
                     <StackPanel x:Name="NavPanel" Margin="0,4,0,0">
                         <controls:NavItem x:Name="NavDashboard" Style="{StaticResource NavRadio}" GroupName="nav"
-                                     Icon="&#xE80F;" Content="Accueil" IsChecked="True" Checked="OnNavChecked"
-                                     Tag="dashboard" ToolTip="Tableau de bord : état du PC en temps réel" />
+                                     Icon="&#xE80F;" Content="{loc:Text Shell_NavDashboard}" IsChecked="True" Checked="OnNavChecked"
+                                     Tag="dashboard" ToolTip="{loc:Text Shell_NavDashboard_Tip}" />
                         <controls:NavItem Style="{StaticResource NavRadio}" GroupName="nav"
-                                     Icon="&#xE895;" Content="Analyse" Checked="OnNavChecked"
-                                     Tag="analysis" ToolTip="Diagnostic complet du système et corrections" />
+                                     Icon="&#xE895;" Content="{loc:Text Shell_NavAnalysis}" Checked="OnNavChecked"
+                                     Tag="analysis" ToolTip="{loc:Text Shell_NavAnalysis_Tip}" />
                         <controls:NavItem Style="{StaticResource NavRadio}" GroupName="nav"
-                                     Icon="&#xE9F0;" Content="Mon PC" Checked="OnNavChecked"
-                                     Tag="hardware" ToolTip="Fiche détaillée du matériel détecté" />
+                                     Icon="&#xE9F0;" Content="{loc:Text Shell_NavHardware}" Checked="OnNavChecked"
+                                     Tag="hardware" ToolTip="{loc:Text Shell_NavHardware_Tip}" />
                         <controls:NavItem Style="{StaticResource NavRadio}" GroupName="nav"
-                                     Icon="&#xE7F4;" Content="GPU" Checked="OnNavChecked"
-                                     Tag="gpu" ToolTip="Carte graphique, pilote et technologies compatibles" />
+                                     Icon="&#xE7F4;" Content="{loc:Text Shell_NavGpu}" Checked="OnNavChecked"
+                                     Tag="gpu" ToolTip="{loc:Text Shell_NavGpu_Tip}" />
                         <controls:NavItem Style="{StaticResource NavRadio}" GroupName="nav"
-                                     Icon="&#xE8B7;" Content="Stockage" Checked="OnNavChecked"
-                                     Tag="storage" ToolTip="Disques, espace libre, état et températures" />
+                                     Icon="&#xE8B7;" Content="{loc:Text Shell_NavStorage}" Checked="OnNavChecked"
+                                     Tag="storage" ToolTip="{loc:Text Shell_NavStorage_Tip}" />
                         <controls:NavItem Style="{StaticResource NavRadio}" GroupName="nav"
-                                     Icon="&#xE7FC;" Content="Jeux" Checked="OnNavChecked"
-                                     Tag="games" ToolTip="Jeux détectés (Steam, Epic, Ubisoft, Xbox…)" />
+                                     Icon="&#xE7FC;" Content="{loc:Text Shell_NavGames}" Checked="OnNavChecked"
+                                     Tag="games" ToolTip="{loc:Text Shell_NavGames_Tip}" />
                         <controls:NavItem Style="{StaticResource NavRadio}" GroupName="nav"
-                                     Icon="&#xE77B;" Content="Profils" Checked="OnNavChecked"
-                                     Tag="profiles" ToolTip="Profils graphiques par jeu (Qualité, Équilibré, Performance)" />
+                                     Icon="&#xE77B;" Content="{loc:Text Shell_NavProfiles}" Checked="OnNavChecked"
+                                     Tag="profiles" ToolTip="{loc:Text Shell_NavProfiles_Tip}" />
                         <controls:NavItem Style="{StaticResource NavRadio}" GroupName="nav"
-                                     Icon="&#xE7C5;" Content="Applications" Checked="OnNavChecked"
-                                     Tag="processes" ToolTip="Processus en cours, ressources utilisées, fermeture ciblée" />
+                                     Icon="&#xE7C5;" Content="{loc:Text Shell_NavProcesses}" Checked="OnNavChecked"
+                                     Tag="processes" ToolTip="{loc:Text Shell_NavProcesses_Tip}" />
                         <controls:NavItem Style="{StaticResource NavRadio}" GroupName="nav"
-                                     Icon="&#xE9D9;" Content="Monitoring" Checked="OnNavChecked"
-                                     Tag="monitoring" ToolTip="FPS, frametime et overlay pendant le jeu" />
+                                     Icon="&#xE9D9;" Content="{loc:Text Shell_NavMonitoring}" Checked="OnNavChecked"
+                                     Tag="monitoring" ToolTip="{loc:Text Shell_NavMonitoring_Tip}" />
                         <controls:NavItem Style="{StaticResource NavRadio}" GroupName="nav"
-                                     Icon="&#xE81C;" Content="Historique" Checked="OnNavChecked"
-                                     Tag="history" ToolTip="Sessions enregistrées et comparaison A/B" />
+                                     Icon="&#xE81C;" Content="{loc:Text Shell_NavHistory}" Checked="OnNavChecked"
+                                     Tag="history" ToolTip="{loc:Text Shell_NavHistory_Tip}" />
                         <controls:NavItem Style="{StaticResource NavRadio}" GroupName="nav"
-                                     Icon="&#xE8A4;" Content="Rapports" Checked="OnNavChecked"
-                                     Tag="reports" ToolTip="Export HTML des analyses et mesures" />
+                                     Icon="&#xE8A4;" Content="{loc:Text Shell_NavReports}" Checked="OnNavChecked"
+                                     Tag="reports" ToolTip="{loc:Text Shell_NavReports_Tip}" />
                         <controls:NavItem Style="{StaticResource NavRadio}" GroupName="nav"
-                                     Icon="&#xE713;" Content="Paramètres" Checked="OnNavChecked"
-                                     Tag="settings" ToolTip="Réglages de GameBoost" />
+                                     Icon="&#xE713;" Content="{loc:Text Shell_NavSettings}" Checked="OnNavChecked"
+                                     Tag="settings" ToolTip="{loc:Text Shell_NavSettings_Tip}" />
                     </StackPanel>
                 </DockPanel>
             </Border>
@@ -195,10 +196,10 @@
                            Text="{Binding StatusMessage, Source={x:Static services:ShellState.Instance}}" />
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                     <TextBlock FontSize="11.5" Foreground="{DynamicResource TextFaintBrush}"
-                               Text="Données locales · aucun compte requis" />
+                               Text="{loc:Text Shell_LocalNote}" />
                     <Ellipse Width="6" Height="6" Fill="{DynamicResource AccentBrush}" Margin="9,0,0,0"
                              VerticalAlignment="Center"
-                             ToolTip="Le monitoring est actif" />
+                             ToolTip="{loc:Text Shell_MonitoringTip}" />
                 </StackPanel>
             </Grid>
         </Border>

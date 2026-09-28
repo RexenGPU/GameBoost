@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using GameBoost.Core.Localization;
 using GameBoost.Core.Models;
 
 namespace GameBoost.App.Pages.Profiles;
@@ -33,15 +34,15 @@ public sealed class ProfileCard : INotifyPropertyChanged
 
     public string PresetLabel => Profile.Preset switch
     {
-        ProfilePreset.MaximumQuality => "Qualité maximale",
-        ProfilePreset.Balanced => "Équilibré",
-        ProfilePreset.Performance => "Performance",
-        _ => "Personnalisé"
+        ProfilePreset.MaximumQuality => Loc.T("Prof_PresetQuality"),
+        ProfilePreset.Balanced => Loc.T("Prof_PresetBalanced"),
+        ProfilePreset.Performance => Loc.T("Prof_PresetPerformance"),
+        _ => Loc.T("Prof_PresetCustom")
     };
 
-    public string ActiveLabel => _isActive ? "Profil actif" : "Inactif";
+    public string ActiveLabel => _isActive ? Loc.T("Prof_LabelActive") : Loc.T("Prof_LabelInactive");
 
-    public string UpdatedLabel => "Modifié le " + Profile.UpdatedAt.ToString("dd/MM/yyyy HH:mm");
+    public string UpdatedLabel => Loc.T("Prof_UpdatedLabel", Profile.UpdatedAt.ToString("dd/MM/yyyy HH:mm"));
 
     public static List<string> BuildBullets(ProfileSettings settings)
     {
@@ -49,25 +50,25 @@ public sealed class ProfileCard : INotifyPropertyChanged
         if (settings is null) return bullets;
 
         bullets.Add(settings.ResolutionWidth is int w && settings.ResolutionHeight is int h
-            ? "Résolution : " + w + "×" + h
-            : "Résolution : conservée dans le jeu");
+            ? Loc.T("Prof_BulletResolution", w, h)
+            : Loc.T("Prof_BulletResKeep"));
 
-        AddQuality(bullets, "Textures", settings.TextureQuality);
-        AddQuality(bullets, "Ombres", settings.ShadowQuality);
-        AddQuality(bullets, "Éclairage", settings.LightingQuality);
+        AddQuality(bullets, Loc.T("Prof_LblTextures"), settings.TextureQuality);
+        AddQuality(bullets, Loc.T("Prof_LblShadows"), settings.ShadowQuality);
+        AddQuality(bullets, Loc.T("Prof_LblLighting"), settings.LightingQuality);
 
         AddFlag(bullets, "Ray tracing", settings.RayTracing);
         AddFlag(bullets, "DLSS", settings.Dlss);
         AddFlag(bullets, "FSR", settings.Fsr);
         AddFlag(bullets, "XeSS", settings.Xess);
         AddFlag(bullets, "V-Sync", settings.VSync);
-        AddFlag(bullets, "Plein écran", settings.Fullscreen);
+        AddFlag(bullets, Loc.T("Prof_LblFullscreen"), settings.Fullscreen);
 
-        if (settings.FpsLimit is int fps) bullets.Add("Limite FPS : " + fps);
+        if (settings.FpsLimit is int fps) bullets.Add(Loc.T("Prof_BulletFps", fps));
         if (!string.IsNullOrWhiteSpace(settings.ExtraNotes))
-            bullets.Add("Notes : " + settings.ExtraNotes);
+            bullets.Add(Loc.T("Prof_BulletNotes", settings.ExtraNotes));
 
-        if (bullets.Count == 0) bullets.Add("Aucun réglage défini");
+        if (bullets.Count == 0) bullets.Add(Loc.T("Prof_NoSettings"));
         return bullets;
     }
 
@@ -80,7 +81,7 @@ public sealed class ProfileCard : INotifyPropertyChanged
     private static void AddFlag(List<string> bullets, string label, bool? value)
     {
         if (value is null) return;
-        bullets.Add(label + " : " + (value.Value ? "activé" : "désactivé"));
+        bullets.Add(label + " : " + Loc.T(value.Value ? "Prof_FlagOn" : "Prof_FlagOff"));
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

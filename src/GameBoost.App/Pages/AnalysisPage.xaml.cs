@@ -8,6 +8,7 @@ using GameBoost.App.Services;
 using GameBoost.Core.Analysis;
 using GameBoost.Core.Data;
 using GameBoost.Core.History;
+using GameBoost.Core.Localization;
 using GameBoost.Core.Logging;
 using GameBoost.Core.Models;
 using GameBoost.Core.Reports;
@@ -48,7 +49,7 @@ public partial class AnalysisPage : UserControl
         {
             _report = latest.Report;
             RenderReport();
-            ShellState.Status("Dernière analyse du " + latest.DateLabel + " affichée sans relancer de vérification.");
+            ShellState.Status(Loc.T("Anal_StatusLatestShown", latest.DateLabel));
         }
     }
 
@@ -59,8 +60,8 @@ public partial class AnalysisPage : UserControl
         AnalyzeButton.IsEnabled = false;
         ProgressFill.Value = 0;
         PercentText.Text = "0 %";
-        StageText.Text = "Analyse en cours…";
-        DetailText.Text = "Préparation des vérifications…";
+        StageText.Text = Loc.T("Anal_Running");
+        DetailText.Text = Loc.T("Anal_Preparing");
         ProgressPanel.Visibility = Visibility.Visible;
         ElevationPanel.Visibility = Visibility.Collapsed;
 
@@ -73,13 +74,12 @@ public partial class AnalysisPage : UserControl
             SaveReport(report);
             RenderReport();
             LoadRecent();
-            ShellState.Status("Analyse terminée : " + report.GoodCount + " optimal, " +
-                              report.WarningCount + " à surveiller, " + report.CriticalCount + " problèmes.");
+            ShellState.Status(Loc.T("Anal_StatusDone", report.GoodCount, report.WarningCount, report.CriticalCount));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Analyse de la configuration", ex);
-            ShellState.Status("L'analyse a échoué : " + ex.Message);
+            ShellState.Status(Loc.T("Anal_StatusFail", ex.Message));
         }
         finally
         {
@@ -124,7 +124,7 @@ public partial class AnalysisPage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Enregistrement du rapport d'analyse", ex);
-            ShellState.Status("Le rapport n'a pas pu être enregistré : " + ex.Message);
+            ShellState.Status(Loc.T("Anal_StatusSaveFail", ex.Message));
         }
     }
 
@@ -144,7 +144,7 @@ public partial class AnalysisPage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Lecture des dernières analyses", ex);
-            ShellState.Status("Historique des analyses indisponible : " + ex.Message);
+            ShellState.Status(Loc.T("Anal_StatusHistoryFail", ex.Message));
         }
     }
 
@@ -152,12 +152,12 @@ public partial class AnalysisPage : UserControl
     {
         if (_report is null) return;
 
-        GoodCountText.Text = "🟢 " + _report.GoodCount + " optimal";
-        WarningCountText.Text = "🟡 " + _report.WarningCount + " à surveiller";
-        CriticalCountText.Text = "🔴 " + _report.CriticalCount + " problèmes";
-        ReportDateText.Text = "Analyse du " + _report.CreatedAt.ToString("dddd d MMMM yyyy 'à' HH:mm", French);
+        GoodCountText.Text = Loc.T("Anal_GoodCount", _report.GoodCount);
+        WarningCountText.Text = Loc.T("Anal_WatchCount", _report.WarningCount);
+        CriticalCountText.Text = Loc.T("Anal_ProblemCount", _report.CriticalCount);
+        ReportDateText.Text = Loc.T("Anal_ReportDate", _report.CreatedAt.ToString("dddd d MMMM yyyy 'à' HH:mm", French));
         SummaryText.Text = string.IsNullOrWhiteSpace(_report.OverallSummary)
-            ? "Récapitulatif non disponible pour ce rapport."
+            ? Loc.T("Anal_SummaryMissing")
             : _report.OverallSummary;
         SummaryPanel.Visibility = Visibility.Visible;
         ExportReportButton.IsEnabled = true;
@@ -180,7 +180,7 @@ public partial class AnalysisPage : UserControl
             .ToList();
 
         ChecksList.ItemsSource = ordered;
-        FilterCountText.Text = ordered.Count + " vérification(s)";
+        FilterCountText.Text = Loc.T("Anal_CheckCount", ordered.Count);
         NoMatchText.Visibility = _report is not null && ordered.Count == 0
             ? Visibility.Visible
             : Visibility.Collapsed;
@@ -216,14 +216,14 @@ public partial class AnalysisPage : UserControl
             var target = actionId["navigate:".Length..].Trim();
             if (!NavigationKeys.Contains(target, StringComparer.OrdinalIgnoreCase))
             {
-                ShellState.Status("Page « " + target + " » indisponible : ouvrez-la depuis le menu de gauche.");
+                ShellState.Status(Loc.T("Anal_StatusPageMissing", target));
                 return;
             }
             NavigationService.Navigate(target);
             var hint = string.IsNullOrWhiteSpace(item.Result.FixDescription)
-                ? "Suivez la procédure indiquée sur cette page."
+                ? Loc.T("Anal_FollowSteps")
                 : item.Result.FixDescription;
-            ShellState.Status("Ouverture de la page « " + target + " » — " + hint);
+            ShellState.Status(Loc.T("Anal_StatusNavigate", target, hint));
             return;
         }
 
@@ -236,7 +236,7 @@ public partial class AnalysisPage : UserControl
             if (elevate || outcome.RequiresElevation)
             {
                 ElevationText.Text = outcome.RequiresElevation
-                    ? outcome.Message + " Relancez GameBoost en administrateur pour appliquer cette correction."
+                    ? outcome.Message + " " + Loc.T("Anal_ElevateHint")
                     : outcome.Message;
                 ElevationPanel.Visibility = Visibility.Visible;
             }
@@ -247,7 +247,7 @@ public partial class AnalysisPage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Correction " + actionId, ex);
-            ShellState.Status("La correction a échoué : " + ex.Message);
+            ShellState.Status(Loc.T("Anal_StatusFixFail", ex.Message));
         }
     }
 
@@ -257,14 +257,14 @@ public partial class AnalysisPage : UserControl
         {
             var path = Environment.ProcessPath;
             if (string.IsNullOrWhiteSpace(path))
-                throw new InvalidOperationException("Chemin de GameBoost introuvable.");
+                throw new InvalidOperationException(Loc.T("Anal_ExeMissing"));
             Process.Start(new ProcessStartInfo(path) { UseShellExecute = true, Verb = "runas" });
-            ShellState.Status("Relance en administrateur demandée.");
+            ShellState.Status(Loc.T("Anal_StatusElevateAsked"));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Relance en administrateur", ex);
-            ShellState.Status("Relance impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Anal_StatusRelaunchFail", ex.Message));
         }
     }
 
@@ -272,7 +272,7 @@ public partial class AnalysisPage : UserControl
     {
         if (_report is null)
         {
-            ShellState.Status("Aucun rapport d'analyse à exporter : lancez d'abord une analyse.");
+            ShellState.Status(Loc.T("Anal_StatusNothingToExport"));
             return;
         }
         try
@@ -281,25 +281,25 @@ public partial class AnalysisPage : UserControl
             var result = ReportGenerator.Instance.ExportHtml(_report, _report.Hardware, sessions);
             if (!result.Success)
             {
-                ShellState.Status("Export impossible : " + result.Error);
+                ShellState.Status(Loc.T("Anal_StatusExportFail", result.Error));
                 return;
             }
             _exportPath = result.FilePath;
             ExportPathText.Text = result.FilePath;
             ExportPanel.Visibility = Visibility.Visible;
-            ShellState.Status("Rapport HTML généré : " + result.FilePath);
+            ShellState.Status(Loc.T("Anal_StatusExportDone", result.FilePath));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Export du rapport d'analyse", ex);
-            ShellState.Status("Export impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Anal_StatusExportFail", ex.Message));
         }
     }
 
-    private void OnOpenReportClick(object sender, RoutedEventArgs e) => OpenPath(_exportPath, "rapport");
+    private void OnOpenReportClick(object sender, RoutedEventArgs e) => OpenPath(_exportPath, Loc.T("Anal_LblReport"));
 
     private void OnOpenFolderClick(object sender, RoutedEventArgs e) =>
-        OpenPath(ReportGenerator.Instance.GetExportDirectory(), "dossier des rapports");
+        OpenPath(ReportGenerator.Instance.GetExportDirectory(), Loc.T("Anal_LblReportsFolder"));
 
     private static void OpenPath(string path, string label)
     {
@@ -307,7 +307,7 @@ public partial class AnalysisPage : UserControl
         {
             if (string.IsNullOrWhiteSpace(path))
             {
-                ShellState.Status("Aucun " + label + " à ouvrir.");
+                ShellState.Status(Loc.T("Anal_StatusNothingToOpen", label));
                 return;
             }
             Process.Start(new ProcessStartInfo(path) { UseShellExecute = true });
@@ -315,7 +315,7 @@ public partial class AnalysisPage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Ouverture du " + label, ex);
-            ShellState.Status("Ouverture impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Anal_StatusOpenFail", ex.Message));
         }
     }
 
@@ -326,12 +326,12 @@ public partial class AnalysisPage : UserControl
         {
             _report = item.Report;
             RenderReport();
-            ShellState.Status("Analyse du " + item.DateLabel + " rechargée sans nouvelle vérification.");
+            ShellState.Status(Loc.T("Anal_StatusRecentLoaded", item.DateLabel));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Chargement d'un rapport enregistré", ex);
-            ShellState.Status("Chargement impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Anal_StatusLoadFail", ex.Message));
         }
     }
 }

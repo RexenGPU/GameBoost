@@ -9,6 +9,7 @@ using GameBoost.App.Services;
 using GameBoost.Core.Data;
 using GameBoost.Core.Games;
 using GameBoost.Core.History;
+using GameBoost.Core.Localization;
 using GameBoost.Core.Logging;
 using GameBoost.Core.Models;
 using GameBoost.Core.Optimization;
@@ -72,7 +73,7 @@ public partial class BoostDialog : Window
         catch (Exception ex)
         {
             Log.Error("UI", "Paramètres indisponibles", ex);
-            ShellState.Status("Paramètres indisponibles : " + ex.Message);
+            ShellState.Status(Loc.T("Bdlg_StatusSettingsFail", ex.Message));
         }
 
         try
@@ -85,7 +86,7 @@ public partial class BoostDialog : Window
         catch (Exception ex)
         {
             Log.Error("UI", "Bibliothèque de jeux indisponible", ex);
-            ShellState.Status("Bibliothèque de jeux indisponible : " + ex.Message);
+            ShellState.Status(Loc.T("Bdlg_StatusLibraryFail", ex.Message));
             FillGameCombo();
         }
 
@@ -97,8 +98,8 @@ public partial class BoostDialog : Window
         catch (Exception ex)
         {
             Log.Error("UI", "Liste des processus indisponible", ex);
-            ShellState.Status("Liste des processus indisponible : " + ex.Message);
-            ProcessCountText.Text = "Liste des processus non disponible.";
+            ShellState.Status(Loc.T("Bdlg_StatusProcessListFail", ex.Message));
+            ProcessCountText.Text = Loc.T("Bdlg_ProcessListFail");
         }
 
         UpdateApplyState();
@@ -106,7 +107,7 @@ public partial class BoostDialog : Window
 
     private void FillGameCombo()
     {
-        var options = new List<GameOption> { new("Aucun jeu spécifique", null) };
+        var options = new List<GameOption> { new(Loc.T("Bdlg_NoSpecificGame"), null) };
         foreach (var game in _games) options.Add(new(game.Name, game));
         GameCombo.ItemsSource = options;
         GameCombo.SelectedIndex = 0;
@@ -123,13 +124,13 @@ public partial class BoostDialog : Window
             var game = _selectedGame;
             var profile = await Task.Run(() => ProfileService.Instance.GetActiveProfile(game.Id));
             ProfileHint.Text = profile is null
-                ? "Aucun profil actif pour ce jeu : l'étape « Profil » sera ignorée."
-                : "Profil actif : " + profile.Name + " (" + PresetLabel(profile.Preset) + ").";
+                ? Loc.T("Bdlg_ProfileNone")
+                : Loc.T("Bdlg_ProfileActive", profile.Name, PresetLabel(profile.Preset));
         }
         catch (Exception ex)
         {
             Log.Warn("UI", "Profil actif illisible : " + ex.Message);
-            ProfileHint.Text = "Profil actif non disponible.";
+            ProfileHint.Text = Loc.T("Bdlg_ProfileUnavailable");
         }
     }
 
@@ -172,7 +173,7 @@ public partial class BoostDialog : Window
             catch (Exception ex)
             {
                 Log.Warn("UI", "Règle de fermeture illisible : " + ex.Message);
-                reason = "Règle de fermeture illisible";
+                reason = Loc.T("Bdlg_CloseRuleFail");
             }
 
             var box = new CheckBox
@@ -183,8 +184,8 @@ public partial class BoostDialog : Window
                 Margin = new Thickness(0, 0, 0, 8),
                 Content = BuildProcessLabel(process),
                 ToolTip = canClose
-                    ? "Coché : cette application sera fermée pendant la session et relancée à la fin si le réglage est actif"
-                    : "Fermeture impossible : " + reason
+                    ? Loc.T("Bdlg_ProcessCloseTip")
+                    : Loc.T("Bdlg_ProcessNoCloseTip", reason)
             };
             ProcessListHost.Children.Add(box);
             _processRows.Add((box, process));
@@ -194,8 +195,8 @@ public partial class BoostDialog : Window
         TgClose.IsChecked = anyChecked;
         var closable = _processRows.Count(r => r.Box.IsEnabled);
         ProcessCountText.Text = _processRows.Count == 0
-            ? "Aucune application détectée en cours d'exécution."
-            : _processRows.Count + " application(s) en cours, " + closable + " fermable(s).";
+            ? Loc.T("Bdlg_ProcessNone")
+            : Loc.T("Bdlg_ProcessCount", _processRows.Count, closable);
     }
 
     private static bool IsAutoClose(string name)
@@ -213,7 +214,7 @@ public partial class BoostDialog : Window
 
     private static string BuildProcessLabel(ProcessSnapshot process)
     {
-        return (string.IsNullOrWhiteSpace(process.Name) ? "Processus sans nom" : process.Name) +
+        return (string.IsNullOrWhiteSpace(process.Name) ? Loc.T("Dash_UnnamedProcess") : process.Name) +
                "  ·  PID " + process.ProcessId +
                "  ·  " + process.CpuPercent.ToString("F1", CultureInfo.CurrentCulture) + " %  ·  " +
                BytesToSizeConverter.Format(process.MemoryBytes);
@@ -255,7 +256,7 @@ public partial class BoostDialog : Window
         catch (Exception ex)
         {
             Log.Error("UI", "Construction du plan impossible", ex);
-            ShellState.Status("Impossible de préparer le résumé : " + ex.Message);
+            ShellState.Status(Loc.T("Bdlg_StatusPlanFail", ex.Message));
         }
         finally
         {
@@ -304,7 +305,7 @@ public partial class BoostDialog : Window
                 badge.Child = new TextBlock
                 {
                     Style = TryStyle("Caption"),
-                    Text = reversible ? "restauré automatiquement" : "non réversible",
+                    Text = reversible ? Loc.T("Bdlg_BadgeReversible") : Loc.T("Bdlg_BadgeIrreversible"),
                     Foreground = TryBrush(reversible ? "GoodBrush" : "DangerBrush")
                 };
                 Grid.SetColumn(badge, 1);
@@ -318,7 +319,7 @@ public partial class BoostDialog : Window
                 var detail = new TextBlock
                 {
                     Style = TryStyle("BodyMuted"),
-                    Text = step.Enabled ? step.Detail : "Étape ignorée — " + step.Detail,
+                    Text = step.Enabled ? step.Detail : Loc.T("Bdlg_StepSkipped", step.Detail),
                     Margin = new Thickness(0, 7, 0, 0)
                 };
                 if (!step.Enabled) detail.Foreground = TryBrush("WarnBrush");
@@ -355,10 +356,10 @@ public partial class BoostDialog : Window
             var hasSteps = _plan is not null && _plan.Steps.Any(step => step.Enabled);
             ApplyButton.IsEnabled = understood && hasSteps;
             ApplyButton.ToolTip = !hasSteps
-                ? "Aucune étape du boost ne peut être appliquée avec cette configuration."
+                ? Loc.T("Bdlg_ApplyNoStepsTip")
                 : !understood
-                    ? "Cochez « J'ai compris » pour appliquer les optimisations."
-                    : "Appliquer les optimisations listées dans le résumé.";
+                    ? Loc.T("Bdlg_ApplyConfirmTip")
+                    : Loc.T("Bdlg_ApplyReadyTip");
         }
         catch (Exception ex)
         {
@@ -401,7 +402,7 @@ public partial class BoostDialog : Window
         RunProgress.Minimum = 0;
         RunProgress.Maximum = Math.Max(1, (_plan?.Steps.Count ?? 0) + 1);
         RunProgress.Value = 0;
-        RunLabel.Text = "Préparation…";
+        RunLabel.Text = Loc.T("Bdlg_Preparing");
         ResultsTitle.Visibility = Visibility.Collapsed;
         BackupsTitle.Visibility = Visibility.Collapsed;
         AppliedTitle.Visibility = Visibility.Collapsed;
@@ -430,18 +431,18 @@ public partial class BoostDialog : Window
             _sessionActive = session.IsActive;
             RenderResults(session);
             RunLabel.Text = session.IsActive
-                ? "Session active : les optimisations restent en place jusqu'à la fin de session."
-                : "Exécution terminée.";
+                ? Loc.T("Bdlg_RunSessionActive")
+                : Loc.T("Bdlg_RunDone");
             StartHistory(plan);
             ShellState.Status(session.IsActive
-                ? "Boost appliqué : " + session.AppliedOptimizations.Count + " optimisation(s) en place."
-                : "Boost terminé sans session active.");
+                ? Loc.T("Bdlg_StatusBoostApplied", session.AppliedOptimizations.Count)
+                : Loc.T("Bdlg_StatusBoostDone"));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Exécution du boost impossible", ex);
-            ShellState.Status("Le boost a échoué : " + ex.Message);
-            RunLabel.Text = "Échec : " + ex.Message;
+            ShellState.Status(Loc.T("Bdlg_StatusBoostFail", ex.Message));
+            RunLabel.Text = Loc.T("Bdlg_RunFail", ex.Message);
             try
             {
                 _sessionActive = BoostService.Instance.ActiveSession is not null;
@@ -477,7 +478,7 @@ public partial class BoostDialog : Window
             BackupsHost.Children.Add(new TextBlock
             {
                 Style = TryStyle("BodyMuted"),
-                Text = "Aucune sauvegarde n'a été nécessaire."
+                Text = Loc.T("Bdlg_NoBackups")
             });
         }
         else
@@ -500,7 +501,7 @@ public partial class BoostDialog : Window
             AppliedHost.Children.Add(new TextBlock
             {
                 Style = TryStyle("BodyMuted"),
-                Text = "Aucune optimisation n'a pu être appliquée."
+                Text = Loc.T("Bdlg_NothingApplied")
             });
         }
         else
@@ -567,17 +568,17 @@ public partial class BoostDialog : Window
             RenderRestore(session);
             StopHistory();
             RunLabel.Text = session.IsActive
-                ? "La session est toujours active : vérifiez les messages ci-dessous."
-                : "Session terminée : les réglages d'origine sont restaurés.";
+                ? Loc.T("Bdlg_EndStillActive")
+                : Loc.T("Bdlg_EndRestored");
             ShellState.Status(session.IsActive
-                ? "La session n'a pas pu être terminée."
-                : "Session Boost terminée : réglages restaurés.");
+                ? Loc.T("Bdlg_StatusEndFail")
+                : Loc.T("Bdlg_StatusEnded"));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Fin de session impossible", ex);
-            ShellState.Status("Fin de session impossible : " + ex.Message);
-            RunLabel.Text = "Échec : " + ex.Message;
+            ShellState.Status(Loc.T("Bdlg_StatusEndSessionFail", ex.Message));
+            RunLabel.Text = Loc.T("Bdlg_RunFail", ex.Message);
         }
         finally
         {
@@ -598,7 +599,7 @@ public partial class BoostDialog : Window
             RestoreHost.Children.Add(new TextBlock
             {
                 Style = TryStyle("BodyMuted"),
-                Text = "Aucune restauration à effectuer : rien n'avait été modifié."
+                Text = Loc.T("Bdlg_NothingToRestore")
             });
             return;
         }
@@ -627,7 +628,7 @@ public partial class BoostDialog : Window
         _historyStarted = false;
         try
         {
-            HistoryService.Instance.StopSession("Session Boost");
+            HistoryService.Instance.StopSession(Loc.T("Bdlg_SessionName"));
         }
         catch (Exception ex)
         {
@@ -653,7 +654,7 @@ public partial class BoostDialog : Window
         if (_running)
         {
             e.Cancel = true;
-            ShellState.Status("Veuillez attendre la fin de l'opération en cours.");
+            ShellState.Status(Loc.T("Bdlg_StatusWait"));
             return;
         }
 
@@ -664,7 +665,7 @@ public partial class BoostDialog : Window
         }
 
         var answer = MessageBox.Show(
-            "Une session Boost est active sur votre PC. Terminer la session et remettre les réglages d'origine ?",
+            Loc.T("Bdlg_CloseConfirm"),
             "GameBoost", MessageBoxButton.YesNo, MessageBoxImage.Question);
         if (answer != MessageBoxResult.Yes)
         {
@@ -678,7 +679,7 @@ public partial class BoostDialog : Window
             if (!task.Wait(TimeSpan.FromSeconds(12)))
             {
                 e.Cancel = true;
-                ShellState.Status("La restauration prend trop de temps : fermeture annulée.");
+                ShellState.Status(Loc.T("Bdlg_StatusRestoreSlow"));
                 return;
             }
 
@@ -686,18 +687,18 @@ public partial class BoostDialog : Window
             if (session.IsActive)
             {
                 e.Cancel = true;
-                ShellState.Status("La session n'a pas pu être terminée : fermeture annulée.");
+                ShellState.Status(Loc.T("Bdlg_StatusEndCancel"));
                 return;
             }
 
             _sessionActive = false;
             StopHistory();
-            ShellState.Status("Session Boost terminée : réglages restaurés.");
+            ShellState.Status(Loc.T("Bdlg_StatusEnded"));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Restauration à la fermeture impossible", ex);
-            ShellState.Status("Restauration impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Bdlg_StatusRestoreFail", ex.Message));
             e.Cancel = true;
         }
     }
@@ -730,10 +731,10 @@ public partial class BoostDialog : Window
 
     private static string PresetLabel(ProfilePreset preset) => preset switch
     {
-        ProfilePreset.MaximumQuality => "Qualité maximale",
-        ProfilePreset.Balanced => "Équilibré",
-        ProfilePreset.Performance => "Performance",
-        _ => "Personnalisé"
+        ProfilePreset.MaximumQuality => Loc.T("Bdlg_PresetMaxQuality"),
+        ProfilePreset.Balanced => Loc.T("Bdlg_PresetBalanced"),
+        ProfilePreset.Performance => Loc.T("Bdlg_PresetPerformance"),
+        _ => Loc.T("Bdlg_PresetCustom")
     };
 
     private static Style? TryStyle(string key) => Application.Current?.TryFindResource(key) as Style;

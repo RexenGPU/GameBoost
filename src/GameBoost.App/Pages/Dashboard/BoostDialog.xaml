@@ -1,7 +1,8 @@
 <Window x:Class="GameBoost.App.Pages.Dashboard.BoostDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="GameBoost — Assistant de boost"
+        xmlns:loc="clr-namespace:GameBoost.App.Localization"
+        Title="{loc:Text Bdlg_Title}"
         Width="800" Height="780" MinWidth="620" MinHeight="540"
         WindowStartupLocation="CenterOwner"
         WindowStyle="None" AllowsTransparency="False"
@@ -32,15 +33,15 @@
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <TextBlock Text="&#xE74E;" FontFamily="{StaticResource IconFont}" FontSize="14"
                                Foreground="{DynamicResource AccentBrush}" VerticalAlignment="Center" />
-                    <TextBlock Text="Assistant de boost" FontSize="14" FontWeight="SemiBold"
+                    <TextBlock Text="{loc:Text Bdlg_Header}" FontSize="14" FontWeight="SemiBold"
                                Foreground="{DynamicResource TextBrush}" Margin="10,0,0,0"
                                VerticalAlignment="Center" />
-                    <TextBlock Text="Aucune modification sans résumé préalable" FontSize="12"
+                    <TextBlock Text="{loc:Text Bdlg_HeaderHint}" FontSize="12"
                                Foreground="{DynamicResource TextMutedBrush}" Margin="12,0,0,0"
                                VerticalAlignment="Center" />
                 </StackPanel>
                 <Button Grid.Column="1" Style="{StaticResource WindowCloseButton}" Click="OnCloseClick"
-                        FontFamily="{StaticResource IconFont}" FontSize="11" ToolTip="Fermer l'assistant">
+                        FontFamily="{StaticResource IconFont}" FontSize="11" ToolTip="{loc:Text Bdlg_CloseTip}">
                     <TextBlock Text="&#xE8BB;" />
                 </Button>
             </Grid>
@@ -49,7 +50,7 @@
         <ScrollViewer x:Name="StepAPanel" Grid.Row="1" VerticalScrollBarVisibility="Auto"
                       HorizontalScrollBarVisibility="Disabled" Focusable="False">
             <StackPanel Margin="28,22,28,12">
-                <TextBlock Text="1. Configuration" Style="{StaticResource H2}" />
+                <TextBlock Text="{loc:Text Bdlg_StepConfig}" Style="{StaticResource H2}" />
 
                 <Border x:Name="ElevationBanner" Background="{DynamicResource InfoBgBrush}"
                         BorderBrush="{DynamicResource InfoBrush}" BorderThickness="1" CornerRadius="10"
@@ -63,25 +64,25 @@
                                    Foreground="{DynamicResource InfoBrush}" VerticalAlignment="Top" />
                         <TextBlock Grid.Column="1" Style="{StaticResource BodyMuted}"
                                    Margin="12,0,0,0" TextWrapping="Wrap"
-                                   Text="Certaines mesures (températures, priorité de processus) nécessitent l'élévation des privilèges. Relancez GameBoost en administrateur depuis la page Paramètres pour les activer." />
+                                   Text="{loc:Text Bdlg_ElevationNote}" />
                     </Grid>
                 </Border>
 
-                <TextBlock Text="JEU CONCERNÉ" Style="{StaticResource Label}" Margin="0,20,0,8" />
+                <TextBlock Text="{loc:Text Bdlg_GameLabel}" Style="{StaticResource Label}" Margin="0,20,0,8" />
                 <ComboBox x:Name="GameCombo" Style="{StaticResource Combo}" DisplayMemberPath="Label"
                           SelectionChanged="OnGameSelectionChanged"
-                          ToolTip="Choisissez le jeu à optimiser, ou laissez « Aucun jeu spécifique » pour un boost général" />
+                          ToolTip="{loc:Text Bdlg_GameComboTip}" />
                 <TextBlock x:Name="ProfileHint" Text="" Style="{StaticResource Caption}" Margin="0,7,0,0" />
 
-                <TextBlock Text="APPLICATIONS À FERMER" Style="{StaticResource Label}" Margin="0,20,0,6" />
-                <TextBlock x:Name="ProcessCountText" Text="Lecture des processus…" Style="{StaticResource Caption}" />
+                <TextBlock Text="{loc:Text Bdlg_CloseAppsLabel}" Style="{StaticResource Label}" Margin="0,20,0,6" />
+                <TextBlock x:Name="ProcessCountText" Text="{loc:Text Bdlg_ReadingProcesses}" Style="{StaticResource Caption}" />
                 <Border Style="{StaticResource CardFlat}" Margin="0,9,0,0" Padding="12">
                     <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="216" Focusable="False">
                         <StackPanel x:Name="ProcessListHost" />
                     </ScrollViewer>
                 </Border>
 
-                <TextBlock Text="OPTIMISATIONS" Style="{StaticResource Label}" Margin="0,22,0,12" />
+                <TextBlock Text="{loc:Text Bdlg_OptimizationsLabel}" Style="{StaticResource Label}" Margin="0,22,0,12" />
 
                 <Grid Margin="0,0,0,15">
                     <Grid.ColumnDefinitions>
@@ -89,11 +90,11 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <ToggleButton x:Name="TgClose" Style="{StaticResource Toggle}" VerticalAlignment="Top"
-                                 
-                                  ToolTip="Ferme uniquement les applications cochées dans la liste ci-dessus" />
+                                  
+                                  ToolTip="{loc:Text Bdlg_CloseToggleTip}" />
                     <StackPanel Grid.Column="1" Margin="14,0,0,0">
-                        <TextBlock Text="Fermer les applications sélectionnées" Style="{StaticResource Body}" />
-                        <TextBlock Text="Libère le processeur et la mémoire pendant la session."
+                        <TextBlock Text="{loc:Text Bdlg_CloseApps}" Style="{StaticResource Body}" />
+                        <TextBlock Text="{loc:Text Bdlg_CloseAppsSub}"
                                    Style="{StaticResource Caption}" Margin="0,3,0,0" />
                     </StackPanel>
                 </Grid>
@@ -104,11 +105,11 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <ToggleButton x:Name="TgGameMode" Style="{StaticResource Toggle}" VerticalAlignment="Top"
-                                 
-                                  ToolTip="Active le Mode Jeu Windows (registre) : l'ancienne valeur est restaurée à la fin de la session" />
+                                  
+                                  ToolTip="{loc:Text Bdlg_GameModeTip}" />
                     <StackPanel Grid.Column="1" Margin="14,0,0,0">
-                        <TextBlock Text="Activer le Mode Jeu Windows" Style="{StaticResource Body}" />
-                        <TextBlock Text="Windows priorise les jeux et coupe les notifications."
+                        <TextBlock Text="{loc:Text Bdlg_GameMode}" Style="{StaticResource Body}" />
+                        <TextBlock Text="{loc:Text Bdlg_GameModeSub}"
                                    Style="{StaticResource Caption}" Margin="0,3,0,0" />
                     </StackPanel>
                 </Grid>
@@ -119,11 +120,11 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <ToggleButton x:Name="TgPower" Style="{StaticResource Toggle}" VerticalAlignment="Top"
-                                 
-                                  ToolTip="Bascule temporairement vers le plan « Hautes performances » : l'ancien plan est restauré à la fin de la session" />
+                                  
+                                  ToolTip="{loc:Text Bdlg_PowerTip}" />
                     <StackPanel Grid.Column="1" Margin="14,0,0,0">
-                        <TextBlock Text="Plan d'alimentation temporaire (Hautes performances)" Style="{StaticResource Body}" />
-                        <TextBlock Text="Empêche la réduction de fréquence pendant la session."
+                        <TextBlock Text="{loc:Text Bdlg_PowerPlan}" Style="{StaticResource Body}" />
+                        <TextBlock Text="{loc:Text Bdlg_PowerSub}"
                                    Style="{StaticResource Caption}" Margin="0,3,0,0" />
                     </StackPanel>
                 </Grid>
@@ -134,11 +135,11 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <ToggleButton x:Name="TgMemory" Style="{StaticResource Toggle}" VerticalAlignment="Top"
-                                 
-                                  ToolTip="Vide la mémoire des applications en arrière-plan : elles la réclameront à nouveau quand vous les utiliserez" />
+                                  
+                                  ToolTip="{loc:Text Bdlg_MemoryTip}" />
                     <StackPanel Grid.Column="1" Margin="14,0,0,0">
-                        <TextBlock Text="Libérer la mémoire vive en arrière-plan" Style="{StaticResource Body}" />
-                        <TextBlock Text="Hors applications protégées et hors jeu."
+                        <TextBlock Text="{loc:Text Bdlg_FreeMemory}" Style="{StaticResource Body}" />
+                        <TextBlock Text="{loc:Text Bdlg_FreeMemorySub}"
                                    Style="{StaticResource Caption}" Margin="0,3,0,0" />
                     </StackPanel>
                 </Grid>
@@ -149,11 +150,11 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <ToggleButton x:Name="TgProfile" Style="{StaticResource Toggle}" VerticalAlignment="Top"
-                                 
-                                  ToolTip="Modifie le fichier de configuration du jeu (une copie de sauvegarde est créée, restaurée à la fin)" />
+                                  
+                                  ToolTip="{loc:Text Bdlg_ProfileTip}" />
                     <StackPanel Grid.Column="1" Margin="14,0,0,0">
-                        <TextBlock Text="Appliquer le profil actif du jeu" Style="{StaticResource Body}" />
-                        <TextBlock Text="Résolution, qualité, V-Sync selon le profil choisi."
+                        <TextBlock Text="{loc:Text Bdlg_ApplyProfile}" Style="{StaticResource Body}" />
+                        <TextBlock Text="{loc:Text Bdlg_ApplyProfileSub}"
                                    Style="{StaticResource Caption}" Margin="0,3,0,0" />
                     </StackPanel>
                 </Grid>
@@ -164,11 +165,11 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <ToggleButton x:Name="TgOverlay" Style="{StaticResource Toggle}" VerticalAlignment="Top"
-                                 
-                                  ToolTip="Affiche les FPS et les températures pendant la session : le réglage est restauré à la fin" />
+                                  
+                                  ToolTip="{loc:Text Bdlg_OverlayTip}" />
                     <StackPanel Grid.Column="1" Margin="14,0,0,0">
-                        <TextBlock Text="Afficher l'overlay FPS" Style="{StaticResource Body}" />
-                        <TextBlock Text="Compteur affiché à l'écran pendant le jeu."
+                        <TextBlock Text="{loc:Text Bdlg_ShowFpsOverlay}" Style="{StaticResource Body}" />
+                        <TextBlock Text="{loc:Text Bdlg_ShowFpsOverlaySub}"
                                    Style="{StaticResource Caption}" Margin="0,3,0,0" />
                     </StackPanel>
                 </Grid>
@@ -179,11 +180,11 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <ToggleButton x:Name="TgTemp" Style="{StaticResource Toggle}" VerticalAlignment="Top"
-                                 
-                                  ToolTip="Action non réversible : les fichiers temporaires supprimés de plus de 48 heures ne peuvent pas être récupérés" />
+                                  
+                                  ToolTip="{loc:Text Bdlg_TempTip}" />
                     <StackPanel Grid.Column="1" Margin="14,0,0,0">
-                        <TextBlock Text="Nettoyer les fichiers temporaires > 48 h" Style="{StaticResource Body}" />
-                        <TextBlock Text="Désactivé par défaut : suppression définitive des fichiers de plus de 48 heures."
+                        <TextBlock Text="{loc:Text Bdlg_CleanTemp}" Style="{StaticResource Body}" />
+                        <TextBlock Text="{loc:Text Bdlg_CleanTempSub}"
                                    Style="{StaticResource Caption}" Margin="0,3,0,0" />
                     </StackPanel>
                 </Grid>
@@ -193,41 +194,41 @@
         <ScrollViewer x:Name="StepBPanel" Grid.Row="1" Visibility="Collapsed"
                       VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Focusable="False">
             <StackPanel Margin="28,22,28,12">
-                <TextBlock Text="2. Résumé" Style="{StaticResource H2}" />
-                <TextBlock Text="GameBoost va effectuer les optimisations suivantes :"
+                <TextBlock Text="{loc:Text Bdlg_StepSummary}" Style="{StaticResource H2}" />
+                <TextBlock Text="{loc:Text Bdlg_SummaryIntro}"
                            Style="{StaticResource H3}" Margin="0,16,0,0" TextWrapping="Wrap" />
-                <TextBlock Text="Rien n'est encore modifié sur votre PC. Vérifiez la liste ci-dessous avant d'appliquer."
+                <TextBlock Text="{loc:Text Bdlg_SummaryNote}"
                            Style="{StaticResource BodyMuted}" Margin="0,8,0,0" />
                 <StackPanel x:Name="SummaryHost" Margin="0,16,0,0" />
-                <CheckBox x:Name="UnderstoodCheck" Content="J'ai compris" Style="{StaticResource Check}"
+                <CheckBox x:Name="UnderstoodCheck" Content="{loc:Text Bdlg_Understood}" Style="{StaticResource Check}"
                           Checked="OnUnderstoodChanged" Unchecked="OnUnderstoodChanged"
-                          ToolTip="Confirmez que vous avez lu le résumé avant l'application des modifications" />
+                          ToolTip="{loc:Text Bdlg_UnderstoodTip}" />
             </StackPanel>
         </ScrollViewer>
 
         <ScrollViewer x:Name="StepCPanel" Grid.Row="1" Visibility="Collapsed"
                       VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Focusable="False">
             <StackPanel Margin="28,22,28,12">
-                <TextBlock Text="3. Exécution" Style="{StaticResource H2}" />
+                <TextBlock Text="{loc:Text Bdlg_StepRun}" Style="{StaticResource H2}" />
                 <ProgressBar x:Name="RunProgress" Style="{StaticResource SlimProgress}" Margin="0,16,0,0" />
-                <TextBlock x:Name="RunLabel" Text="En attente…" Style="{StaticResource BodyMuted}" Margin="0,10,0,0" />
+                <TextBlock x:Name="RunLabel" Text="{loc:Text Bdlg_Waiting}" Style="{StaticResource BodyMuted}" Margin="0,10,0,0" />
 
-                <TextBlock x:Name="ResultsTitle" Text="Résultats" Style="{StaticResource H3}"
+                <TextBlock x:Name="ResultsTitle" Text="{loc:Text Bdlg_Results}" Style="{StaticResource H3}"
                            Margin="0,24,0,0" Visibility="Collapsed" />
                 <StackPanel x:Name="ResultsHost" Margin="0,12,0,0" />
 
-                <TextBlock x:Name="BackupsTitle" Text="Sauvegardes créées" Style="{StaticResource H3}"
+                <TextBlock x:Name="BackupsTitle" Text="{loc:Text Bdlg_Backups}" Style="{StaticResource H3}"
                            Margin="0,22,0,0" Visibility="Collapsed" />
                 <StackPanel x:Name="BackupsHost" Margin="0,10,0,0" />
 
-                <TextBlock x:Name="AppliedTitle" Text="Optimisations appliquées" Style="{StaticResource H3}"
+                <TextBlock x:Name="AppliedTitle" Text="{loc:Text Bdlg_Applied}" Style="{StaticResource H3}"
                            Margin="0,22,0,0" Visibility="Collapsed" />
                 <StackPanel x:Name="AppliedHost" Margin="0,10,0,0" />
 
                 <Border x:Name="RestorePanel" Style="{StaticResource CardFlat}" Margin="0,22,0,0"
                         Visibility="Collapsed">
                     <StackPanel>
-                        <TextBlock Text="Restauration" Style="{StaticResource H3}" />
+                        <TextBlock Text="{loc:Text Bdlg_Restore}" Style="{StaticResource H3}" />
                         <StackPanel x:Name="RestoreHost" Margin="0,12,0,0" />
                     </StackPanel>
                 </Border>
@@ -237,30 +238,30 @@
         <Grid Grid.Row="2">
             <StackPanel x:Name="FooterA" Orientation="Horizontal" HorizontalAlignment="Right"
                         Margin="24,12,24,22">
-                <Button Content="Annuler" Style="{StaticResource SecondaryButton}" Click="OnCloseClick"
-                        ToolTip="Fermer l'assistant sans rien modifier" />
-                <Button x:Name="SummaryButton" Content="Voir le résumé" Style="{StaticResource AccentButton}"
+                <Button Content="{loc:Text Bdlg_Cancel}" Style="{StaticResource SecondaryButton}" Click="OnCloseClick"
+                        ToolTip="{loc:Text Bdlg_CancelTip}" />
+                <Button x:Name="SummaryButton" Content="{loc:Text Bdlg_SeeSummary}" Style="{StaticResource AccentButton}"
                         Click="OnSummaryClick" Margin="12,0,0,0"
-                        ToolTip="Afficher la liste exacte des modifications avant toute application" />
+                        ToolTip="{loc:Text Bdlg_SeeSummaryTip}" />
             </StackPanel>
 
             <StackPanel x:Name="FooterB" Orientation="Horizontal" HorizontalAlignment="Right"
                         Margin="24,12,24,22" Visibility="Collapsed">
-                <Button Content="Retour" Style="{StaticResource SecondaryButton}" Click="OnBackClick"
-                        ToolTip="Revenir à la configuration" />
-                <Button Content="Annuler" Style="{StaticResource GhostButton}" Click="OnCloseClick"
-                        Margin="12,0,0,0" ToolTip="Fermer l'assistant sans rien modifier" />
-                <Button x:Name="ApplyButton" Content="APPLIQUER" Style="{StaticResource AccentButton}"
+                <Button Content="{loc:Text Bdlg_Back}" Style="{StaticResource SecondaryButton}" Click="OnBackClick"
+                        ToolTip="{loc:Text Bdlg_BackTip}" />
+                <Button Content="{loc:Text Bdlg_Cancel}" Style="{StaticResource GhostButton}" Click="OnCloseClick"
+                        Margin="12,0,0,0" ToolTip="{loc:Text Bdlg_CancelTip}" />
+                <Button x:Name="ApplyButton" Content="{loc:Text Bdlg_Apply}" Style="{StaticResource AccentButton}"
                         Click="OnApplyClick" Margin="12,0,0,0"
-                        ToolTip="Appliquer les optimisations listées dans le résumé" />
+                        ToolTip="{loc:Text Bdlg_ApplyTip}" />
             </StackPanel>
 
             <StackPanel x:Name="FooterC" Orientation="Horizontal" HorizontalAlignment="Right"
                         Margin="24,12,24,22" Visibility="Collapsed">
-                <Button x:Name="EndSessionButton" Content="TERMINER LA SESSION ET RESTAURER"
+                <Button x:Name="EndSessionButton" Content="{loc:Text Bdlg_EndSession}"
                         Style="{StaticResource DangerButton}" Click="OnEndSessionClick"
-                        ToolTip="Remettre l'alimentation, le mode jeu, les priorités et l'overlay dans l'état d'origine" />
-                <Button x:Name="CloseButton" Content="Fermer" Style="{StaticResource SecondaryButton}"
+                        ToolTip="{loc:Text Bdlg_EndSessionTip}" />
+                <Button x:Name="CloseButton" Content="{loc:Text Bdlg_Close}" Style="{StaticResource SecondaryButton}"
                         Click="OnCloseClick" Margin="12,0,0,0" Visibility="Collapsed" />
             </StackPanel>
         </Grid>

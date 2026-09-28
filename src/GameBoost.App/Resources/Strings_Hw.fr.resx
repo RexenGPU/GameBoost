@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Hw_Title" xml:space="preserve"><value>Mon PC</value></data>
+  <data name="Hw_Subtitle" xml:space="preserve"><value>Fiche détaillée du matériel détecté</value></data>
+  <data name="Hw_RefreshTip" xml:space="preserve"><value>Relancer la détection complète du matériel. L'opération prend environ 5 secondes.</value></data>
+  <data name="Hw_Refresh" xml:space="preserve"><value>Actualiser</value></data>
+  <data name="Hw_ElevationBanner" xml:space="preserve"><value>Exécuté sans administrateur : certaines valeurs (températures, santé SMART) sont indisponibles.</value></data>
+  <data name="Hw_ElevationBannerNote" xml:space="preserve"><value>La détection du processeur, de la mémoire, des écrans et du système reste complète.</value></data>
+  <data name="Hw_ElevationHelp" xml:space="preserve"><value>Comment lancer en administrateur ?</value></data>
+  <data name="Hw_ElevationHelpTip" xml:space="preserve"><value>Ouvrir les paramètres de GameBoost, qui proposent de relancer l'application avec les droits administrateur</value></data>
+  <data name="Hw_Loading" xml:space="preserve"><value>Détection du matériel en cours…</value></data>
+  <data name="Hw_CpuTitle" xml:space="preserve"><value>Processeur</value></data>
+  <data name="Hw_RamTitle" xml:space="preserve"><value>Mémoire vive</value></data>
+  <data name="Hw_RamModulesTitle" xml:space="preserve"><value>CARTOUCHES INSTALLÉES</value></data>
+  <data name="Hw_MotherboardTitle" xml:space="preserve"><value>Carte mère</value></data>
+  <data name="Hw_SystemTitle" xml:space="preserve"><value>Système</value></data>
+  <data name="Hw_DisplaysTitle" xml:space="preserve"><value>Affichage</value></data>
+  <data name="Hw_DisplaysEmpty" xml:space="preserve"><value>Non détecté</value></data>
+  <data name="Hw_PeripheralsTitle" xml:space="preserve"><value>Périphériques</value></data>
+  <data name="Hw_PeripheralSearchTip" xml:space="preserve"><value>Filtrer les périphériques affichés par nom ou par type</value></data>
+  <data name="Hw_PeripheralsEmpty" xml:space="preserve"><value>Aucun périphérique détecté.</value></data>
+  <data name="Hw_GpuTitle" xml:space="preserve"><value>Carte graphique</value></data>
+  <data name="Hw_OpenGpuPage" xml:space="preserve"><value>Voir la page GPU</value></data>
+  <data name="Hw_OpenGpuPageTip" xml:space="preserve"><value>Ouvrir la page GPU : technologies compatibles, pilote et mesures en direct</value></data>
+  <data name="Hw_Capacity" xml:space="preserve"><value>CAPACITÉ</value></data>
+  <data name="Hw_Frequency" xml:space="preserve"><value>FRÉQUENCE</value></data>
+  <data name="Hw_Manufacturer" xml:space="preserve"><value>FABRICANT</value></data>
+  <data name="Hw_Reference" xml:space="preserve"><value>RÉFÉRENCE</value></data>
+  <data name="Hw_Slot" xml:space="preserve"><value>EMPLACEMENT</value></data>
+  <data name="Hw_StatusElevationFail" xml:space="preserve"><value>Niveau d'élévation indisponible : {0}</value></data>
+  <data name="Hw_StatusDetecting" xml:space="preserve"><value>Nouvelle détection du matériel…</value></data>
+  <data name="Hw_StatusDetected" xml:space="preserve"><value>Matériel détecté le {0}.</value></data>
+  <data name="Hw_StatusDetectFail" xml:space="preserve"><value>Détection du matériel impossible : {0}</value></data>
+  <data name="Hw_StatusRenderFail" xml:space="preserve"><value>Affichage du matériel impossible : {0}</value></data>
+  <data name="Hw_Name" xml:space="preserve"><value>NOM</value></data>
+  <data name="Hw_CoresThreads" xml:space="preserve"><value>CŒURS / THREADS</value></data>
+  <data name="Hw_CoresThreadsValue" xml:space="preserve"><value>{0} cœurs / {1} threads</value></data>
+  <data name="Hw_NotAvailable" xml:space="preserve"><value>Non disponible</value></data>
+  <data name="Hw_CoresThreadsTip" xml:space="preserve"><value>Un cœur est une unité de calcul du processeur ; les threads permettent de traiter deux tâches par cœur.</value></data>
+  <data name="Hw_ClockTitle" xml:space="preserve"><value>HORLOGE BASE / MAX</value></data>
+  <data name="Hw_ClockTip" xml:space="preserve"><value>Fréquence de fonctionnement du processeur, exprimée en mégahertz (MHz).</value></data>
+  <data name="Hw_Architecture" xml:space="preserve"><value>ARCHITECTURE</value></data>
+  <data name="Hw_Socket" xml:space="preserve"><value>SOCKET</value></data>
+  <data name="Hw_Description" xml:space="preserve"><value>DESCRIPTION</value></data>
+  <data name="Hw_Total" xml:space="preserve"><value>TOTAL</value></data>
+  <data name="Hw_Available" xml:space="preserve"><value>DISPONIBLE</value></data>
+  <data name="Hw_FormFactor" xml:space="preserve"><value>FACTEUR DE FORME</value></data>
+  <data name="Hw_Usage" xml:space="preserve"><value>UTILISATION</value></data>
+  <data name="Hw_UsageTip" xml:space="preserve"><value>Part de la mémoire occupée : total moins disponible.</value></data>
+  <data name="Hw_UsageValue" xml:space="preserve"><value>{0} % utilisée</value></data>
+  <data name="Hw_Model" xml:space="preserve"><value>MODÈLE</value></data>
+  <data name="Hw_Version" xml:space="preserve"><value>VERSION</value></data>
+  <data name="Hw_Bios" xml:space="preserve"><value>BIOS</value></data>
+  <data name="Hw_BiosTip" xml:space="preserve"><value>Version et date du BIOS telles que rapportées par le fabricant de la carte mère.</value></data>
+  <data name="Hw_SerialNumber" xml:space="preserve"><value>NUMÉRO DE SÉRIE</value></data>
+  <data name="Hw_SerialTip" xml:space="preserve"><value>Identifiant local de la carte mère, jamais transmis hors de votre PC.</value></data>
+  <data name="Hw_SystemLabel" xml:space="preserve"><value>SYSTÈME</value></data>
+  <data name="Hw_Edition" xml:space="preserve"><value>ÉDITION</value></data>
+  <data name="Hw_Uptime" xml:space="preserve"><value>DEPUIS LE DÉMARRAGE</value></data>
+  <data name="Hw_UptimeTip" xml:space="preserve"><value>Durée pendant laquelle le PC est allumé sans redémarrage.</value></data>
+  <data name="Hw_GameMode" xml:space="preserve"><value>MODE JEU</value></data>
+  <data name="Hw_Enabled" xml:space="preserve"><value>Activé</value></data>
+  <data name="Hw_Disabled" xml:space="preserve"><value>Désactivé</value></data>
+  <data name="Hw_GameModeTip" xml:space="preserve"><value>Réglage Windows qui priorise les jeux en arrière-plan. La valeur affichée est lue dans le registre.</value></data>
+  <data name="Hw_DirectX" xml:space="preserve"><value>DIRECTX</value></data>
+  <data name="Hw_DirectXTip" xml:space="preserve"><value>Interface graphique utilisée par les jeux. DirectX 12 est la version courante sur Windows récent.</value></data>
+  <data name="Hw_ElevationLevel" xml:space="preserve"><value>NIVEAU D'ÉLÉVATION</value></data>
+  <data name="Hw_Admin" xml:space="preserve"><value>Administrateur</value></data>
+  <data name="Hw_StandardUser" xml:space="preserve"><value>Utilisateur standard</value></data>
+  <data name="Hw_ElevatedTip" xml:space="preserve"><value>GameBoost tourne avec les droits administrateur.</value></data>
+  <data name="Hw_NotElevatedTip" xml:space="preserve"><value>Sans administrateur, les températures et la santé SMART ne peuvent pas être lues.</value></data>
+  <data name="Hw_VendorLabel" xml:space="preserve"><value>CONSTRUCTEUR</value></data>
+  <data name="Hw_DedicatedVram" xml:space="preserve"><value>MÉMOIRE DÉDIÉE</value></data>
+  <data name="Hw_Driver" xml:space="preserve"><value>PILOTE</value></data>
+  <data name="Hw_Adapters" xml:space="preserve"><value>ADAPTATEURS</value></data>
+  <data name="Hw_AdaptersDetected" xml:space="preserve"><value>{0} détecté(s)</value></data>
+  <data name="Hw_DisplayIndex" xml:space="preserve"><value>Écran {0}</value></data>
+  <data name="Hw_Primary" xml:space="preserve"><value>Principal</value></data>
+  <data name="Hw_PrimaryTip" xml:space="preserve"><value>Écran utilisé comme écran principal par Windows.</value></data>
+  <data name="Hw_Resolution" xml:space="preserve"><value>RÉSOLUTION</value></data>
+  <data name="Hw_RefreshRate" xml:space="preserve"><value>TAUX D'AFFICHAGE</value></data>
+  <data name="Hw_RefreshRateTip" xml:space="preserve"><value>Nombre d'images affichées par seconde par l'écran.</value></data>
+  <data name="Hw_Colors" xml:space="preserve"><value>COULEURS</value></data>
+  <data name="Hw_GpuLabel" xml:space="preserve"><value>CARTE GRAPHIQUE</value></data>
+  <data name="Hw_Identifier" xml:space="preserve"><value>IDENTIFIANT</value></data>
+  <data name="Hw_PeripheralKindTip" xml:space="preserve"><value>Type de périphérique tel que classé par Windows.</value></data>
+  <data name="Hw_PeripheralsCount" xml:space="preserve"><value>{0} périphériques</value></data>
+  <data name="Hw_PeripheralCount" xml:space="preserve"><value>{0} périphérique</value></data>
+  <data name="Hw_StatusPeripheralsFail" xml:space="preserve"><value>Périphériques indisponibles : {0}</value></data>
+  <data name="Hw_MaxClock" xml:space="preserve"><value>max. {0} MHz</value></data>
+  <data name="Hw_BuildVersion" xml:space="preserve"><value>build {0}</value></data>
+  <data name="Hw_LessThanMinute" xml:space="preserve"><value>moins d'une minute</value></data>
+  <data name="Hw_DaysShort" xml:space="preserve"><value>{0} j</value></data>
+  <data name="Hw_HoursShort" xml:space="preserve"><value>{0} h</value></data>
+  <data name="Hw_MinutesShort" xml:space="preserve"><value>{0} min</value></data>
+  <data name="Hw_OtherVendor" xml:space="preserve"><value>Autre constructeur</value></data>
+  <data name="Gpu_Subtitle" xml:space="preserve"><value>Carte graphique, pilote, mesures en direct et technologies compatibles</value></data>
+  <data name="Gpu_RefreshTip" xml:space="preserve"><value>Relancer la détection de la carte graphique. L'opération prend environ 5 secondes.</value></data>
+  <data name="Gpu_Refresh" xml:space="preserve"><value>Actualiser</value></data>
+  <data name="Gpu_Loading" xml:space="preserve"><value>Détection de la carte graphique en cours…</value></data>
+  <data name="Gpu_EmptyTitle" xml:space="preserve"><value>Aucune carte graphique n'a été identifiée</value></data>
+  <data name="Gpu_EmptyNote" xml:space="preserve"><value>La détection n'a renvoyé aucun modèle de carte graphique. Cela arrive quand Windows utilise un pilote d'affichage générique, ou quand la lecture du registre a échoué. Aucune valeur n'est inventée : rien ne sera affiché tant que la détection n'a pas de résultat.</value></data>
+  <data name="Gpu_EmptyRefreshTip" xml:space="preserve"><value>Relancer la détection du matériel pour obtenir le modèle exact de la carte graphique</value></data>
+  <data name="Gpu_LiveTitle" xml:space="preserve"><value>Mesures en direct</value></data>
+  <data name="Gpu_LiveNote" xml:space="preserve"><value>Relevées automatiquement, environ une fois par seconde.</value></data>
+  <data name="Gpu_TempTitle" xml:space="preserve"><value>Température GPU</value></data>
+  <data name="Gpu_TempTip" xml:space="preserve"><value>Température du processeur graphique. La lecture demande les droits administrateur ; le point chaud est la zone la plus chaude du silicium.</value></data>
+  <data name="Gpu_LoadTitle" xml:space="preserve"><value>Charge GPU</value></data>
+  <data name="Gpu_LoadTip" xml:space="preserve"><value>Part des capacités de la carte graphique utilisée par les jeux et les applications.</value></data>
+  <data name="Gpu_ClockTitle" xml:space="preserve"><value>Fréquence</value></data>
+  <data name="Gpu_ClockTip" xml:space="preserve"><value>Fréquence actuelle du processeur graphique, en mégahertz. Elle varie selon la charge et la température.</value></data>
+  <data name="Gpu_FanTitle" xml:space="preserve"><value>Ventilateur</value></data>
+  <data name="Gpu_FanTip" xml:space="preserve"><value>Vitesse du ventilateur de la carte, en pourcentage de sa vitesse maximale.</value></data>
+  <data name="Gpu_VramUsedTitle" xml:space="preserve"><value>VRAM utilisée</value></data>
+  <data name="Gpu_VramUsedTip" xml:space="preserve"><value>Mémoire vidéo occupée par les textures et images en cours, relevée en continu.</value></data>
+  <data name="Gpu_VramTotalTitle" xml:space="preserve"><value>Mémoire vidéo dédiée</value></data>
+  <data name="Gpu_VramTotalTip" xml:space="preserve"><value>Quantité de mémoire vidéo dédiée annoncée par le pilote de la carte.</value></data>
+  <data name="Gpu_TechTitle" xml:space="preserve"><value>Technologies compatibles</value></data>
+  <data name="Gpu_TechNote" xml:space="preserve"><value>GameBoost détecte la compatibilité matérielle. L'activation se fait dans les jeux ou le panneau du constructeur (GeForce Experience / AMD Software).</value></data>
+  <data name="Gpu_AdaptersTitle" xml:space="preserve"><value>Adaptateurs</value></data>
+  <data name="Gpu_AdaptersNote" xml:space="preserve"><value>Toutes les cartes graphiques visibles par Windows, y compris les puces intégrées.</value></data>
+  <data name="Gpu_DriverAgeTip" xml:space="preserve"><value>Un pilote très ancien peut réduire les performances dans les jeux récents.</value></data>
+  <data name="Gpu_StatusLiveFail" xml:space="preserve"><value>Mesures GPU indisponibles : {0}</value></data>
+  <data name="Gpu_StatusDetecting" xml:space="preserve"><value>Nouvelle détection de la carte graphique…</value></data>
+  <data name="Gpu_StatusDetected" xml:space="preserve"><value>Carte graphique détectée : {0}.</value></data>
+  <data name="Gpu_StatusDetectFail" xml:space="preserve"><value>Détection de la carte graphique impossible : {0}</value></data>
+  <data name="Gpu_Driver" xml:space="preserve"><value>PILOTE</value></data>
+  <data name="Gpu_DriverTip" xml:space="preserve"><value>Le pilote fait le lien entre Windows et la carte graphique. Un pilote à jour corrige des bugs et débloque des fonctions.</value></data>
+  <data name="Gpu_DriverDate" xml:space="preserve"><value>DATE DU PILOTE</value></data>
+  <data name="Gpu_DedicatedVram" xml:space="preserve"><value>MÉMOIRE DÉDIÉE</value></data>
+  <data name="Gpu_DedicatedVramTip" xml:space="preserve"><value>Mémoire vidéo physique installée sur la carte, distincte de la mémoire vive du PC.</value></data>
+  <data name="Gpu_PnpId" xml:space="preserve"><value>IDENTIFIANT PNP</value></data>
+  <data name="Gpu_PnpIdTip" xml:space="preserve"><value>Identifiant technique de la carte dans Windows, utilisé pour retrouver le bon pilote.</value></data>
+  <data name="Gpu_StatusRenderFail" xml:space="preserve"><value>Affichage du GPU impossible : {0}</value></data>
+  <data name="Gpu_TechDlss" xml:space="preserve"><value>Reconstruction d'image par intelligence artificielle : l'image est calculée à plus basse résolution puis améliorée, ce qui augmente les FPS dans les jeux compatibles.</value></data>
+  <data name="Gpu_TechFrameGen" xml:space="preserve"><value>Génération d'images intermédiaires par l'IA pour lisser l'affichage. Elle dépend de la génération de la carte et des jeux qui la prennent en charge.</value></data>
+  <data name="Gpu_TechRayTracing" xml:space="preserve"><value>Simulation de la lumière réelle : reflets, ombres et éclairage plus fidèles, au prix d'une consommation d'images plus élevée.</value></data>
+  <data name="Gpu_TechReflex" xml:space="preserve"><value>Réduit le délai entre l'entrée de votre souris ou manette et l'image affichée. Sert surtout en jeu compétitif.</value></data>
+  <data name="Gpu_TechFsr" xml:space="preserve"><value>Amélioration d'image par mise à l'échelle, ouverte à plusieurs cartes graphiques. Elle se règle dans les jeux compatibles.</value></data>
+  <data name="Gpu_TechXess" xml:space="preserve"><value>Amélioration d'image par intelligence artificielle, utilisable dans les jeux qui la prennent en charge.</value></data>
+  <data name="Gpu_TechUnavailable" xml:space="preserve"><value>Non disponible sur ce matériel : {0}.</value></data>
+  <data name="Gpu_Compatible" xml:space="preserve"><value>Compatible avec votre matériel</value></data>
+  <data name="Gpu_CompatibleTip" xml:space="preserve"><value>La compatibilité est déduite du modèle de la carte graphique détecté.</value></data>
+  <data name="Gpu_Primary" xml:space="preserve"><value>Principal</value></data>
+  <data name="Gpu_PrimaryTip" xml:space="preserve"><value>Cet adaptateur pilote l'écran principal.</value></data>
+  <data name="Gpu_StatusSensorsFail" xml:space="preserve"><value>Capteurs GPU indisponibles : {0}</value></data>
+  <data name="Gpu_Hotspot" xml:space="preserve"><value>point chaud {0} °C</value></data>
+  <data name="Gpu_RequiresAdmin" xml:space="preserve"><value>nécessite l'administrateur</value></data>
+  <data name="Gpu_VramOfTotal" xml:space="preserve"><value>sur {0}</value></data>
+  <data name="Gpu_VramDeclaredByDriver" xml:space="preserve"><value>déclarée par le pilote</value></data>
+  <data name="Gpu_VendorPciTip" xml:space="preserve"><value>Constructeur identifié à partir de l'identifiant PCI du pilote.</value></data>
+  <data name="Gpu_OtherVendor" xml:space="preserve"><value>Autre constructeur</value></data>
+  <data name="Gpu_OtherVendorTip" xml:space="preserve"><value>Le constructeur n'a pas pu être rattaché à NVIDIA, AMD ou Intel.</value></data>
+  <data name="Gpu_UnknownVendor" xml:space="preserve"><value>Constructeur inconnu</value></data>
+  <data name="Gpu_UnknownVendorTip" xml:space="preserve"><value>Le constructeur n'a pas pu être identifié.</value></data>
+  <data name="Gpu_DriverAgeNa" xml:space="preserve"><value>Âge du pilote : non disponible</value></data>
+  <data name="Gpu_DriverAgeMonths" xml:space="preserve"><value>Âge du pilote : {0} mois</value></data>
+  <data name="Gpu_DriverNa" xml:space="preserve"><value>Pilote non disponible</value></data>
+  <data name="Gpu_DriverValue" xml:space="preserve"><value>Pilote {0}</value></data>
+  <data name="Gpu_DriverValueDate" xml:space="preserve"><value>Pilote {0} · {1}</value></data>
+  <data name="Sto_Title" xml:space="preserve"><value>Stockage</value></data>
+  <data name="Sto_Subtitle" xml:space="preserve"><value>Espace libre, état SMART et températures de vos disques</value></data>
+  <data name="Sto_RefreshTip" xml:space="preserve"><value>Relancer l'analyse complète des disques : températures, santé SMART et débit d'essai. Environ 3 secondes.</value></data>
+  <data name="Sto_Refresh" xml:space="preserve"><value>Actualiser</value></data>
+  <data name="Sto_Loading" xml:space="preserve"><value>Analyse des disques (températures, santé, débits)…</value></data>
+  <data name="Sto_LoadingNote" xml:space="preserve"><value>L'analyse prend jusqu'à 3 secondes : elle relève les compteurs SMART et mesure un débit d'essai.</value></data>
+  <data name="Sto_Empty" xml:space="preserve"><value>Aucun disque détecté.</value></data>
+  <data name="Sto_TipsTitle" xml:space="preserve"><value>Conseils</value></data>
+  <data name="Sto_Tip1" xml:space="preserve"><value>En dessous de 10 % d'espace libre, Windows et les jeux manquent de place pour leurs mises à jour et leur cache : les téléchargements échouent ou ralentissent.</value></data>
+  <data name="Sto_Tip2" xml:space="preserve"><value>Un SSD rempli à plus de 90 % perd en performance : gardez une marge libre, surtout sur le disque qui contient Windows.</value></data>
+  <data name="Sto_Tip3" xml:space="preserve"><value>Les températures et l'état SMART ne sont lus qu'avec les droits administrateur : sans eux, ces valeurs s'affichent comme indisponibles.</value></data>
+  <data name="Sto_Tip4" xml:space="preserve"><value>Ces lignes décrivent le fonctionnement normal du stockage. GameBoost ne modifie aucun de vos disques.</value></data>
+  <data name="Sto_StatusAnalyzing" xml:space="preserve"><value>Analyse des disques en cours…</value></data>
+  <data name="Sto_StatusAnalyzed" xml:space="preserve"><value>{0} disque(s) analysé(s).</value></data>
+  <data name="Sto_StatusAnalyzeFail" xml:space="preserve"><value>Analyse des disques impossible : {0}</value></data>
+  <data name="Sto_StatusRenderFail" xml:space="preserve"><value>Affichage des disques impossible : {0}</value></data>
+  <data name="Sto_SystemVolume" xml:space="preserve"><value>système</value></data>
+  <data name="Sto_AlertCritical" xml:space="preserve"><value>Espace critique sur le volume {0} ({1} % libre)</value></data>
+  <data name="Sto_AlertWarning" xml:space="preserve"><value>Volume {0} bientôt plein ({1} % libre)</value></data>
+  <data name="Sto_AlertNote" xml:space="preserve"><value>Windows et les jeux ont besoin d'espace pour les mises à jour et le cache.</value></data>
+  <data name="Sto_AlertTipCritical" xml:space="preserve"><value>Conseil : désinstallez les applications inutiles, videz la corbeille, puis déplacez vos jeux vers un autre disque.</value></data>
+  <data name="Sto_AlertTipWarning" xml:space="preserve"><value>Conseil : déplacez vos jeux vers un autre disque ou désinstallez ce que vous n'utilisez plus avant que Windows n'ait plus de place.</value></data>
+  <data name="Sto_OpenExplorer" xml:space="preserve"><value>Ouvrir l'Explorateur</value></data>
+  <data name="Sto_OpenExplorerTip" xml:space="preserve"><value>Ouvrir l'explorateur de fichiers à la racine du volume concerné</value></data>
+  <data name="Sto_SystemDisk" xml:space="preserve"><value>Disque système</value></data>
+  <data name="Sto_SystemDiskTip" xml:space="preserve"><value>Disque qui contient Windows et ses fichiers de démarrage.</value></data>
+  <data name="Sto_DiskHeader" xml:space="preserve"><value>Disque {0} · Fabricant : {1}</value></data>
+  <data name="Sto_BusTypeTip" xml:space="preserve"><value>Type de connexion du disque au reste du PC.</value></data>
+  <data name="Sto_Capacity" xml:space="preserve"><value>CAPACITÉ</value></data>
+  <data name="Sto_CapacityTip" xml:space="preserve"><value>Espace total annoncé par le disque.</value></data>
+  <data name="Sto_Volumes" xml:space="preserve"><value>VOLUMES</value></data>
+  <data name="Sto_Temperature" xml:space="preserve"><value>TEMPÉRATURE</value></data>
+  <data name="Sto_TemperatureTip" xml:space="preserve"><value>Température du disque relevée pendant l'analyse. Sans administrateur, ce relevé est impossible.</value></data>
+  <data name="Sto_Health" xml:space="preserve"><value>SANTÉ</value></data>
+  <data name="Sto_HealthTipNa" xml:space="preserve"><value>État rapporté par le disque. Le pourcentage de santé détaillé demande les droits administrateur.</value></data>
+  <data name="Sto_HealthTipKnown" xml:space="preserve"><value>Santé estimée à partir de l'usure rapportée par le disque : 100 % correspond à un disque neuf.</value></data>
+  <data name="Sto_Speeds" xml:space="preserve"><value>DÉBITS OBSERVÉS</value></data>
+  <data name="Sto_SpeedsTip" xml:space="preserve"><value>Débit observé pendant l'analyse : mesure courte et indicative, elle ne remplace pas un test de performance complet.</value></data>
+  <data name="Sto_OpenRoot" xml:space="preserve"><value>Ouvrir la racine</value></data>
+  <data name="Sto_OpenRootDisabledTip" xml:space="preserve"><value>Ce disque n'a pas de lettre de lecteur : il ne peut pas être ouvert directement dans l'explorateur.</value></data>
+  <data name="Sto_OpenRootTip" xml:space="preserve"><value>Ouvrir l'explorateur de fichiers à la racine de {0}</value></data>
+  <data name="Sto_VolumeNoLetter" xml:space="preserve"><value>Volume sans lettre</value></data>
+  <data name="Sto_FreeOfTotal" xml:space="preserve"><value>libre {0} sur {1}</value></data>
+  <data name="Sto_UsedPercent" xml:space="preserve"><value>{0} % du volume est occupé.</value></data>
+  <data name="Sto_TempBadgeTip" xml:space="preserve"><value>Température du disque pendant l'analyse. Un disque flash reste généralement sous 50 °C.</value></data>
+  <data name="Sto_NotMeasured" xml:space="preserve"><value>Non mesuré</value></data>
+  <data name="Sto_ReadSpeed" xml:space="preserve"><value>Lecture {0}</value></data>
+  <data name="Sto_WriteSpeed" xml:space="preserve"><value>Écriture {0}</value></data>
+  <data name="Sto_SsdTip" xml:space="preserve"><value>Disque flash sans pièce mobile : accès rapide et silencieux.</value></data>
+  <data name="Sto_HddTip" xml:space="preserve"><value>Disque mécanique avec plateaux en rotation : plus lent et plus bruyant.</value></data>
+  <data name="Sto_MediaUnknown" xml:space="preserve"><value>Type inconnu</value></data>
+  <data name="Sto_MediaUnknownTip" xml:space="preserve"><value>Windows n'a pas communiqué le type de ce disque.</value></data>
+  <data name="Sto_StatusExplorerOpened" xml:space="preserve"><value>Explorateur de fichiers ouvert.</value></data>
+  <data name="Sto_StatusOpenExplorerFail" xml:space="preserve"><value>Ouverture de l'explorateur impossible : {0}</value></data>
+</root>

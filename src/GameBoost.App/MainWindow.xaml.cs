@@ -6,6 +6,7 @@ using System.Windows.Media.Animation;
 using GameBoost.App.Controls;
 using GameBoost.App.Pages;
 using GameBoost.App.Services;
+using GameBoost.Core.Localization;
 using GameBoost.Core.Logging;
 using GameBoost.Core.Monitoring;
 using GameBoost.Core.Models;
@@ -50,6 +51,7 @@ public partial class MainWindow : Window
 
         NavigationService.Navigated += OnNavigated;
         SystemMonitor.Instance.SampleUpdated += OnSampleUpdated;
+        LocManager.Instance.PropertyChanged += OnCultureChanged;
 
         ShowPage("dashboard");
     }
@@ -58,7 +60,22 @@ public partial class MainWindow : Window
     {
         _chipsReady = true;
         MaxHeight = SystemParameters.WorkArea.Height;
-        ShellState.Status("Bienvenue sur GameBoost — cliquez sur « Analyse » pour diagnostiquer votre PC.");
+        RefreshElevationLabel();
+        ShellState.Status(Loc.T("Shell_Welcome"));
+    }
+
+    private void OnCultureChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        Dispatcher.BeginInvoke(() =>
+        {
+            RefreshElevationLabel();
+            ApplyNavTooltips();
+        });
+    }
+
+    private void RefreshElevationLabel()
+    {
+        ElevationLabel.Text = ShellState.Instance.IsElevated ? Loc.T("Shell_Admin") : Loc.T("Shell_User");
     }
 
     private void OnWindowSizeChanged(object sender, SizeChangedEventArgs e)
@@ -66,25 +83,25 @@ public partial class MainWindow : Window
         var narrow = e.NewSize.Width < 1180;
         SidebarColumn.Width = new GridLength(narrow ? 64 : 232);
         ShellState.Instance.LabelsVisible = !narrow;
+        ApplyNavTooltips();
+    }
+
+    private void ApplyNavTooltips()
+    {
+        var narrow = ActualWidth < 1180;
         foreach (var rb in _navButtons)
         {
-            rb.ToolTip = narrow ? rb.Content + " — " + (rb.ToolTip?.ToString() ?? string.Empty) : rb.Tag switch
-            {
-                "dashboard" => "Tableau de bord : état du PC en temps réel",
-                "analysis" => "Diagnostic complet du système et corrections",
-                "hardware" => "Fiche détaillée du matériel détecté",
-                "gpu" => "Carte graphique, pilote et technologies compatibles",
-                "storage" => "Disques, espace libre, état et températures",
-                "games" => "Jeux détectés (Steam, Epic, Ubisoft, Xbox…)",
-                "profiles" => "Profils graphiques par jeu",
-                "processes" => "Processus en cours et fermeture ciblée",
-                "monitoring" => "FPS, frametime et overlay pendant le jeu",
-                "history" => "Sessions enregistrées et comparaison A/B",
-                "reports" => "Export HTML des analyses et mesures",
-                "settings" => "Réglages de GameBoost",
-                _ => rb.Content?.ToString() ?? string.Empty
-            };
+            rb.ToolTip = narrow
+                ? rb.Content + " — " + NavTipKey(rb.Tag as string)
+                : NavTipKey(rb.Tag as string);
         }
+    }
+
+    private static string NavTipKey(string? tag)
+    {
+        if (string.IsNullOrEmpty(tag)) return string.Empty;
+        var key = "Shell_Nav" + char.ToUpperInvariant(tag[0]) + tag[1..] + "_Tip";
+        return Loc.T(key);
     }
 
     private void OnWindowStateChanged(object? sender, EventArgs e)
@@ -117,7 +134,7 @@ public partial class MainWindow : Window
             catch (Exception ex)
             {
                 Log.Error("UI", "Création de la page " + key, ex);
-                ShellState.Status("Impossible d'ouvrir cette page : " + ex.Message);
+                ShellState.Status(Loc.T("Shell_PageError", ex.Message));
                 return;
             }
         }
@@ -169,7 +186,7 @@ public partial class MainWindow : Window
     private void OnThemeClick(object sender, RoutedEventArgs e)
     {
         ThemeService.Toggle();
-        ShellState.Status(ThemeService.CurrentTheme == "Light" ? "Thème clair activé." : "Thème sombre activé.");
+        ShellState.Status(ThemeService.CurrentTheme == "Light" ? Loc.T("Shell_ThemeLight") : Loc.T("Shell_ThemeDark"));
     }
 
     private void OnTitleBarDrag(object sender, MouseButtonEventArgs e)

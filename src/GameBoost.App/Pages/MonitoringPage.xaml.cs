@@ -7,6 +7,7 @@ using GameBoost.App.Overlay;
 using GameBoost.App.Services;
 using GameBoost.Core.Games;
 using GameBoost.Core.History;
+using GameBoost.Core.Localization;
 using GameBoost.Core.Logging;
 using GameBoost.Core.Models;
 using GameBoost.Core.Monitoring;
@@ -68,7 +69,7 @@ public partial class MonitoringPage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Chargement de la page Monitoring", ex);
-            ShellState.Status("Chargement du monitoring impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Mon_StatusLoadFail", ex.Message));
         }
     }
 
@@ -96,15 +97,15 @@ public partial class MonitoringPage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Demarrage du monitoring", ex);
-            ShellState.Status("Le monitoring n'a pas pu démarrer : " + ex.Message);
+            ShellState.Status(Loc.T("Mon_StatusMonitorStartFail", ex.Message));
         }
     }
 
     private void UpdateMonitorUi()
     {
         var running = SystemMonitor.Instance.IsRunning;
-        MonitorStateText.Text = running ? "Monitoring actif" : "Monitoring inactif";
-        MonitorToggleLabel.Text = running ? "Arrêter" : "Démarrer";
+        MonitorStateText.Text = running ? Loc.T("Mon_MonitorActive") : Loc.T("Mon_MonitorInactive");
+        MonitorToggleLabel.Text = running ? Loc.T("Mon_Stop") : Loc.T("Mon_Start");
         MonitorDot.Fill = running ? Brush("GoodBrush") : Brush("TextFaintBrush");
     }
 
@@ -115,19 +116,19 @@ public partial class MonitoringPage : UserControl
             if (SystemMonitor.Instance.IsRunning)
             {
                 SystemMonitor.Instance.Stop();
-                ShellState.Status("Monitoring arrêté : les mesures sont en pause.");
+                ShellState.Status(Loc.T("Mon_StatusStopped"));
             }
             else
             {
                 SystemMonitor.Instance.Start(1000);
-                ShellState.Status("Monitoring démarré : une mesure toutes les secondes.");
+                ShellState.Status(Loc.T("Mon_StatusStarted"));
             }
             UpdateMonitorUi();
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Bascule du monitoring", ex);
-            ShellState.Status("Changement d'état impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Mon_StatusToggleFail", ex.Message));
         }
     }
 
@@ -144,12 +145,12 @@ public partial class MonitoringPage : UserControl
             if (current is not null) GameCombo.SelectedItem = _games.FirstOrDefault(g => g.Id == current.Id);
             if (GameCombo.SelectedItem is null && _games.Count > 0) GameCombo.SelectedIndex = 0;
             if (_games.Count == 0)
-                ShellState.Status("Aucun jeu détecté : ajoutez-en un depuis la page Jeux.");
+                ShellState.Status(Loc.T("Mon_StatusNoGames"));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Lecture de la bibliotheque de jeux", ex);
-            ShellState.Status("Jeux indisponibles : " + ex.Message);
+            ShellState.Status(Loc.T("Mon_StatusGamesFail", ex.Message));
         }
     }
 
@@ -163,7 +164,7 @@ public partial class MonitoringPage : UserControl
     {
         if (GameCombo.SelectedItem is not GameInfo game)
         {
-            ShellState.Status("Sélectionnez d'abord un jeu à suivre.");
+            ShellState.Status(Loc.T("Mon_StatusPickGame"));
             return;
         }
 
@@ -172,7 +173,7 @@ public partial class MonitoringPage : UserControl
             var pid = await Task.Run(() => ProcessService.Instance.FindGameProcessId(game));
             if (pid is null or <= 0)
             {
-                ShellState.Status("Le jeu n'est pas lancé — lancez-le puis réessayez.");
+                ShellState.Status(Loc.T("Mon_StatusGameNotRunning"));
                 return;
             }
 
@@ -183,12 +184,12 @@ public partial class MonitoringPage : UserControl
             _trackedGame = game;
             UpdateTrackedUi();
             ApplySample(SystemMonitor.Instance.Current);
-            ShellState.Status("Suivi démarré : " + game.Name + " (PID " + pid.Value + ").");
+            ShellState.Status(Loc.T("Mon_StatusTracked", game.Name, pid.Value));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Suivi du jeu", ex);
-            ShellState.Status("Suivi impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Mon_StatusTrackFail", ex.Message));
         }
     }
 
@@ -199,12 +200,12 @@ public partial class MonitoringPage : UserControl
             SystemMonitor.Instance.ClearProcess();
             _trackedGame = null;
             UpdateTrackedUi();
-            ShellState.Status("Suivi arrêté : aucun jeu n'est mesuré.");
+            ShellState.Status(Loc.T("Mon_StatusUntracked"));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Arret du suivi", ex);
-            ShellState.Status("Arrêt du suivi impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Mon_StatusUntrackFail", ex.Message));
         }
     }
 
@@ -212,11 +213,11 @@ public partial class MonitoringPage : UserControl
     {
         var pid = SystemMonitor.Instance.TrackedProcessId;
         if (_trackedGame is not null && pid is int tracked)
-            TrackedText.Text = "Suivi : " + _trackedGame.Name + " · PID " + tracked;
+            TrackedText.Text = Loc.T("Mon_TrackedGame", _trackedGame.Name, tracked);
         else if (pid is int id)
-            TrackedText.Text = "Suivi : PID " + id;
+            TrackedText.Text = Loc.T("Mon_TrackedPid", id);
         else
-            TrackedText.Text = "Suivi : aucun processus";
+            TrackedText.Text = Loc.T("Mon_TrackedNone");
     }
 
     private void OnSampleUpdated(MonitorSample sample)
@@ -240,7 +241,7 @@ public partial class MonitoringPage : UserControl
             CardGpu.Value = sample.GpuUsagePercent.ToString("F0");
             CardRam.Value = BytesToSizeConverter.Format(sample.RamUsedBytes);
             CardRam.SubText = sample.RamTotalBytes > 0
-                ? "sur " + BytesToSizeConverter.Format(sample.RamTotalBytes)
+                ? Loc.T("Mon_OutOf", BytesToSizeConverter.Format(sample.RamTotalBytes))
                 : string.Empty;
             CardCpuTemp.Value = Temperature(sample.CpuTemperatureC);
             CardGpuTemp.Value = Temperature(sample.GpuTemperatureC);
@@ -248,7 +249,7 @@ public partial class MonitoringPage : UserControl
                 ? BytesToSizeConverter.Format(sample.VramUsedBytes)
                 : "—";
             CardVram.SubText = sample.VramTotalBytes > 0
-                ? "sur " + BytesToSizeConverter.Format(sample.VramTotalBytes)
+                ? Loc.T("Mon_OutOf", BytesToSizeConverter.Format(sample.VramTotalBytes))
                 : string.Empty;
 
             if (sample.FrameTimeMs is double frameTime && frameTime > 0 && !double.IsNaN(frameTime))
@@ -320,11 +321,11 @@ public partial class MonitoringPage : UserControl
         SampleCountText.Text = (stats?.SampleCount ?? 0).ToString();
 
         if (!hasAverage)
-            FpsSourceText.Text = "Aucune mesure d'image : suivez un jeu lancé pour obtenir des FPS.";
+            FpsSourceText.Text = Loc.T("Mon_FpsNoMeasureHint");
         else if (stats is null)
-            FpsSourceText.Text = "Valeur instantanée du moniteur : suivez un jeu pour obtenir les statistiques détaillées.";
+            FpsSourceText.Text = Loc.T("Mon_FpsInstantHint");
         else
-            FpsSourceText.Text = "Statistiques calculées sur " + stats.SampleCount + " échantillon(s) du jeu suivi.";
+            FpsSourceText.Text = Loc.T("Mon_FpsStatsHint", stats.SampleCount);
     }
 
     private static string FormatFps(double? value)
@@ -342,12 +343,12 @@ public partial class MonitoringPage : UserControl
             _fpsPoints.Clear();
             RefreshCharts();
             ApplySample(SystemMonitor.Instance.Current);
-            ShellState.Status("Statistiques d'images réinitialisées.");
+            ShellState.Status(Loc.T("Mon_StatusStatsReset"));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Reinitialisation des statistiques", ex);
-            ShellState.Status("Réinitialisation impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Mon_StatusResetFail", ex.Message));
         }
     }
 
@@ -356,15 +357,15 @@ public partial class MonitoringPage : UserControl
         try
         {
             var game = SelectedGameOrNull() ?? _trackedGame;
-            var name = string.IsNullOrWhiteSpace(game?.Name) ? "Session manuelle" : game!.Name;
+            var name = string.IsNullOrWhiteSpace(game?.Name) ? Loc.T("Mon_ManualSession") : game!.Name;
             HistoryService.Instance.StartSession(name, game?.Id ?? string.Empty);
             UpdateSessionUi();
-            ShellState.Status("Enregistrement démarré : " + name + ".");
+            ShellState.Status(Loc.T("Mon_StatusRecordingStarted", name));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Demarrage de la session", ex);
-            ShellState.Status("Démarrage impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Mon_StatusSessionStartFail", ex.Message));
         }
     }
 
@@ -376,18 +377,18 @@ public partial class MonitoringPage : UserControl
             UpdateSessionUi();
             if (record is null)
             {
-                ShellState.Status("Aucune session en cours d'enregistrement.");
+                ShellState.Status(Loc.T("Mon_StatusNoActiveSession"));
                 return;
             }
 
             ShellState.Status(record.AverageFps is double fps
-                ? "Session enregistrée : " + record.GameName + " · " + fps.ToString("F0") + " FPS en moyenne."
-                : "Session enregistrée : " + record.GameName + " · FPS non enregistrés.");
+                ? Loc.T("Mon_StatusSessionSaved", record.GameName, fps.ToString("F0"))
+                : Loc.T("Mon_StatusSessionSavedNoFps", record.GameName));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Arret de la session", ex);
-            ShellState.Status("Arrêt impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Mon_StatusSessionStopFail", ex.Message));
         }
     }
 
@@ -408,21 +409,21 @@ public partial class MonitoringPage : UserControl
         var active = HistoryService.Instance.ActiveSession;
         if (active is null)
         {
-            SessionStateText.Text = "Aucune session en cours.";
+            SessionStateText.Text = Loc.T("Mon_SessionNone");
             StartSessionButton.IsEnabled = true;
             StopSessionButton.IsEnabled = false;
         }
         else
         {
-            SessionStateText.Text = "Session en cours depuis " + active.StartTime.ToString("HH:mm") + ".";
+            SessionStateText.Text = Loc.T("Mon_SessionActive", active.StartTime.ToString("HH:mm"));
             StartSessionButton.IsEnabled = false;
             StopSessionButton.IsEnabled = true;
         }
 
         var game = SelectedGameOrNull() ?? _trackedGame;
         SessionGameText.Text = game is null
-            ? "Jeu : aucun sélectionné"
-            : "Jeu : " + game.Name + (active is not null ? " · enregistrement en cours" : string.Empty);
+            ? Loc.T("Mon_SessionGameNone")
+            : Loc.T(active is not null ? "Mon_SessionGameRecording" : "Mon_SessionGameIdle", game.Name);
     }
 
     private GameInfo? SelectedGameOrNull() => GameCombo.SelectedItem as GameInfo;
@@ -441,7 +442,7 @@ public partial class MonitoringPage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Lecture des reglages d'overlay", ex);
-            ShellState.Status("Réglages overlay indisponibles : " + ex.Message);
+            ShellState.Status(Loc.T("Mon_StatusOverlaySettingsFail", ex.Message));
         }
     }
 
@@ -481,7 +482,7 @@ public partial class MonitoringPage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Demarrage de l'overlay", ex);
-            ShellState.Status("Overlay impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Mon_StatusOverlayFail", ex.Message));
         }
     }
 
@@ -506,14 +507,14 @@ public partial class MonitoringPage : UserControl
                 else OverlayController.Instance.Stop();
                 UpdateOverlayBadge();
                 ShellState.Status(_overlaySettings.Enabled
-                    ? "Overlay activé : GameBoost surveille les jeux lancés."
-                    : "Overlay désactivé.");
+                    ? Loc.T("Mon_StatusOverlayOn")
+                    : Loc.T("Mon_StatusOverlayOff"));
             }
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Reglage d'overlay", ex);
-            ShellState.Status("Réglage overlay impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Mon_StatusOverlaySetFail", ex.Message));
         }
     }
 
@@ -530,7 +531,7 @@ public partial class MonitoringPage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Reglage de l'opacite", ex);
-            ShellState.Status("Opacité impossible à régler : " + ex.Message);
+            ShellState.Status(Loc.T("Mon_StatusOpacityFail", ex.Message));
         }
     }
 
@@ -555,12 +556,12 @@ public partial class MonitoringPage : UserControl
                 ? area.Height - OverlayHeightGuess - OverlayEdgeMargin
                 : OverlayEdgeMargin);
             SaveOverlaySettings();
-            ShellState.Status("Position de l'overlay mise à jour.");
+            ShellState.Status(Loc.T("Mon_StatusPositionSaved"));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Position de l'overlay", ex);
-            ShellState.Status("Position impossible à appliquer : " + ex.Message);
+            ShellState.Status(Loc.T("Mon_StatusPositionFail", ex.Message));
         }
     }
 
@@ -577,7 +578,7 @@ public partial class MonitoringPage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Enregistrement des reglages d'overlay", ex);
-            ShellState.Status("Réglages overlay non enregistrés : " + ex.Message);
+            ShellState.Status(Loc.T("Mon_StatusOverlaySaveFail", ex.Message));
         }
     }
 
@@ -591,18 +592,20 @@ public partial class MonitoringPage : UserControl
             UpdateOverlayBadge();
 
             if (wasRunning)
-                ShellState.Status("Overlay masqué.");
+                ShellState.Status(Loc.T("Mon_StatusOverlayHidden"));
             else if (OverlayController.Instance.IsRunning)
-                ShellState.Status("Overlay affiché" + (game is null ? string.Empty : " pour " + game.Name) + ".");
+                ShellState.Status(game is null
+                    ? Loc.T("Mon_StatusOverlayShown")
+                    : Loc.T("Mon_StatusOverlayShownFor", game.Name));
             else if (game is not null)
-                ShellState.Status("L'overlay ne s'est pas affiché : vérifiez qu'il est activé pour ce jeu.");
+                ShellState.Status(Loc.T("Mon_StatusOverlayNotShown"));
             else
-                ShellState.Status("Surveillance lancée : l'overlay s'affichera dès qu'un jeu avec l'overlay activé sera détecté.");
+                ShellState.Status(Loc.T("Mon_StatusDetectionStarted"));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Apercu de l'overlay", ex);
-            ShellState.Status("Aperçu impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Mon_StatusPreviewFail", ex.Message));
         }
     }
 
@@ -621,7 +624,7 @@ public partial class MonitoringPage : UserControl
     private void UpdateOverlayBadge()
     {
         var running = OverlayController.Instance.IsRunning;
-        OverlayBadgeText.Text = running ? "Overlay : actif" : "Overlay : inactif";
+        OverlayBadgeText.Text = running ? Loc.T("Mon_OverlayActive") : Loc.T("Mon_OverlayInactive");
         OverlayDot.Fill = running ? Brush("GoodBrush") : Brush("TextFaintBrush");
     }
 

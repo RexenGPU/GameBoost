@@ -6,6 +6,7 @@ using GameBoost.App.Controls;
 using GameBoost.App.Services;
 using GameBoost.Core.Data;
 using GameBoost.Core.Hardware;
+using GameBoost.Core.Localization;
 using GameBoost.Core.Logging;
 using GameBoost.Core.Models;
 
@@ -13,7 +14,11 @@ namespace GameBoost.App.Pages;
 
 public partial class HardwarePage : UserControl
 {
-    private static readonly string[] ModuleHeaders = { "CAPACITÉ", "FRÉQUENCE", "FABRICANT", "RÉFÉRENCE", "EMPLACEMENT" };
+    private static string[] ModuleHeaders => new[]
+    {
+        Loc.T("Hw_Capacity"), Loc.T("Hw_Frequency"), Loc.T("Hw_Manufacturer"),
+        Loc.T("Hw_Reference"), Loc.T("Hw_Slot")
+    };
     private static readonly double[] ModuleWeights = { 1.1, 1.0, 1.5, 2.0, 1.3 };
 
     private readonly List<Border> _cards = new();
@@ -43,7 +48,7 @@ public partial class HardwarePage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Lecture du niveau d'élévation impossible", ex);
-            ShellState.Status("Niveau d'élévation indisponible : " + ex.Message);
+            ShellState.Status(Loc.T("Hw_StatusElevationFail", ex.Message));
         }
 
         ApplyLayout();
@@ -71,7 +76,7 @@ public partial class HardwarePage : UserControl
 
     private async void OnRefreshClick(object sender, RoutedEventArgs e)
     {
-        ShellState.Status("Nouvelle détection du matériel…");
+        ShellState.Status(Loc.T("Hw_StatusDetecting"));
         await LoadAsync();
     }
 
@@ -87,12 +92,12 @@ public partial class HardwarePage : UserControl
             var report = await HardwareDetector.Instance.CollectAsync();
             Fill(report);
             _loaded = true;
-            ShellState.Status("Matériel détecté le " + report.CollectedAt.ToString("HH:mm:ss", CultureInfo.CurrentCulture) + ".");
+            ShellState.Status(Loc.T("Hw_StatusDetected", report.CollectedAt.ToString("HH:mm:ss", CultureInfo.CurrentCulture)));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Détection du matériel impossible", ex);
-            ShellState.Status("Détection du matériel impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Hw_StatusDetectFail", ex.Message));
             Fill(new HardwareReport());
             _loaded = true;
         }
@@ -123,43 +128,44 @@ public partial class HardwarePage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Affichage de la fiche matérielle impossible", ex);
-            ShellState.Status("Affichage du matériel impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Hw_StatusRenderFail", ex.Message));
         }
     }
 
     private void FillCpu(CpuInfo cpu)
     {
         CpuFields.Children.Clear();
-        CpuFields.Children.Add(Row("NOM", Known(cpu.Name)));
-        CpuFields.Children.Add(Row("FABRICANT", Known(cpu.Manufacturer)));
-        CpuFields.Children.Add(Row("CŒURS / THREADS",
+        CpuFields.Children.Add(Row(Loc.T("Hw_Name"), Known(cpu.Name)));
+        CpuFields.Children.Add(Row(Loc.T("Hw_Manufacturer"), Known(cpu.Manufacturer)));
+        CpuFields.Children.Add(Row(Loc.T("Hw_CoresThreads"),
             cpu.PhysicalCores > 0
-                ? cpu.PhysicalCores.ToString(CultureInfo.CurrentCulture) + " cœurs / " +
-                  cpu.LogicalCores.ToString(CultureInfo.CurrentCulture) + " threads"
-                : "Non disponible",
-            "Un cœur est une unité de calcul du processeur ; les threads permettent de traiter deux tâches par cœur."));
-        CpuFields.Children.Add(Row("HORLOGE BASE / MAX", ClockText(cpu.BaseClockMHz, cpu.MaxClockMHz),
-            "Fréquence de fonctionnement du processeur, exprimée en mégahertz (MHz)."));
-        CpuFields.Children.Add(Row("ARCHITECTURE", Known(cpu.Architecture)));
-        CpuFields.Children.Add(Row("SOCKET", Known(cpu.Socket)));
-        CpuFields.Children.Add(Row("DESCRIPTION", Known(cpu.Description)));
+                ? Loc.T("Hw_CoresThreadsValue",
+                    cpu.PhysicalCores.ToString(CultureInfo.CurrentCulture),
+                    cpu.LogicalCores.ToString(CultureInfo.CurrentCulture))
+                : Loc.T("Hw_NotAvailable"),
+            Loc.T("Hw_CoresThreadsTip")));
+        CpuFields.Children.Add(Row(Loc.T("Hw_ClockTitle"), ClockText(cpu.BaseClockMHz, cpu.MaxClockMHz),
+            Loc.T("Hw_ClockTip")));
+        CpuFields.Children.Add(Row(Loc.T("Hw_Architecture"), Known(cpu.Architecture)));
+        CpuFields.Children.Add(Row(Loc.T("Hw_Socket"), Known(cpu.Socket)));
+        CpuFields.Children.Add(Row(Loc.T("Hw_Description"), Known(cpu.Description)));
     }
 
     private void FillRam(RamInfo ram)
     {
         RamFields.Children.Clear();
-        RamFields.Children.Add(Row("TOTAL", ram.TotalBytes > 0 ? Size(ram.TotalBytes) : "Non disponible"));
-        RamFields.Children.Add(Row("DISPONIBLE", ram.AvailableBytes > 0 ? Size(ram.AvailableBytes) : "Non disponible"));
-        RamFields.Children.Add(Row("FRÉQUENCE", ram.SpeedMHz > 0
+        RamFields.Children.Add(Row(Loc.T("Hw_Total"), ram.TotalBytes > 0 ? Size(ram.TotalBytes) : Loc.T("Hw_NotAvailable")));
+        RamFields.Children.Add(Row(Loc.T("Hw_Available"), ram.AvailableBytes > 0 ? Size(ram.AvailableBytes) : Loc.T("Hw_NotAvailable")));
+        RamFields.Children.Add(Row(Loc.T("Hw_Frequency"), ram.SpeedMHz > 0
             ? ram.SpeedMHz.ToString("N0", CultureInfo.CurrentCulture) + " MHz"
-            : "Non disponible"));
-        RamFields.Children.Add(Row("FACTEUR DE FORME", Known(ram.FormFactor)));
+            : Loc.T("Hw_NotAvailable")));
+        RamFields.Children.Add(Row(Loc.T("Hw_FormFactor"), Known(ram.FormFactor)));
 
         var total = ram.TotalBytes;
         var used = total - ram.AvailableBytes;
         if (total <= 0 || used < 0)
         {
-            RamFields.Children.Add(Row("UTILISATION", "Non disponible"));
+            RamFields.Children.Add(Row(Loc.T("Hw_Usage"), Loc.T("Hw_NotAvailable")));
         }
         else
         {
@@ -171,21 +177,21 @@ public partial class HardwarePage : UserControl
                 Minimum = 0,
                 Maximum = 100,
                 Value = percent,
-                ToolTip = "Part de la mémoire occupée : total moins disponible."
+                ToolTip = Loc.T("Hw_UsageTip")
             });
             bar.Children.Add(new TextBlock
             {
-                Text = percent.ToString("F1", CultureInfo.CurrentCulture) + " % utilisée",
+                Text = Loc.T("Hw_UsageValue", percent.ToString("F1", CultureInfo.CurrentCulture)),
                 Style = StyleOf("Caption"),
                 Margin = new Thickness(0, 6, 0, 0)
             });
-            RamFields.Children.Add(Row("UTILISATION", bar));
+            RamFields.Children.Add(Row(Loc.T("Hw_Usage"), bar));
         }
 
         RamModules.Children.Clear();
         if (ram.Modules.Count == 0)
         {
-            RamModules.Children.Add(new TextBlock { Text = "Non disponible", Style = StyleOf("BodyMuted") });
+            RamModules.Children.Add(new TextBlock { Text = Loc.T("Hw_NotAvailable"), Style = StyleOf("BodyMuted") });
             return;
         }
 
@@ -194,8 +200,8 @@ public partial class HardwarePage : UserControl
         {
             RamModules.Children.Add(ModuleRow(new[]
             {
-                module.CapacityBytes > 0 ? Size(module.CapacityBytes) : "Non disponible",
-                module.SpeedMHz > 0 ? module.SpeedMHz.ToString("N0", CultureInfo.CurrentCulture) + " MHz" : "Non disponible",
+                module.CapacityBytes > 0 ? Size(module.CapacityBytes) : Loc.T("Hw_NotAvailable"),
+                module.SpeedMHz > 0 ? module.SpeedMHz.ToString("N0", CultureInfo.CurrentCulture) + " MHz" : Loc.T("Hw_NotAvailable"),
                 Known(module.Manufacturer),
                 Known(module.PartNumber),
                 Known(module.Slot)
@@ -206,38 +212,38 @@ public partial class HardwarePage : UserControl
     private void FillMotherboard(MotherboardInfo board)
     {
         MotherboardFields.Children.Clear();
-        MotherboardFields.Children.Add(Row("FABRICANT", Known(board.Manufacturer)));
-        MotherboardFields.Children.Add(Row("MODÈLE", Known(board.Product)));
-        MotherboardFields.Children.Add(Row("VERSION", Known(board.Version)));
-        MotherboardFields.Children.Add(Row("BIOS", BiosText(board.BiosVersion, board.BiosDate),
-            "Version et date du BIOS telles que rapportées par le fabricant de la carte mère."));
-        MotherboardFields.Children.Add(Row("NUMÉRO DE SÉRIE", Known(board.SerialNumber),
-            "Identifiant local de la carte mère, jamais transmis hors de votre PC.", true));
+        MotherboardFields.Children.Add(Row(Loc.T("Hw_Manufacturer"), Known(board.Manufacturer)));
+        MotherboardFields.Children.Add(Row(Loc.T("Hw_Model"), Known(board.Product)));
+        MotherboardFields.Children.Add(Row(Loc.T("Hw_Version"), Known(board.Version)));
+        MotherboardFields.Children.Add(Row(Loc.T("Hw_Bios"), BiosText(board.BiosVersion, board.BiosDate),
+            Loc.T("Hw_BiosTip")));
+        MotherboardFields.Children.Add(Row(Loc.T("Hw_SerialNumber"), Known(board.SerialNumber),
+            Loc.T("Hw_SerialTip"), true));
     }
 
     private void FillSystem(OsInfo os, string directX)
     {
         SystemFields.Children.Clear();
-        SystemFields.Children.Add(Row("SYSTÈME", Known(os.Caption)));
-        SystemFields.Children.Add(Row("VERSION", VersionText(os.Version, os.Build)));
-        SystemFields.Children.Add(Row("ÉDITION", Known(os.Edition)));
-        SystemFields.Children.Add(Row("ARCHITECTURE", Known(os.Architecture)));
-        SystemFields.Children.Add(Row("DEPUIS LE DÉMARRAGE", UptimeText(os.Uptime),
-            "Durée pendant laquelle le PC est allumé sans redémarrage."));
-        SystemFields.Children.Add(Row("MODE JEU", Badge(os.GameModeEnabled ? "Activé" : "Désactivé",
+        SystemFields.Children.Add(Row(Loc.T("Hw_SystemLabel"), Known(os.Caption)));
+        SystemFields.Children.Add(Row(Loc.T("Hw_Version"), VersionText(os.Version, os.Build)));
+        SystemFields.Children.Add(Row(Loc.T("Hw_Edition"), Known(os.Edition)));
+        SystemFields.Children.Add(Row(Loc.T("Hw_Architecture"), Known(os.Architecture)));
+        SystemFields.Children.Add(Row(Loc.T("Hw_Uptime"), UptimeText(os.Uptime),
+            Loc.T("Hw_UptimeTip")));
+        SystemFields.Children.Add(Row(Loc.T("Hw_GameMode"), Badge(os.GameModeEnabled ? Loc.T("Hw_Enabled") : Loc.T("Hw_Disabled"),
             os.GameModeEnabled ? BrushOf("GoodBgBrush") : BrushOf("CardAltBrush"),
             os.GameModeEnabled ? BrushOf("GoodBrush") : BrushOf("TextMutedBrush"),
-            "Réglage Windows qui priorise les jeux en arrière-plan. La valeur affichée est lue dans le registre.",
+            Loc.T("Hw_GameModeTip"),
             new Thickness(0))));
-        SystemFields.Children.Add(Row("DIRECTX", Known(directX),
-            "Interface graphique utilisée par les jeux. DirectX 12 est la version courante sur Windows récent."));
-        SystemFields.Children.Add(Row("NIVEAU D'ÉLÉVATION", Badge(
-            AppPaths.IsElevated ? "Administrateur" : "Utilisateur standard",
+        SystemFields.Children.Add(Row(Loc.T("Hw_DirectX"), Known(directX),
+            Loc.T("Hw_DirectXTip")));
+        SystemFields.Children.Add(Row(Loc.T("Hw_ElevationLevel"), Badge(
+            AppPaths.IsElevated ? Loc.T("Hw_Admin") : Loc.T("Hw_StandardUser"),
             AppPaths.IsElevated ? BrushOf("GoodBgBrush") : BrushOf("WarnBgBrush"),
             AppPaths.IsElevated ? BrushOf("GoodBrush") : BrushOf("WarnBrush"),
             AppPaths.IsElevated
-                ? "GameBoost tourne avec les droits administrateur."
-                : "Sans administrateur, les températures et la santé SMART ne peuvent pas être lues.",
+                ? Loc.T("Hw_ElevatedTip")
+                : Loc.T("Hw_NotElevatedTip"),
             new Thickness(0))));
     }
 
@@ -252,13 +258,13 @@ public partial class HardwarePage : UserControl
     private void FillGpu(GpuInfo gpu)
     {
         GpuFields.Children.Clear();
-        GpuFields.Children.Add(Row("NOM", Known(gpu.Name)));
-        GpuFields.Children.Add(Row("CONSTRUCTEUR", VendorLabel(gpu.Vendor)));
-        GpuFields.Children.Add(Row("MÉMOIRE DÉDIÉE", gpu.DedicatedVramBytes > 0 ? Size(gpu.DedicatedVramBytes) : "Non disponible"));
-        GpuFields.Children.Add(Row("PILOTE", DriverText(gpu.DriverVersion, gpu.DriverDate)));
-        GpuFields.Children.Add(Row("ADAPTATEURS", gpu.AllAdapters.Count > 0
-            ? gpu.AllAdapters.Count.ToString(CultureInfo.CurrentCulture) + " détecté(s)"
-            : "Non disponible"));
+        GpuFields.Children.Add(Row(Loc.T("Hw_Name"), Known(gpu.Name)));
+        GpuFields.Children.Add(Row(Loc.T("Hw_VendorLabel"), VendorLabel(gpu.Vendor)));
+        GpuFields.Children.Add(Row(Loc.T("Hw_DedicatedVram"), gpu.DedicatedVramBytes > 0 ? Size(gpu.DedicatedVramBytes) : Loc.T("Hw_NotAvailable")));
+        GpuFields.Children.Add(Row(Loc.T("Hw_Driver"), DriverText(gpu.DriverVersion, gpu.DriverDate)));
+        GpuFields.Children.Add(Row(Loc.T("Hw_Adapters"), gpu.AllAdapters.Count > 0
+            ? Loc.T("Hw_AdaptersDetected", gpu.AllAdapters.Count.ToString(CultureInfo.CurrentCulture))
+            : Loc.T("Hw_NotAvailable")));
     }
 
     private UIElement BuildDisplay(DisplayInfo display, int index)
@@ -275,28 +281,30 @@ public partial class HardwarePage : UserControl
         title.Children.Add(new TextBlock
         {
             Text = string.IsNullOrWhiteSpace(display.Description)
-                ? (string.IsNullOrWhiteSpace(display.DeviceName) ? "Écran " + (index + 1).ToString(CultureInfo.CurrentCulture) : display.DeviceName)
+                ? (string.IsNullOrWhiteSpace(display.DeviceName)
+                    ? Loc.T("Hw_DisplayIndex", (index + 1).ToString(CultureInfo.CurrentCulture))
+                    : display.DeviceName)
                 : display.Description,
             Style = StyleOf("H3")
         });
         if (display.Primary)
-            title.Children.Add(Badge("Principal", BrushOf("GoodBgBrush"), BrushOf("GoodBrush"), "Écran utilisé comme écran principal par Windows."));
+            title.Children.Add(Badge(Loc.T("Hw_Primary"), BrushOf("GoodBgBrush"), BrushOf("GoodBrush"), Loc.T("Hw_PrimaryTip")));
         panel.Children.Add(title);
 
-        panel.Children.Add(Row("RÉSOLUTION",
+        panel.Children.Add(Row(Loc.T("Hw_Resolution"),
             display.Width > 0 && display.Height > 0
                 ? display.Width.ToString(CultureInfo.CurrentCulture) + " × " + display.Height.ToString(CultureInfo.CurrentCulture)
-                : "Non disponible"));
-        panel.Children.Add(Row("TAUX D'AFFICHAGE", display.RefreshRate > 0
+                : Loc.T("Hw_NotAvailable")));
+        panel.Children.Add(Row(Loc.T("Hw_RefreshRate"), display.RefreshRate > 0
             ? display.RefreshRate.ToString(CultureInfo.CurrentCulture) + " Hz"
-            : "Non disponible",
-            "Nombre d'images affichées par seconde par l'écran."));
-        panel.Children.Add(Row("COULEURS", display.BitsPerPixel > 0
+            : Loc.T("Hw_NotAvailable"),
+            Loc.T("Hw_RefreshRateTip")));
+        panel.Children.Add(Row(Loc.T("Hw_Colors"), display.BitsPerPixel > 0
             ? display.BitsPerPixel.ToString(CultureInfo.CurrentCulture) + " bits"
-            : "Non disponible"));
-        panel.Children.Add(Row("CARTE GRAPHIQUE", Known(display.GpuName)));
+            : Loc.T("Hw_NotAvailable")));
+        panel.Children.Add(Row(Loc.T("Hw_GpuLabel"), Known(display.GpuName)));
         if (!string.IsNullOrWhiteSpace(display.DeviceName) && !string.IsNullOrWhiteSpace(display.Description))
-            panel.Children.Add(Row("IDENTIFIANT", display.DeviceName, mono: true));
+            panel.Children.Add(Row(Loc.T("Hw_Identifier"), display.DeviceName, mono: true));
 
         card.Child = panel;
         return card;
@@ -324,7 +332,7 @@ public partial class HardwarePage : UserControl
         grid.Children.Add(name);
 
         var kind = Badge(Known(peripheral.Kind), BrushOf("CardAltBrush"), BrushOf("TextMutedBrush"),
-            "Type de périphérique tel que classé par Windows.", new Thickness(10, 0, 0, 0));
+            Loc.T("Hw_PeripheralKindTip"), new Thickness(10, 0, 0, 0));
         Grid.SetColumn(kind, 1);
         grid.Children.Add(kind);
 
@@ -354,12 +362,13 @@ public partial class HardwarePage : UserControl
             PeripheralEmpty.Visibility = visible.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
             PeripheralCount.Text = visible.Count == 0
                 ? string.Empty
-                : visible.Count.ToString(CultureInfo.CurrentCulture) + (visible.Count > 1 ? " périphériques" : " périphérique");
+                : Loc.T(visible.Count > 1 ? "Hw_PeripheralsCount" : "Hw_PeripheralCount",
+                    visible.Count.ToString(CultureInfo.CurrentCulture));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Affichage des périphériques impossible", ex);
-            ShellState.Status("Périphériques indisponibles : " + ex.Message);
+            ShellState.Status(Loc.T("Hw_StatusPeripheralsFail", ex.Message));
         }
     }
 
@@ -452,8 +461,9 @@ public partial class HardwarePage : UserControl
     {
         var basis = baseClock is > 0 ? baseClock.Value.ToString("N0", CultureInfo.CurrentCulture) : null;
         var max = maxClock is > 0 ? maxClock.Value.ToString("N0", CultureInfo.CurrentCulture) : null;
-        if (basis is null && max is null) return "Non disponible";
-        if (basis is null) return "max. " + max + " MHz";
+        var na = Loc.T("Hw_NotAvailable");
+        if (basis is null && max is null) return na;
+        if (basis is null) return Loc.T("Hw_MaxClock", max!);
         if (max is null) return basis + " MHz";
         return basis + " / " + max + " MHz";
     }
@@ -462,9 +472,10 @@ public partial class HardwarePage : UserControl
     {
         var knownVersion = Known(version);
         var knownDate = Known(date);
-        if (knownVersion == "Non disponible" && knownDate == "Non disponible") return "Non disponible";
-        if (knownVersion == "Non disponible") return knownDate;
-        if (knownDate == "Non disponible") return knownVersion;
+        var na = Loc.T("Hw_NotAvailable");
+        if (knownVersion == na && knownDate == na) return na;
+        if (knownVersion == na) return knownDate;
+        if (knownDate == na) return knownVersion;
         return knownVersion + " · " + knownDate;
     }
 
@@ -472,30 +483,32 @@ public partial class HardwarePage : UserControl
     {
         var knownVersion = Known(version);
         var knownBuild = Known(build);
-        if (knownVersion == "Non disponible" && knownBuild == "Non disponible") return "Non disponible";
-        if (knownBuild == "Non disponible") return knownVersion;
-        if (knownVersion == "Non disponible") return "build " + knownBuild;
-        return knownVersion + " · build " + knownBuild;
+        var na = Loc.T("Hw_NotAvailable");
+        if (knownVersion == na && knownBuild == na) return na;
+        if (knownBuild == na) return knownVersion;
+        if (knownVersion == na) return Loc.T("Hw_BuildVersion", knownBuild);
+        return knownVersion + " · " + Loc.T("Hw_BuildVersion", knownBuild);
     }
 
     private static string DriverText(string version, string date)
     {
         var knownVersion = Known(version);
         var knownDate = Known(date);
-        if (knownVersion == "Non disponible" && knownDate == "Non disponible") return "Non disponible";
-        if (knownDate == "Non disponible") return knownVersion;
-        if (knownVersion == "Non disponible") return knownDate;
+        var na = Loc.T("Hw_NotAvailable");
+        if (knownVersion == na && knownDate == na) return na;
+        if (knownDate == na) return knownVersion;
+        if (knownVersion == na) return knownDate;
         return knownVersion + " · " + knownDate;
     }
 
     private static string UptimeText(TimeSpan uptime)
     {
-        if (uptime <= TimeSpan.Zero) return "Non disponible";
-        if (uptime.TotalMinutes < 1) return "moins d'une minute";
+        if (uptime <= TimeSpan.Zero) return Loc.T("Hw_NotAvailable");
+        if (uptime.TotalMinutes < 1) return Loc.T("Hw_LessThanMinute");
         var parts = new List<string>();
-        if (uptime.Days > 0) parts.Add(uptime.Days.ToString(CultureInfo.CurrentCulture) + " j");
-        if (uptime.Hours > 0) parts.Add(uptime.Hours.ToString(CultureInfo.CurrentCulture) + " h");
-        parts.Add(uptime.Minutes.ToString(CultureInfo.CurrentCulture) + " min");
+        if (uptime.Days > 0) parts.Add(Loc.T("Hw_DaysShort", uptime.Days.ToString(CultureInfo.CurrentCulture)));
+        if (uptime.Hours > 0) parts.Add(Loc.T("Hw_HoursShort", uptime.Hours.ToString(CultureInfo.CurrentCulture)));
+        parts.Add(Loc.T("Hw_MinutesShort", uptime.Minutes.ToString(CultureInfo.CurrentCulture)));
         return string.Join(" ", parts);
     }
 
@@ -503,14 +516,14 @@ public partial class HardwarePage : UserControl
 
     private static string Known(string? value)
     {
-        if (string.IsNullOrWhiteSpace(value)) return "Non disponible";
+        if (string.IsNullOrWhiteSpace(value)) return Loc.T("Hw_NotAvailable");
         var trimmed = value.Trim();
         if (trimmed.Equals("Inconnu", StringComparison.OrdinalIgnoreCase) ||
             trimmed.Equals("Inconnue", StringComparison.OrdinalIgnoreCase) ||
             trimmed.Equals("Inconnus", StringComparison.OrdinalIgnoreCase) ||
             trimmed.Equals("Inconnues", StringComparison.OrdinalIgnoreCase) ||
             trimmed.Equals("Unknown", StringComparison.OrdinalIgnoreCase))
-            return "Non disponible";
+            return Loc.T("Hw_NotAvailable");
         return trimmed;
     }
 
@@ -519,8 +532,8 @@ public partial class HardwarePage : UserControl
         GpuVendor.Nvidia => "NVIDIA",
         GpuVendor.Amd => "AMD",
         GpuVendor.Intel => "Intel",
-        GpuVendor.Other => "Autre constructeur",
-        _ => "Non disponible"
+        GpuVendor.Other => Loc.T("Hw_OtherVendor"),
+        _ => Loc.T("Hw_NotAvailable")
     };
 
     private static Style? StyleOf(string key) => Application.Current?.TryFindResource(key) as Style;

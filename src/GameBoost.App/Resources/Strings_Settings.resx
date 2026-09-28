@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Settings_Title" xml:space="preserve"><value>Settings</value></data>
+  <data name="Settings_Subtitle" xml:space="preserve"><value>GameBoost settings. Everything is saved on this PC, in a local configuration file.</value></data>
+  <data name="Settings_General" xml:space="preserve"><value>General</value></data>
+  <data name="Settings_Language" xml:space="preserve"><value>Interface language</value></data>
+  <data name="Settings_LanguageTip" xml:space="preserve"><value>Language used on every GameBoost screen. Applied instantly, no restart needed.</value></data>
+  <data name="Settings_LanguageAuto" xml:space="preserve"><value>Automatic (Windows language)</value></data>
+  <data name="Settings_StatusLanguage" xml:space="preserve"><value>Interface language applied.</value></data>
+  <data name="Settings_ThemeLabel" xml:space="preserve"><value>Interface theme</value></data>
+  <data name="Settings_ThemeTip" xml:space="preserve"><value>Dark or light appearance of GameBoost</value></data>
+  <data name="Settings_ThemeDark" xml:space="preserve"><value>Dark</value></data>
+  <data name="Settings_ThemeLight" xml:space="preserve"><value>Light</value></data>
+  <data name="Settings_StartWithWindows" xml:space="preserve"><value>Start with Windows</value></data>
+  <data name="Settings_StartWithWindowsTip" xml:space="preserve"><value>Adds GameBoost to your Windows account startup key, without creating a service</value></data>
+  <data name="Settings_StartElevated" xml:space="preserve"><value>Start as administrator</value></data>
+  <data name="Settings_StartElevatedTip" xml:space="preserve"><value>Always relaunches GameBoost as administrator at startup</value></data>
+  <data name="Settings_RelaunchAdmin" xml:space="preserve"><value>Relaunch as administrator now</value></data>
+  <data name="Settings_RelaunchAdminTip" xml:space="preserve"><value>Restarts GameBoost with administrator rights: temperatures, process priorities and SMART health become available</value></data>
+  <data name="Settings_Notifications" xml:space="preserve"><value>Notifications</value></data>
+  <data name="Settings_NotificationsTip" xml:space="preserve"><value>Shows messages when an analysis or a boost finishes</value></data>
+  <data name="Settings_AnalysisBoost" xml:space="preserve"><value>Analysis &amp; Boost</value></data>
+  <data name="Settings_IntervalLabel" xml:space="preserve"><value>Analysis frequency</value></data>
+  <data name="Settings_IntervalTip" xml:space="preserve"><value>Interval between two automatic analyses of your PC's state</value></data>
+  <data name="Settings_Minutes" xml:space="preserve"><value>{0} minutes</value></data>
+  <data name="Settings_Minute" xml:space="preserve"><value>{0} minute</value></data>
+  <data name="Settings_Days" xml:space="preserve"><value>{0} days</value></data>
+  <data name="Settings_Day" xml:space="preserve"><value>{0} day</value></data>
+  <data name="Settings_ConfirmBoost" xml:space="preserve"><value>Confirm before a boost</value></data>
+  <data name="Settings_ConfirmBoostTip" xml:space="preserve"><value>Asks for confirmation before any system change</value></data>
+  <data name="Settings_RelaunchClosed" xml:space="preserve"><value>Relaunch closed applications</value></data>
+  <data name="Settings_RelaunchClosedTip" xml:space="preserve"><value>Automatically reopens the applications closed by the boost after the gaming session</value></data>
+  <data name="Settings_ClearTemp" xml:space="preserve"><value>Clean temporary files on boost</value></data>
+  <data name="Settings_ClearTempTip" xml:space="preserve"><value>Deletes temporary files: this operation is not reversible</value></data>
+  <data name="Settings_AutoCloseTitle" xml:space="preserve"><value>Applications to close automatically</value></data>
+  <data name="Settings_AutoCloseNote" xml:space="preserve"><value>GameBoost will close these applications before a boost to free resources.</value></data>
+  <data name="Settings_AutoCloseEnable" xml:space="preserve"><value>Enable automatic closing</value></data>
+  <data name="Settings_AutoCloseEnableTip" xml:space="preserve"><value>Allows GameBoost to close the applications listed below</value></data>
+  <data name="Settings_AutoCloseBoxTip" xml:space="preserve"><value>Process name, for example chrome or discord</value></data>
+  <data name="Settings_Add" xml:space="preserve"><value>Add</value></data>
+  <data name="Settings_AddTip" xml:space="preserve"><value>Add this application to the list</value></data>
+  <data name="Settings_RunningPickerTip" xml:space="preserve"><value>Pick a running application to prefill the field</value></data>
+  <data name="Settings_RemoveTip" xml:space="preserve"><value>Remove from the list</value></data>
+  <data name="Settings_ExclusionsTitle" xml:space="preserve"><value>Exclusions &amp; folders</value></data>
+  <data name="Settings_ExclusionsLabel" xml:space="preserve"><value>Exclusions</value></data>
+  <data name="Settings_ExclusionsNote" xml:space="preserve"><value>GameBoost will never act on these items: no performance analysis, no closing, no priority change.</value></data>
+  <data name="Settings_ExclusionBoxTip" xml:space="preserve"><value>Name of a process or game to exclude</value></data>
+  <data name="Settings_AddExclusionTip" xml:space="preserve"><value>Add to exclusions</value></data>
+  <data name="Settings_CustomFoldersLabel" xml:space="preserve"><value>Custom game folders</value></data>
+  <data name="Settings_CustomFoldersNote" xml:space="preserve"><value>These folders will be scanned during the next game search.</value></data>
+  <data name="Settings_AddFolder" xml:space="preserve"><value>Add a folder</value></data>
+  <data name="Settings_AddFolderTip" xml:space="preserve"><value>Choose a game folder that was not detected automatically</value></data>
+  <data name="Settings_RemoveFolderTip" xml:space="preserve"><value>Remove this folder from the list</value></data>
+  <data name="Settings_OverlayMonitoring" xml:space="preserve"><value>Overlay &amp; Monitoring</value></data>
+  <data name="Settings_OverlayEnabled" xml:space="preserve"><value>Overlay enabled</value></data>
+  <data name="Settings_OverlayEnabledTip" xml:space="preserve"><value>Shows an in-game overlay: FPS, temperatures, loads</value></data>
+  <data name="Settings_FpsTip" xml:space="preserve"><value>Show frames per second</value></data>
+  <data name="Settings_FrameTime" xml:space="preserve"><value>Frame time</value></data>
+  <data name="Settings_FrameTimeTip" xml:space="preserve"><value>Show time per frame: useful to detect stuttering</value></data>
+  <data name="Settings_CpuLoadTip" xml:space="preserve"><value>Show processor load</value></data>
+  <data name="Settings_GpuLoadTip" xml:space="preserve"><value>Show graphics card load</value></data>
+  <data name="Settings_RamLoadTip" xml:space="preserve"><value>Show memory in use</value></data>
+  <data name="Settings_Temperatures" xml:space="preserve"><value>Temperatures</value></data>
+  <data name="Settings_TemperaturesTip" xml:space="preserve"><value>Show CPU and GPU temperatures if sensors are available</value></data>
+  <data name="Settings_Opacity" xml:space="preserve"><value>Overlay opacity</value></data>
+  <data name="Settings_OpacityTip" xml:space="preserve"><value>In-game overlay transparency: 30% very transparent, 100% opaque</value></data>
+  <data name="Settings_RecordSessions" xml:space="preserve"><value>Record sessions</value></data>
+  <data name="Settings_RecordSessionsTip" xml:space="preserve"><value>Keeps the measurements of each gaming session so you can compare them</value></data>
+  <data name="Settings_RetentionLabel" xml:space="preserve"><value>History retention</value></data>
+  <data name="Settings_RetentionTip" xml:space="preserve"><value>How long past sessions are kept</value></data>
+  <data name="Settings_ApplyNow" xml:space="preserve"><value>Apply now</value></data>
+  <data name="Settings_ApplyNowTip" xml:space="preserve"><value>Immediately deletes sessions older than the chosen retention</value></data>
+  <data name="Settings_BackupsLogs" xml:space="preserve"><value>Backups &amp; logs</value></data>
+  <data name="Settings_BackupLabel" xml:space="preserve"><value>Backup location</value></data>
+  <data name="Settings_BackupNote" xml:space="preserve"><value>Empty = GameBoost default folder. Applied profiles drop a copy of modified files there.</value></data>
+  <data name="Settings_BackupBoxTip" xml:space="preserve"><value>Folder where GameBoost copies files before modifying them</value></data>
+  <data name="Settings_Browse" xml:space="preserve"><value>Browse…</value></data>
+  <data name="Settings_BrowseTip" xml:space="preserve"><value>Choose another backup folder</value></data>
+  <data name="Settings_OpenFolder" xml:space="preserve"><value>Open folder</value></data>
+  <data name="Settings_OpenBackupTip" xml:space="preserve"><value>Open the backups folder in File Explorer</value></data>
+  <data name="Settings_OpenLogs" xml:space="preserve"><value>Open logs folder</value></data>
+  <data name="Settings_OpenLogsTip" xml:space="preserve"><value>Open the folder containing log files</value></data>
+  <data name="Settings_ShowLogs" xml:space="preserve"><value>Show last 200 log lines</value></data>
+  <data name="Settings_ShowLogsTip" xml:space="preserve"><value>Displays the last 200 lines written today</value></data>
+  <data name="Settings_TodayLog" xml:space="preserve"><value>Today's log</value></data>
+  <data name="Settings_Copy" xml:space="preserve"><value>Copy</value></data>
+  <data name="Settings_CopyTip" xml:space="preserve"><value>Copy the whole display to the clipboard</value></data>
+  <data name="Settings_TrimLogs" xml:space="preserve"><value>Clean old logs</value></data>
+  <data name="Settings_TrimLogsTip" xml:space="preserve"><value>Deletes logs older than the defined retention period</value></data>
+  <data name="Settings_About" xml:space="preserve"><value>About</value></data>
+  <data name="Settings_Version" xml:space="preserve"><value>Version</value></data>
+  <data name="Settings_PrivacyNote" xml:space="preserve"><value>Your data stays on this PC — no account, nothing uploaded.</value></data>
+  <data name="Settings_HonestyNote" xml:space="preserve"><value>GameBoost promises no specific FPS gain: results depend on your hardware, your drivers and the games you play.</value></data>
+  <data name="Settings_StatusReadFail" xml:space="preserve"><value>Unable to read settings: {0}</value></data>
+  <data name="Settings_StatusSaved" xml:space="preserve"><value>Changed: {0}</value></data>
+  <data name="Settings_StatusSaveFail" xml:space="preserve"><value>Save failed: {0}</value></data>
+  <data name="Settings_LblStartWithWindows" xml:space="preserve"><value>start with Windows</value></data>
+  <data name="Settings_LblStartElevated" xml:space="preserve"><value>start as administrator</value></data>
+  <data name="Settings_LblNotifications" xml:space="preserve"><value>notifications</value></data>
+  <data name="Settings_LblInterval" xml:space="preserve"><value>analysis frequency ({0} min)</value></data>
+  <data name="Settings_LblConfirmBoost" xml:space="preserve"><value>confirmation before boost</value></data>
+  <data name="Settings_LblRelaunchClosed" xml:space="preserve"><value>relaunch of closed apps</value></data>
+  <data name="Settings_LblClearTemp" xml:space="preserve"><value>temporary cleanup on boost</value></data>
+  <data name="Settings_LblAutoClose" xml:space="preserve"><value>auto-closed applications</value></data>
+  <data name="Settings_LblExclusions" xml:space="preserve"><value>exclusions</value></data>
+  <data name="Settings_LblCustomFolders" xml:space="preserve"><value>custom game folders</value></data>
+  <data name="Settings_LblOverlay" xml:space="preserve"><value>overlay</value></data>
+  <data name="Settings_LblOverlayFps" xml:space="preserve"><value>overlay: FPS</value></data>
+  <data name="Settings_LblOverlayFrameTime" xml:space="preserve"><value>overlay: frame time</value></data>
+  <data name="Settings_LblOverlayCpu" xml:space="preserve"><value>overlay: CPU</value></data>
+  <data name="Settings_LblOverlayGpu" xml:space="preserve"><value>overlay: GPU</value></data>
+  <data name="Settings_LblOverlayRam" xml:space="preserve"><value>overlay: RAM</value></data>
+  <data name="Settings_LblOverlayTemp" xml:space="preserve"><value>overlay: temperatures</value></data>
+  <data name="Settings_LblOpacity" xml:space="preserve"><value>overlay opacity</value></data>
+  <data name="Settings_LblSessions" xml:space="preserve"><value>session recording</value></data>
+  <data name="Settings_LblRetention" xml:space="preserve"><value>history retention ({0} days)</value></data>
+  <data name="Settings_LblBackupLocation" xml:space="preserve"><value>backup location</value></data>
+  <data name="Settings_StatusStartWinFail" xml:space="preserve"><value>Start with Windows failed: {0}</value></data>
+  <data name="Settings_StatusNoPath" xml:space="preserve"><value>Application path not found: relaunch impossible.</value></data>
+  <data name="Settings_StatusRelaunchAsked" xml:space="preserve"><value>Administrator relaunch requested.</value></data>
+  <data name="Settings_StatusRelaunchFail" xml:space="preserve"><value>Relaunch cancelled or failed: {0}</value></data>
+  <data name="Settings_StatusEnterName" xml:space="preserve"><value>Enter the name of an application to close.</value></data>
+  <data name="Settings_StatusAlreadyListed" xml:space="preserve"><value>“{0}” is already in the list.</value></data>
+  <data name="Settings_StatusAlreadyExcluded" xml:space="preserve"><value>“{0}” is already excluded.</value></data>
+  <data name="Settings_StatusAddFail" xml:space="preserve"><value>Add failed: {0}</value></data>
+  <data name="Settings_StatusEnterExclusion" xml:space="preserve"><value>Enter an item to exclude.</value></data>
+  <data name="Settings_StatusFolderAdded" xml:space="preserve"><value>Folder added: it will be scanned on the next game search.</value></data>
+  <data name="Settings_StatusFolderDup" xml:space="preserve"><value>This folder is already in the list.</value></data>
+  <data name="Settings_DialogGameFolder" xml:space="preserve"><value>Choose a game folder</value></data>
+  <data name="Settings_DialogBackupFolder" xml:space="preserve"><value>Choose the backup folder</value></data>
+  <data name="Settings_StatusPruned" xml:space="preserve"><value>History cleaned with a retention of {0} days.</value></data>
+  <data name="Settings_StatusPruneFail" xml:space="preserve"><value>Cleanup failed: {0}</value></data>
+  <data name="Settings_StatusEmptyPath" xml:space="preserve"><value>Empty path for {0}.</value></data>
+  <data name="Settings_StatusOpening" xml:space="preserve"><value>Opening the {0}.</value></data>
+  <data name="Settings_StatusOpenFail" xml:space="preserve"><value>Opening failed: {0}</value></data>
+  <data name="Settings_LblBackupFolder" xml:space="preserve"><value>backups folder</value></data>
+  <data name="Settings_LblLogsFolder" xml:space="preserve"><value>logs folder</value></data>
+  <data name="Settings_StatusLogLines" xml:space="preserve"><value>{0} log line(s) displayed.</value></data>
+  <data name="Settings_StatusLogReadFail" xml:space="preserve"><value>Unable to read logs: {0}</value></data>
+  <data name="Settings_StatusNoLogCopy" xml:space="preserve"><value>No log to copy.</value></data>
+  <data name="Settings_StatusCopied" xml:space="preserve"><value>Log copied to the clipboard.</value></data>
+  <data name="Settings_StatusCopyFail" xml:space="preserve"><value>Copy failed: {0}</value></data>
+  <data name="Settings_StatusLogsTrimmed" xml:space="preserve"><value>Logs cleaned: keeping {0} days.</value></data>
+</root>

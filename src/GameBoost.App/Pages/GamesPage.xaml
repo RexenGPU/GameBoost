@@ -1,7 +1,8 @@
 ﻿<UserControl x:Class="GameBoost.App.Pages.GamesPage"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:games="clr-namespace:GameBoost.App.Pages.Games">
+             xmlns:games="clr-namespace:GameBoost.App.Pages.Games"
+             xmlns:loc="clr-namespace:GameBoost.App.Localization">
     <UserControl.Resources>
         <games:GameIconConverter x:Key="GameIcon" />
         <Style x:Key="ScanProgress" TargetType="ProgressBar">
@@ -68,27 +69,27 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0">
-                <TextBlock Text="Jeux détectés" Style="{StaticResource H1}" />
+                <TextBlock Text="{loc:Text Games_Title}" Style="{StaticResource H1}" />
                 <TextBlock Style="{StaticResource BodyMuted}" Margin="0,6,0,0"
-                           Text="Bibliothèque locale : jeux installés trouvés sur ce PC, ajoutés à la main, lancement et raccourci vers les profils." />
+                           Text="{loc:Text Games_Subtitle}" />
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top">
                 <Button x:Name="ScanButton" Style="{StaticResource AccentButton}"
                         Click="OnScanClick" Margin="0,0,10,0"
-                        ToolTip="Analyse complète des plateformes (Steam, Epic, Ubisoft, Xbox, GOG, Battle.net, Riot). Prend environ 12 secondes.">
+                        ToolTip="{loc:Text Games_ScanTip}">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="&#xE768;" FontFamily="{StaticResource IconFont}" FontSize="13"
                                    Margin="0,0,8,0" VerticalAlignment="Center" />
-                        <TextBlock Text="Scanner" />
+                        <TextBlock Text="{loc:Text Games_Scan}" />
                     </StackPanel>
                 </Button>
                 <Button x:Name="AddButton" Style="{StaticResource SecondaryButton}"
                         Click="OnAddExeClick"
-                        ToolTip="Ajouter un jeu à la main à partir de son fichier exécutable">
+                        ToolTip="{loc:Text Games_AddTip}">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="&#xE8A7;" FontFamily="{StaticResource IconFont}" FontSize="13"
                                    Margin="0,0,8,0" VerticalAlignment="Center" />
-                        <TextBlock Text="Ajouter un .exe" />
+                        <TextBlock Text="{loc:Text Games_AddExe}" />
                     </StackPanel>
                 </Button>
             </StackPanel>
@@ -105,7 +106,7 @@
                 <TextBox x:Name="SearchBox" Style="{StaticResource SearchBox}"
                          VerticalContentAlignment="Center"
                          TextChanged="OnSearchChanged"
-                         ToolTip="Filtrer par nom de jeu ou chemin d'installation" />
+                         ToolTip="{loc:Text Games_SearchTip}" />
                 <TextBlock Text="&#xE721;" FontFamily="{StaticResource IconFont}" FontSize="13"
                            Foreground="{DynamicResource TextMutedBrush}"
                            HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"
@@ -113,11 +114,11 @@
             </Grid>
             <ComboBox x:Name="PlatformFilter" Grid.Column="1" Margin="0,0,10,0"
                       SelectionChanged="OnPlatformChanged"
-                      ToolTip="N'afficher que les jeux d'une plateforme" />
+                      ToolTip="{loc:Text Games_PlatformTip}" />
             <TextBlock x:Name="ResultCount" Grid.Column="2" Style="{StaticResource Caption}"
                        VerticalAlignment="Center" />
             <TextBlock Grid.Column="3" Style="{StaticResource Caption}" VerticalAlignment="Center"
-                       Text="Tout est stocké sur ce PC" />
+                       Text="{loc:Text Games_LocalNote}" />
         </Grid>
 
         <ProgressBar x:Name="ScanProgress" Grid.Row="2" Margin="0,12,0,0"
@@ -171,7 +172,7 @@
                                             <Border Grid.Column="2" Background="{DynamicResource AccentBrush}"
                                                     CornerRadius="6" Padding="7,3" VerticalAlignment="Top"
                                                     Visibility="{Binding RunningLabel, Converter={StaticResource NullToCollapsed}}"
-                                                    ToolTip="Ce jeu est actuellement ouvert">
+                                                    ToolTip="{loc:Text Games_RunningTip}">
                                                 <TextBlock Text="{Binding RunningLabel}" Style="{StaticResource Caption}"
                                                            Foreground="{DynamicResource OnAccentBrush}" />
                                             </Border>
@@ -187,11 +188,11 @@
                                                 <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
                                             <StackPanel Grid.Column="0">
-                                                <TextBlock Text="Dernier lancement" Style="{StaticResource Label}" />
+                                                <TextBlock Text="{loc:Text Games_LastLaunch}" Style="{StaticResource Label}" />
                                                 <TextBlock Text="{Binding LastLaunchLabel}" Style="{StaticResource Caption}" />
                                             </StackPanel>
                                             <StackPanel Grid.Column="1" HorizontalAlignment="Right">
-                                                <TextBlock Text="Taille" Style="{StaticResource Label}"
+                                                <TextBlock Text="{loc:Text Games_Size}" Style="{StaticResource Label}"
                                                            HorizontalAlignment="Right" />
                                                 <TextBlock Text="{Binding SizeLabel}" Style="{StaticResource Caption}"
                                                            HorizontalAlignment="Right" />
@@ -210,22 +211,22 @@
                                                     <TextBlock Text="&#xE74E;" FontFamily="{StaticResource IconFont}"
                                                                FontSize="12" Margin="0,0,6,0"
                                                                VerticalAlignment="Center" />
-                                                    <TextBlock Text="Lancer" />
+                                                    <TextBlock Text="{loc:Text Games_Launch}" />
                                                 </StackPanel>
                                             </Button>
                                             <Button Style="{StaticResource GhostButton}" Padding="12,7" Margin="6,0,0,0"
                                                     Click="OnProfilesClick"
-                                                    ToolTip="Ouvrir la page des profils graphiques">
-                                                <TextBlock Text="Profils" />
+                                                    ToolTip="{loc:Text Games_ProfilesBtnTip}">
+                                                <TextBlock Text="{loc:Text Games_ProfilesBtn}" />
                                             </Button>
                                             <Button Style="{StaticResource GhostButton}" Padding="12,7" Margin="6,0,0,0"
                                                     Click="OnOpenFolderClick" Tag="{Binding Game}"
-                                                    ToolTip="Ouvrir l'explorateur de fichiers sur ce jeu">
-                                                <TextBlock Text="Ouvrir le dossier" />
+                                                    ToolTip="{loc:Text Games_OpenFolderTip}">
+                                                <TextBlock Text="{loc:Text Games_OpenFolderBtn}" />
                                             </Button>
                                             <Button Style="{StaticResource GhostButton}" Padding="8,7" Margin="6,0,0,0"
                                                     Click="OnRemoveClick" Tag="{Binding Game}"
-                                                    ToolTip="Retirer ce jeu de GameBoost (les fichiers ne sont pas supprimés)">
+                                                    ToolTip="{loc:Text Games_RemoveTip}">
                                                 <TextBlock Text="&#xE711;" FontFamily="{StaticResource IconFont}"
                                                            FontSize="13" />
                                             </Button>
@@ -242,18 +243,18 @@
                     <TextBlock Text="&#xE7FC;" FontFamily="{StaticResource IconFont}" FontSize="34"
                                Foreground="{DynamicResource TextMutedBrush}"
                                HorizontalAlignment="Center" />
-                    <TextBlock Text="Aucun jeu à afficher" Style="{StaticResource H2}"
+                    <TextBlock Text="{loc:Text Games_EmptyTitle}" Style="{StaticResource H2}"
                                HorizontalAlignment="Center" Margin="0,12,0,0" />
-                    <TextBlock Text="Lancez une analyse pour découvrir les jeux installés sur ce PC, ou ajoutez un exécutable à la main. Rien n'est envoyé : la bibliothèque reste sur votre machine."
+                    <TextBlock Text="{loc:Text Games_EmptyHint}"
                                Style="{StaticResource BodyMuted}" HorizontalAlignment="Center"
                                Margin="0,8,0,0" TextAlignment="Center" />
                     <Button Style="{StaticResource AccentButton}" HorizontalAlignment="Center"
                             Margin="0,18,0,0" Click="OnScanClick"
-                            ToolTip="Analyse complète des plateformes installées">
+                            ToolTip="{loc:Text Games_EmptyScanTip}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="&#xE768;" FontFamily="{StaticResource IconFont}" FontSize="13"
                                        Margin="0,0,8,0" VerticalAlignment="Center" />
-                            <TextBlock Text="Scanner" />
+                            <TextBlock Text="{loc:Text Games_Scan}" />
                         </StackPanel>
                     </Button>
                 </StackPanel>
@@ -262,8 +263,8 @@
             <Border Grid.Column="1" Style="{StaticResource Card}" VerticalAlignment="Top">
                 <Grid>
                 <StackPanel x:Name="DetailPlaceholder">
-                    <TextBlock Text="Détail du jeu" Style="{StaticResource Label}" />
-                    <TextBlock Text="Sélectionnez un jeu dans la liste pour voir son chemin, ses arguments de lancement, son overlay et sa configuration connue."
+                    <TextBlock Text="{loc:Text Games_DetailTitle}" Style="{StaticResource Label}" />
+                    <TextBlock Text="{loc:Text Games_DetailHint}"
                                Style="{StaticResource BodyMuted}" Margin="0,8,0,0" />
                 </StackPanel>
 
@@ -284,8 +285,8 @@
                     <Border x:Name="RunningBadge" Background="{DynamicResource AccentBrush}" CornerRadius="7"
                             Padding="9,4" HorizontalAlignment="Left" Margin="0,10,0,0"
                             Visibility="Collapsed"
-                            ToolTip="Ce jeu est actuellement en cours d'exécution">
-                        <TextBlock Text="En cours d'exécution"
+                            ToolTip="{loc:Text Games_RunningBadgeTip}">
+                        <TextBlock Text="{loc:Text Games_RunningBadge}"
                                    Foreground="{DynamicResource OnAccentBrush}" Style="{StaticResource Caption}" />
                     </Border>
 
@@ -298,12 +299,12 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Row="0" Margin="0,0,0,9">
-                            <TextBlock Text="Dossier d'installation" Style="{StaticResource Label}" />
+                            <TextBlock Text="{loc:Text Games_InstallDir}" Style="{StaticResource Label}" />
                             <TextBlock Text="{Binding InstallPathLabel}" Style="{StaticResource Mono}"
                                        TextWrapping="Wrap" ToolTip="{Binding InstallPathLabel}" />
                         </StackPanel>
                         <StackPanel Grid.Row="1" Margin="0,0,0,9">
-                            <TextBlock Text="Exécutable" Style="{StaticResource Label}" />
+                            <TextBlock Text="{loc:Text Games_Executable}" Style="{StaticResource Label}" />
                             <TextBlock Text="{Binding ExecutableLabel}" Style="{StaticResource Mono}"
                                        TextWrapping="Wrap" ToolTip="{Binding ExecutableLabel}" />
                         </StackPanel>
@@ -313,26 +314,26 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="0">
-                                <TextBlock Text="Taille d'installation" Style="{StaticResource Label}" />
+                                <TextBlock Text="{loc:Text Games_InstallSize}" Style="{StaticResource Label}" />
                                 <TextBlock Text="{Binding SizeLabel}" Style="{StaticResource Body}" />
                             </StackPanel>
                             <StackPanel Grid.Column="1">
-                                <TextBlock Text="Dernier lancement" Style="{StaticResource Label}" />
+                                <TextBlock Text="{loc:Text Games_LastLaunch}" Style="{StaticResource Label}" />
                                 <TextBlock Text="{Binding LastLaunchLabel}" Style="{StaticResource Body}" />
                             </StackPanel>
                         </Grid>
                         <StackPanel Grid.Row="3" Margin="0,0,0,9">
-                            <TextBlock Text="Identifiant interne" Style="{StaticResource Label}" />
+                            <TextBlock Text="{loc:Text Games_InternalId}" Style="{StaticResource Label}" />
                             <TextBlock Text="{Binding Game.Id}" Style="{StaticResource Mono}" />
                         </StackPanel>
                         <StackPanel Grid.Row="4">
-                            <TextBlock Text="Overlay FPS pour ce jeu"
+                            <TextBlock Text="{loc:Text Games_OverlayForGame}"
                                        Style="{StaticResource Label}" />
                             <StackPanel Orientation="Horizontal" Margin="0,7,0,0">
                                 <ToggleButton x:Name="OverlayToggle" Style="{StaticResource Toggle}"
                                               Checked="OnOverlayChanged" Unchecked="OnOverlayChanged"
-                                              ToolTip="Afficher ou masquer l'overlay FPS, températures et charges pendant que ce jeu tourne" />
-                                <TextBlock x:Name="OverlayLabel" Text="Overlay activé"
+                                              ToolTip="{loc:Text Games_OverlayTip}" />
+                                <TextBlock x:Name="OverlayLabel" Text="{loc:Text Games_OverlayEnabled}"
                                            Style="{StaticResource Body}" Margin="9,0,0,0"
                                            VerticalAlignment="Center" />
                             </StackPanel>
@@ -341,28 +342,28 @@
 
                     <Separator Margin="0,14,0,12" Background="{DynamicResource BorderBrush}" />
 
-                    <TextBlock Text="Arguments de lancement" Style="{StaticResource Label}" />
+                    <TextBlock Text="{loc:Text Games_LaunchArgs}" Style="{StaticResource Label}" />
                     <TextBox x:Name="ArgsBox" Margin="0,6,0,0" MinHeight="34"
-                             ToolTip="Options passées au jeu au démarrage, par exemple : -windowed -novid" />
+                             ToolTip="{loc:Text Games_ArgsTip}" />
                     <Button Style="{StaticResource AccentButton}" HorizontalAlignment="Left"
                             Margin="0,10,0,0" Click="OnSaveGameClick"
-                            ToolTip="Enregistrer les arguments et l'état de l'overlay pour ce jeu">
+                            ToolTip="{loc:Text Games_SaveTip}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="&#xE896;" FontFamily="{StaticResource IconFont}" FontSize="13"
                                        Margin="0,0,8,0" VerticalAlignment="Center" />
-                            <TextBlock Text="Enregistrer" />
+                            <TextBlock Text="{loc:Text Games_Save}" />
                         </StackPanel>
                     </Button>
 
                     <Separator Margin="0,16,0,12" Background="{DynamicResource BorderBrush}" />
 
-                    <TextBlock Text="Configuration connue" Style="{StaticResource Label}" />
+                    <TextBlock Text="{loc:Text Games_KnownConfig}" Style="{StaticResource Label}" />
                     <TextBlock x:Name="ConfigText" Style="{StaticResource BodyMuted}" Margin="0,6,0,0" />
 
                     <Button Style="{StaticResource SecondaryButton}" HorizontalAlignment="Left"
                             Margin="0,14,0,0" Click="OnProfilesClick"
-                            ToolTip="Voir les profils graphiques disponibles pour ce jeu">
-                        <TextBlock Text="Voir les profils" />
+                            ToolTip="{loc:Text Games_ViewProfilesTip}">
+                        <TextBlock Text="{loc:Text Games_ViewProfiles}" />
                     </Button>
                 </StackPanel>
                 </Grid>

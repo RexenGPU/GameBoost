@@ -1,6 +1,7 @@
 ﻿<UserControl x:Class="GameBoost.App.Pages.StoragePage"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:loc="clr-namespace:GameBoost.App.Localization"
              Loaded="OnLoaded">
     <Grid Margin="26,22,26,24">
         <Grid.RowDefinitions>
@@ -17,34 +18,34 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <StackPanel VerticalAlignment="Center">
-                <TextBlock Text="Stockage" Style="{StaticResource H1}" />
-                <TextBlock Text="Espace libre, état SMART et températures de vos disques"
+                <TextBlock Text="{loc:Text Sto_Title}" Style="{StaticResource H1}" />
+                <TextBlock Text="{loc:Text Sto_Subtitle}"
                            Style="{StaticResource BodyMuted}" Margin="0,6,0,0" />
             </StackPanel>
             <Button x:Name="RefreshButton" Grid.Column="1" Style="{StaticResource SecondaryButton}"
                     VerticalAlignment="Top" Click="OnRefreshClick"
-                    ToolTip="Relancer l'analyse complète des disques : températures, santé SMART et débit d'essai. Environ 3 secondes.">
+                    ToolTip="{loc:Text Sto_RefreshTip}">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="&#xE768;" FontFamily="{StaticResource IconFont}" FontSize="13"
                                Margin="0,0,8,0" VerticalAlignment="Center"
                                Foreground="{DynamicResource TextMutedBrush}" />
-                    <TextBlock Text="Actualiser" VerticalAlignment="Center" />
+                    <TextBlock Text="{loc:Text Sto_Refresh}" VerticalAlignment="Center" />
                 </StackPanel>
             </Button>
         </Grid>
 
         <StackPanel x:Name="LoadingPanel" Grid.Row="1" Margin="0,18,0,0" Visibility="Collapsed">
             <ProgressBar Style="{StaticResource SlimProgress}" IsIndeterminate="True" />
-            <TextBlock Text="Analyse des disques (températures, santé, débits)…"
+            <TextBlock Text="{loc:Text Sto_Loading}"
                        Style="{StaticResource BodyMuted}" Margin="0,9,0,0" />
-            <TextBlock Text="L'analyse prend jusqu'à 3 secondes : elle relève les compteurs SMART et mesure un débit d'essai."
+            <TextBlock Text="{loc:Text Sto_LoadingNote}"
                        Style="{StaticResource Caption}" Margin="0,4,0,0" />
         </StackPanel>
 
         <StackPanel x:Name="AlertHost" Grid.Row="2" />
 
         <StackPanel x:Name="DisksPanel" Grid.Row="3" Margin="0,16,0,0">
-            <TextBlock x:Name="DisksEmpty" Text="Aucun disque détecté." Style="{StaticResource BodyMuted}"
+            <TextBlock x:Name="DisksEmpty" Text="{loc:Text Sto_Empty}" Style="{StaticResource BodyMuted}"
                        Visibility="Collapsed" />
         </StackPanel>
 
@@ -53,15 +54,15 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="&#xE8A4;" FontFamily="{StaticResource IconFont}" FontSize="14"
                                Foreground="{DynamicResource AccentBrush}" Margin="0,0,8,0" VerticalAlignment="Center" />
-                    <TextBlock Text="Conseils" Style="{StaticResource H3}" VerticalAlignment="Center" />
+                    <TextBlock Text="{loc:Text Sto_TipsTitle}" Style="{StaticResource H3}" VerticalAlignment="Center" />
                 </StackPanel>
-                <TextBlock Text="En dessous de 10 % d'espace libre, Windows et les jeux manquent de place pour leurs mises à jour et leur cache : les téléchargements échouent ou ralentissent."
+                <TextBlock Text="{loc:Text Sto_Tip1}"
                            Style="{StaticResource Body}" Margin="0,12,0,0" />
-                <TextBlock Text="Un SSD rempli à plus de 90 % perd en performance : gardez une marge libre, surtout sur le disque qui contient Windows."
+                <TextBlock Text="{loc:Text Sto_Tip2}"
                            Style="{StaticResource Body}" Margin="0,8,0,0" />
-                <TextBlock Text="Les températures et l'état SMART ne sont lus qu'avec les droits administrateur : sans eux, ces valeurs s'affichent comme indisponibles."
+                <TextBlock Text="{loc:Text Sto_Tip3}"
                            Style="{StaticResource Body}" Margin="0,8,0,0" />
-                <TextBlock Text="Ces lignes décrivent le fonctionnement normal du stockage. GameBoost ne modifie aucun de vos disques."
+                <TextBlock Text="{loc:Text Sto_Tip4}"
                            Style="{StaticResource Caption}" Margin="0,12,0,0" />
             </StackPanel>
         </Border>

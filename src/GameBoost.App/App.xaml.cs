@@ -2,6 +2,7 @@
 using System.Windows.Threading;
 using GameBoost.App.Services;
 using GameBoost.Core.Data;
+using GameBoost.Core.Localization;
 using GameBoost.Core.Logging;
 using GameBoost.Core.Monitoring;
 using GameBoost.Core.Optimization;
@@ -15,6 +16,9 @@ public partial class App : Application
         base.OnStartup(e);
 
         AppPaths.Ensure();
+        Loc.RegisterAssembly(typeof(GameBoost.Core.Logging.Log).Assembly);
+        Loc.RegisterAssembly(typeof(App).Assembly);
+        Loc.SetCulture(SettingsService.Current.Language);
         Log.Init(AppPaths.LogsDir, SettingsService.Current.LogRetentionDays);
         Log.Info("App", "Démarrage de GameBoost " + AssemblyVersion());
 
@@ -102,9 +106,8 @@ public partial class App : Application
         try
         {
             MessageBox.Show(
-                "Une erreur inattendue s'est produite :\n\n" + e.Exception.Message +
-                "\n\nL'application va continuer de fonctionner. Le détail a été écrit dans le journal.",
-                "GameBoost — erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
+                Loc.T("App_ErrorBody", e.Exception.Message),
+                Loc.T("App_ErrorTitle"), MessageBoxButton.OK, MessageBoxImage.Warning);
         }
         catch
         {

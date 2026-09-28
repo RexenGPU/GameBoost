@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using GameBoost.App.Pages.Processes;
 using GameBoost.App.Services;
+using GameBoost.Core.Localization;
 using GameBoost.Core.Logging;
 using GameBoost.Core.Models;
 using GameBoost.Core.Processes;
@@ -14,8 +15,8 @@ namespace GameBoost.App.Pages;
 
 public partial class ProcessesPage : UserControl
 {
-    private static readonly string[] SortLabels =
-        { "Nom", "CPU %", "RAM", "GPU %" };
+    private static string[] SortLabels => new[]
+        { Loc.T("Proc_SortName"), Loc.T("Proc_SortCpu"), Loc.T("Proc_SortRam"), Loc.T("Proc_SortGpu") };
 
     private readonly List<ProcessRow> _rows = new();
     private readonly List<string> _neverClose = new();
@@ -57,12 +58,12 @@ public partial class ProcessesPage : UserControl
         if (AutoToggle.IsChecked == true)
         {
             _timer.Start();
-            ShellState.Status("Actualisation automatique activée (2 s).");
+            ShellState.Status(Loc.T("Proc_StatusAutoOn"));
         }
         else
         {
             _timer.Stop();
-            ShellState.Status("Actualisation automatique désactivée.");
+            ShellState.Status(Loc.T("Proc_StatusAutoOff"));
         }
     }
 
@@ -78,7 +79,7 @@ public partial class ProcessesPage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Lecture des processus", ex);
-            ShellState.Status("Lecture des processus impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Proc_StatusReadFail", ex.Message));
         }
         finally
         {
@@ -127,8 +128,8 @@ public partial class ProcessesPage : UserControl
         EmptyText.Visibility = visible.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
 
         var totalCpu = _rows.Sum(row => row.CpuValue);
-        var summary = _rows.Count + " processus · " + totalCpu.ToString("F0") + " % CPU cumulé";
-        if (query.Length > 0) summary += " · " + visible.Count + " correspondance(s) au filtre";
+        var summary = Loc.T("Proc_Summary", _rows.Count, totalCpu.ToString("F0"));
+        if (query.Length > 0) summary += Loc.T("Proc_SummaryFiltered", visible.Count);
         SummaryText.Text = summary;
 
         CloseSelectedButton.IsEnabled = _rows.Any(row => row.IsChecked);
@@ -172,13 +173,16 @@ public partial class ProcessesPage : UserControl
         }
         UpdateSortHeaders();
         ApplyView();
-        ShellState.Status("Tri : " + (key switch
+        var sortLabel = key switch
         {
-            "name" => "nom",
-            "ram" => "mémoire",
-            "gpu" => "GPU",
-            _ => "processeur"
-        }) + (_sortDescending ? " décroissant." : " croissant."));
+            "name" => Loc.T("Proc_SortKeyName"),
+            "ram" => Loc.T("Proc_SortKeyRam"),
+            "gpu" => Loc.T("Proc_SortKeyGpu"),
+            _ => Loc.T("Proc_SortKeyCpu")
+        };
+        ShellState.Status(_sortDescending
+            ? Loc.T("Proc_StatusSortDesc", sortLabel)
+            : Loc.T("Proc_StatusSortAsc", sortLabel));
     }
 
     private void UpdateSortHeaders()
@@ -201,7 +205,7 @@ public partial class ProcessesPage : UserControl
     private void OnRefreshClick(object sender, RoutedEventArgs e)
     {
         Refresh();
-        ShellState.Status("Actualisation demandée.");
+        ShellState.Status(Loc.T("Proc_StatusRefreshed"));
     }
 
     private void OnRowCheckChanged(object sender, RoutedEventArgs e)
@@ -245,7 +249,7 @@ public partial class ProcessesPage : UserControl
         var row = _rows.FirstOrDefault(item => item.Pid == pid);
         if (row is null)
         {
-            ShellState.Status("Processus introuvable.");
+            ShellState.Status(Loc.T("Proc_StatusNotFound"));
             return;
         }
 
@@ -254,7 +258,7 @@ public partial class ProcessesPage : UserControl
             var path = row.Snapshot.Path;
             if (string.IsNullOrWhiteSpace(path))
             {
-                ShellState.Status("Chemin inaccessible pour ce processus.");
+                ShellState.Status(Loc.T("Proc_StatusNoPath"));
                 return;
             }
             if (File.Exists(path))
@@ -263,7 +267,7 @@ public partial class ProcessesPage : UserControl
                 {
                     UseShellExecute = true
                 });
-                ShellState.Status("Explorateur ouvert sur " + row.NameLabel + ".");
+                ShellState.Status(Loc.T("Proc_StatusExplorerOpened", row.NameLabel));
             }
             else if (Directory.Exists(path))
             {
@@ -274,13 +278,13 @@ public partial class ProcessesPage : UserControl
             }
             else
             {
-                ShellState.Status("Fichier introuvable : " + path);
+                ShellState.Status(Loc.T("Proc_StatusFileNotFound", path));
             }
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Ouverture de l'emplacement du processus", ex);
-            ShellState.Status("Ouverture impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Proc_StatusOpenFail", ex.Message));
         }
     }
 
@@ -293,16 +297,16 @@ public partial class ProcessesPage : UserControl
         {
             if (string.IsNullOrWhiteSpace(row.Snapshot.Path))
             {
-                ShellState.Status("Chemin inaccessible pour ce processus.");
+                ShellState.Status(Loc.T("Proc_StatusNoPath"));
                 return;
             }
             Clipboard.SetText(row.Snapshot.Path);
-            ShellState.Status("Chemin copié dans le presse-papiers.");
+            ShellState.Status(Loc.T("Proc_StatusCopied"));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Copie du chemin du processus", ex);
-            ShellState.Status("Copie impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Proc_StatusCopyFail", ex.Message));
         }
     }
 

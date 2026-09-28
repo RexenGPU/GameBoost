@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using GameBoost.Core.Localization;
 using GameBoost.Core.Models;
 
 namespace GameBoost.App.Pages.Analysis;
@@ -43,7 +44,7 @@ public sealed class CheckItem : INotifyPropertyChanged
 
     public string CurrentValueLabel => string.IsNullOrWhiteSpace(Result.CurrentValue)
         ? string.Empty
-        : "Valeur : " + Result.CurrentValue;
+        : Loc.T("Anal_CurrentValue", Result.CurrentValue);
 
     public string AutoFixLabel
     {
@@ -57,7 +58,7 @@ public sealed class CheckItem : INotifyPropertyChanged
     }
 
     public string ManualLabel => string.IsNullOrWhiteSpace(_autoFixLabel)
-        ? "Correction manuelle : appliquez la procédure ci-dessus."
+        ? Loc.T("Anal_ManualFix")
         : string.Empty;
 
     public string OutcomeLabel
@@ -88,7 +89,7 @@ public sealed class CheckItem : INotifyPropertyChanged
         OutcomeLabel = outcome.Message ?? string.Empty;
         BackupLabel = string.IsNullOrWhiteSpace(outcome.BackupPath)
             ? string.Empty
-            : "Sauvegarde : " + outcome.BackupPath;
+            : Loc.T("Anal_Backup", outcome.BackupPath);
         if (makeGood) Level = HealthLevel.Good;
         if (outcome.Success) AutoFixLabel = string.Empty;
         Raise(nameof(ManualLabel));
@@ -97,7 +98,7 @@ public sealed class CheckItem : INotifyPropertyChanged
     private static string BuildAutoFixLabel(CheckResult result)
     {
         if (!result.CanAutoFix || string.IsNullOrWhiteSpace(result.FixActionId)) return string.Empty;
-        return string.IsNullOrWhiteSpace(result.FixDescription) ? "Appliquer la correction" : result.FixDescription;
+        return string.IsNullOrWhiteSpace(result.FixDescription) ? Loc.T("Anal_ApplyFix") : result.FixDescription;
     }
 
     private void Raise(string name)
@@ -115,10 +116,9 @@ public sealed class RecentAnalysis
         Report = report;
         DateLabel = report.CreatedAt.ToString("dd/MM/yyyy HH:mm",
             System.Globalization.CultureInfo.GetCultureInfo("fr-FR"));
-        CountersLabel = "🟢 " + report.GoodCount + " optimal   ·   🟡 " + report.WarningCount +
-                        " à surveiller   ·   🔴 " + report.CriticalCount + " problèmes";
+        CountersLabel = Loc.T("Anal_RecentCounters", report.GoodCount, report.WarningCount, report.CriticalCount);
         SummaryLabel = string.IsNullOrWhiteSpace(report.OverallSummary)
-            ? "Récapitulatif non disponible"
+            ? Loc.T("Anal_RecentNoSummary")
             : report.OverallSummary;
     }
 

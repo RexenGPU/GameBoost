@@ -1,7 +1,8 @@
 <Window x:Class="GameBoost.App.Overlay.OverlayWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="GameBoost"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:loc="clr-namespace:GameBoost.App.Localization"
+         Title="GameBoost"
         Width="260"
         SizeToContent="Height"
         WindowStyle="None"
@@ -21,7 +22,7 @@
             BorderThickness="1"
             Padding="14,11"
             IsHitTestVisible="False"
-            ToolTip="Overlay GameBoost : mesures réelles issues du monitoring, aucune valeur estimée.">
+            ToolTip="{loc:Text Ov_CardTip}">
         <StackPanel>
             <StackPanel x:Name="FpsPanel">
                 <TextBlock x:Name="FpsText"

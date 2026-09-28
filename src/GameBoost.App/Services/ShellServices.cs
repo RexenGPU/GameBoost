@@ -11,7 +11,7 @@ public sealed class ShellState : INotifyPropertyChanged
     public static ShellState Instance { get; } = new();
 
     private bool _labelsVisible = true;
-    private string _statusMessage = "Prêt";
+    private string _statusMessage = "";
     private bool _isElevated;
 
     public bool LabelsVisible

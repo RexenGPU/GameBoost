@@ -1,7 +1,8 @@
 ﻿<UserControl x:Class="GameBoost.App.Pages.HistoryPage"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:controls="clr-namespace:GameBoost.App.Controls">
+             xmlns:controls="clr-namespace:GameBoost.App.Controls"
+             xmlns:loc="clr-namespace:GameBoost.App.Localization">
     <UserControl.Resources>
         <Style x:Key="Chip" TargetType="RadioButton">
             <Setter Property="Cursor" Value="Hand" />
@@ -49,33 +50,33 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <StackPanel>
-                <TextBlock Text="Historique" Style="{StaticResource H1}" />
-                <TextBlock Text="Sessions de jeu enregistrées localement"
+                <TextBlock Text="{loc:Text Hist_Title}" Style="{StaticResource H1}" />
+                <TextBlock Text="{loc:Text Hist_Subtitle}"
                            Style="{StaticResource BodyMuted}" Margin="0,6,0,0" />
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top">
                 <Button Style="{StaticResource SecondaryButton}" Click="OnRefreshClick"
-                        ToolTip="Relit les sessions enregistrées sur ce PC.">
+                        ToolTip="{loc:Text Hist_RefreshTip}">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="&#xE72C;" FontFamily="{StaticResource IconFont}" FontSize="14"
                                    Margin="0,0,8,0" VerticalAlignment="Center" />
-                        <TextBlock Text="Actualiser" VerticalAlignment="Center" />
+                        <TextBlock Text="{loc:Text Hist_Refresh}" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button>
                 <Button Style="{StaticResource AccentButton}" Click="OnExportSelectionClick" Margin="10,0,0,0"
-                        ToolTip="Exporte les sessions marquées A et B dans un fichier HTML lisible dans le navigateur.">
+                        ToolTip="{loc:Text Hist_ExportSelectionTip}">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="&#xE74E;" FontFamily="{StaticResource IconFont}" FontSize="14"
                                    Margin="0,0,8,0" VerticalAlignment="Center" />
-                        <TextBlock Text="Exporter la sélection (HTML)" VerticalAlignment="Center" />
+                        <TextBlock Text="{loc:Text Hist_ExportSelection}" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button>
                 <Button Style="{StaticResource DangerButton}" Click="OnClearClick" Margin="10,0,0,0"
-                        ToolTip="Supprime définitivement toutes les sessions de ce PC. Deux confirmations sont demandées.">
+                        ToolTip="{loc:Text Hist_ClearTip}">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="&#xE74D;" FontFamily="{StaticResource IconFont}" FontSize="14"
                                    Margin="0,0,8,0" VerticalAlignment="Center" />
-                        <TextBlock Text="Vider l'historique" VerticalAlignment="Center" />
+                        <TextBlock Text="{loc:Text Hist_Clear}" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button>
             </StackPanel>
@@ -84,16 +85,16 @@
         <Border x:Name="EmptyPanel" Grid.Row="1" Style="{StaticResource Card}" Margin="0,16,0,0"
                 Visibility="Collapsed">
             <StackPanel>
-                <TextBlock Text="Aucune session enregistrée" Style="{StaticResource H2}" />
-                <TextBlock Text="Les sessions sont créées depuis la page Monitoring : elles capturent les FPS, les températures et l'utilisation de votre PC pendant le jeu."
+                <TextBlock Text="{loc:Text Hist_EmptyTitle}" Style="{StaticResource H2}" />
+                <TextBlock Text="{loc:Text Hist_EmptyNote}"
                            Style="{StaticResource BodyMuted}" Margin="0,8,0,0" />
                 <Button Style="{StaticResource AccentButton}" Click="OnHowToRecordClick" Margin="0,14,0,0"
                         HorizontalAlignment="Left"
-                        ToolTip="Ouvre la page Monitoring où se trouvent les boutons d'enregistrement.">
+                        ToolTip="{loc:Text Hist_HowToRecordTip}">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="&#xE946;" FontFamily="{StaticResource IconFont}" FontSize="14"
                                    Margin="0,0,8,0" VerticalAlignment="Center" />
-                        <TextBlock Text="Comment enregistrer ?" VerticalAlignment="Center" />
+                        <TextBlock Text="{loc:Text Hist_HowToRecord}" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button>
             </StackPanel>
@@ -103,15 +104,15 @@
             <StackPanel>
                 <Grid>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Sessions" Style="{StaticResource H2}" />
+                        <TextBlock Text="{loc:Text Hist_SessionsTitle}" Style="{StaticResource H2}" />
                         <Border Style="{StaticResource CardFlat}" CornerRadius="999" Padding="9,3" Margin="10,0,0,0"
                                 VerticalAlignment="Center"
-                                ToolTip="Cochez une session pour A et une autre pour B, puis comparez-les.">
-                            <TextBlock x:Name="SelectionCountText" Text="A : aucune · B : aucune"
+                                ToolTip="{loc:Text Hist_SelectionTip}">
+                            <TextBlock x:Name="SelectionCountText" Text="{loc:Text Hist_SelectionNoneSummary}"
                                        Style="{StaticResource Caption}" />
                         </Border>
                     </StackPanel>
-                    <TextBlock Text="Triées de la plus récente à la plus ancienne" Style="{StaticResource Caption}"
+                    <TextBlock Text="{loc:Text Hist_SortedNote}" Style="{StaticResource Caption}"
                                HorizontalAlignment="Right" VerticalAlignment="Center" />
                 </Grid>
 
@@ -124,20 +125,20 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="2" Text="FPS moyen" Style="{StaticResource Label}"
+                    <TextBlock Grid.Column="2" Text="{loc:Text Hist_AvgFps}" Style="{StaticResource Label}"
                                HorizontalAlignment="Right" Width="104" />
-                    <TextBlock Grid.Column="3" Text="1 % low · min · max" Style="{StaticResource Label}"
+                    <TextBlock Grid.Column="3" Text="{loc:Text Hist_LowMinMax}" Style="{StaticResource Label}"
                                HorizontalAlignment="Right" Width="136" />
-                    <TextBlock Grid.Column="4" Text="GPU max · moyenne" Style="{StaticResource Label}"
+                    <TextBlock Grid.Column="4" Text="{loc:Text Hist_GpuTempUsage}" Style="{StaticResource Label}"
                                HorizontalAlignment="Right" Width="124" />
-                    <TextBlock Grid.Column="5" Text="Durée" Style="{StaticResource Label}"
+                    <TextBlock Grid.Column="5" Text="{loc:Text Hist_Duration}" Style="{StaticResource Label}"
                                HorizontalAlignment="Right" Width="76" Margin="12,0,0,0" />
                 </Grid>
 
                 <ScrollViewer x:Name="SessionsScroll" Margin="0,8,0,0" MaxHeight="400"
                               VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
                               Focusable="False"
-                              ToolTip="Cliquez sur une ligne pour afficher le détail complet de la session.">
+                              ToolTip="{loc:Text Hist_RowClickTip}">
                     <StackPanel x:Name="SessionsPanel" />
                 </ScrollViewer>
             </StackPanel>
@@ -147,28 +148,28 @@
             <StackPanel>
                 <Grid>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Comparaison A / B" Style="{StaticResource H2}" />
-                        <TextBlock Text="Session A en bleu, session B en vert" Style="{StaticResource Caption}"
+                        <TextBlock Text="{loc:Text Hist_CompareTitle}" Style="{StaticResource H2}" />
+                        <TextBlock Text="{loc:Text Hist_CompareLegendNote}" Style="{StaticResource Caption}"
                                    Margin="10,0,0,0" VerticalAlignment="Center" />
                     </StackPanel>
                     <Button x:Name="CompareButton" Style="{StaticResource AccentButton}"
                             Click="OnCompareClick" IsEnabled="False" HorizontalAlignment="Right"
-                            ToolTip="Affiche côte à côte six mesures et l'écart entre les deux sessions sélectionnées.">
+                            ToolTip="{loc:Text Hist_CompareTip}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="&#xE8AB;" FontFamily="{StaticResource IconFont}" FontSize="14"
                                        Margin="0,0,8,0" VerticalAlignment="Center" />
-                            <TextBlock Text="Comparer A et B" VerticalAlignment="Center" />
+                            <TextBlock Text="{loc:Text Hist_Compare}" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
                 </Grid>
-                <TextBlock Text="Les deux sessions doivent porter sur des configurations comparables pour être interprétées."
+                <TextBlock Text="{loc:Text Hist_CompareNote}"
                            Style="{StaticResource Caption}" Margin="0,8,0,0" />
 
                 <StackPanel x:Name="ComparisonPanel" Margin="0,12,0,0" Visibility="Collapsed">
                     <Grid x:Name="ComparisonTable" />
                     <controls:LineChart x:Name="CompareChart" Height="170" Margin="0,12,0,0" MaxPoints="300"
                                         ShowGrid="True" Visibility="Collapsed"
-                                        ToolTip="FPS relevés au fil du temps sur les deux sessions (300 points maximum)." />
+                                        ToolTip="{loc:Text Hist_CompareChartTip}" />
                     <TextBlock x:Name="CompareChartHint" Text="" Style="{StaticResource Caption}" Margin="0,6,0,0"
                                Visibility="Collapsed" />
                 </StackPanel>
@@ -180,69 +181,69 @@
             <StackPanel>
                 <Grid>
                     <StackPanel>
-                        <TextBlock x:Name="DetailTitle" Text="Session" Style="{StaticResource H2}" />
+                        <TextBlock x:Name="DetailTitle" Text="{loc:Text Hist_SessionTitle}" Style="{StaticResource H2}" />
                         <TextBlock x:Name="DetailMeta" Text="" Style="{StaticResource Caption}" Margin="0,5,0,0" />
                     </StackPanel>
                     <Button Style="{StaticResource SecondaryButton}" Click="OnExportDetailClick"
                             HorizontalAlignment="Right" VerticalAlignment="Top"
-                            ToolTip="Génère un fichier HTML consacré à cette session puis l'ouvre dans le navigateur.">
+                            ToolTip="{loc:Text Hist_ExportDetailTip}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="&#xE74E;" FontFamily="{StaticResource IconFont}" FontSize="14"
                                        Margin="0,0,8,0" VerticalAlignment="Center" />
-                            <TextBlock Text="Exporter cette session" VerticalAlignment="Center" />
+                            <TextBlock Text="{loc:Text Hist_ExportDetail}" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
                 </Grid>
 
                 <UniformGrid Columns="4" Margin="0,14,0,0">
                     <StackPanel Margin="0,0,10,8">
-                        <TextBlock Text="FPS moyen" Style="{StaticResource Label}" />
+                        <TextBlock Text="{loc:Text Hist_AvgFps}" Style="{StaticResource Label}" />
                         <TextBlock x:Name="DetailFps" Text="—" Style="{StaticResource Mono}" FontSize="15"
                                    Margin="0,4,0,0" />
                     </StackPanel>
                     <StackPanel Margin="0,0,10,8">
-                        <TextBlock Text="1 % low" Style="{StaticResource Label}" />
+                        <TextBlock Text="{loc:Text Hist_OnePercentLow}" Style="{StaticResource Label}" />
                         <TextBlock x:Name="DetailLow" Text="—" Style="{StaticResource Mono}" FontSize="15"
                                    Margin="0,4,0,0" />
                     </StackPanel>
                     <StackPanel Margin="0,0,10,8">
-                        <TextBlock Text="Min · max" Style="{StaticResource Label}" />
+                        <TextBlock Text="{loc:Text Hist_MinMax}" Style="{StaticResource Label}" />
                         <TextBlock x:Name="DetailMinMax" Text="—" Style="{StaticResource Mono}" FontSize="15"
                                    Margin="0,4,0,0" />
                     </StackPanel>
                     <StackPanel Margin="0,0,0,8">
-                        <TextBlock Text="Durée" Style="{StaticResource Label}" />
+                        <TextBlock Text="{loc:Text Hist_Duration}" Style="{StaticResource Label}" />
                         <TextBlock x:Name="DetailDuration" Text="—" Style="{StaticResource Mono}" FontSize="15"
                                    Margin="0,4,0,0" />
                     </StackPanel>
                     <StackPanel Margin="0,0,10,8">
-                        <TextBlock Text="GPU moyen · max" Style="{StaticResource Label}" />
+                        <TextBlock Text="{loc:Text Hist_GpuDetail}" Style="{StaticResource Label}" />
                         <TextBlock x:Name="DetailGpu" Text="—" Style="{StaticResource Mono}" FontSize="15"
                                    Margin="0,4,0,0" />
                     </StackPanel>
                     <StackPanel Margin="0,0,10,8">
-                        <TextBlock Text="CPU moyen · max" Style="{StaticResource Label}" />
+                        <TextBlock Text="{loc:Text Hist_CpuDetail}" Style="{StaticResource Label}" />
                         <TextBlock x:Name="DetailCpu" Text="—" Style="{StaticResource Mono}" FontSize="15"
                                    Margin="0,4,0,0" />
                     </StackPanel>
                     <StackPanel Margin="0,0,10,8">
-                        <TextBlock Text="Pic de RAM" Style="{StaticResource Label}" />
+                        <TextBlock Text="{loc:Text Hist_RamPeak}" Style="{StaticResource Label}" />
                         <TextBlock x:Name="DetailRam" Text="—" Style="{StaticResource Mono}" FontSize="15"
                                    Margin="0,4,0,0" />
                     </StackPanel>
                     <StackPanel>
-                        <TextBlock Text="Profil utilisé" Style="{StaticResource Label}" />
+                        <TextBlock Text="{loc:Text Hist_ProfileUsed}" Style="{StaticResource Label}" />
                         <TextBlock x:Name="DetailProfile" Text="—" Style="{StaticResource Mono}" FontSize="15"
                                    Margin="0,4,0,0" />
                     </StackPanel>
                 </UniformGrid>
 
                 <StackPanel Margin="0,8,0,0">
-                    <TextBlock Text="Frametime (ms)" Style="{StaticResource Label}" />
+                    <TextBlock Text="{loc:Text Hist_FrameTimeTitle}" Style="{StaticResource Label}" />
                     <controls:LineChart x:Name="DetailFrameTimeChart" Height="150" Margin="0,8,0,0" MaxPoints="300"
                                         ShowGrid="True" Visibility="Collapsed"
-                                        ToolTip="Temps entre deux images relevé pendant la session." />
-                    <TextBlock x:Name="DetailFrameTimeHint" Text="Mesure de frametime non enregistrée pour cette session."
+                                        ToolTip="{loc:Text Hist_FrameTimeChartTip}" />
+                    <TextBlock x:Name="DetailFrameTimeHint" Text="{loc:Text Hist_FrameTimeHint}"
                                Style="{StaticResource Caption}" Margin="0,6,0,0" />
                 </StackPanel>
 
@@ -252,11 +253,11 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <StackPanel Margin="0,0,10,0">
-                        <TextBlock Text="Optimisations appliquées" Style="{StaticResource Label}" />
+                        <TextBlock Text="{loc:Text Hist_Optimizations}" Style="{StaticResource Label}" />
                         <StackPanel x:Name="DetailOptimizationsPanel" Margin="0,7,0,0" />
                     </StackPanel>
                     <StackPanel Grid.Column="1" Margin="10,0,0,0">
-                        <TextBlock Text="Notes" Style="{StaticResource Label}" />
+                        <TextBlock Text="{loc:Text Hist_Notes}" Style="{StaticResource Label}" />
                         <TextBlock x:Name="DetailNotes" Text="—" Style="{StaticResource BodyMuted}"
                                    Margin="0,7,0,0" />
                     </StackPanel>

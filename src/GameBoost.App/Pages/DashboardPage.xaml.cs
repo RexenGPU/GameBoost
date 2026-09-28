@@ -12,6 +12,7 @@ using GameBoost.App.Services;
 using GameBoost.Core.Disks;
 using GameBoost.Core.Games;
 using GameBoost.Core.Hardware;
+using GameBoost.Core.Localization;
 using GameBoost.Core.Logging;
 using GameBoost.Core.Models;
 using GameBoost.Core.Monitoring;
@@ -56,7 +57,7 @@ public partial class DashboardPage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Lecture des mesures temps réel impossible", ex);
-            ShellState.Status("Mesures temps réel indisponibles : " + ex.Message);
+            ShellState.Status(Loc.T("Dash_StatusMonitorsFail", ex.Message));
         }
 
         RefreshPendingBanner();
@@ -121,9 +122,9 @@ public partial class DashboardPage : UserControl
             NetFpsCard.Value = fps is double measured
                 ? measured.ToString("F0", CultureInfo.CurrentCulture)
                 : "—";
-            var network = "Réception " + Rate(sample.NetworkReceiveBytesPerSec) +
-                          " · Émission " + Rate(sample.NetworkSendBytesPerSec);
-            NetFpsCard.SubText = fps is null ? "jeu non détecté" + Environment.NewLine + network : network;
+            var network = Loc.T("Dash_NetworkRates", Rate(sample.NetworkReceiveBytesPerSec),
+                Rate(sample.NetworkSendBytesPerSec));
+            NetFpsCard.SubText = fps is null ? Loc.T("Dash_NoGame") + Environment.NewLine + network : network;
         }
         catch (Exception ex)
         {
@@ -135,9 +136,9 @@ public partial class DashboardPage : UserControl
     {
         if (temperature is not double value)
         {
-            card.Value = "Non disponible";
+            card.Value = Loc.T("Dash_NotAvailable");
             card.Unit = string.Empty;
-            card.SubText = "élévation requise";
+            card.SubText = Loc.T("Dash_ElevationRequired");
             card.ProgressPercent = double.NaN;
             card.Level = null;
             return;
@@ -156,7 +157,7 @@ public partial class DashboardPage : UserControl
     {
         if (total <= 0)
         {
-            card.Value = "Non disponible";
+            card.Value = Loc.T("Dash_NotAvailable");
             card.Unit = string.Empty;
             card.SubText = string.Empty;
             card.ProgressPercent = double.NaN;
@@ -166,7 +167,7 @@ public partial class DashboardPage : UserControl
 
         card.Value = BytesToSizeConverter.Format(used);
         card.Unit = string.Empty;
-        card.SubText = "sur " + BytesToSizeConverter.Format(total);
+        card.SubText = Loc.T("Dash_OutOf", BytesToSizeConverter.Format(total));
         var usedPercent = used * 100.0 / total;
         card.ProgressPercent = usedPercent;
         card.Level = FreeLevel(100 - usedPercent);
@@ -176,7 +177,7 @@ public partial class DashboardPage : UserControl
     {
         if (_diskTotalBytes <= 0)
         {
-            DiskCard.Value = "Non disponible";
+            DiskCard.Value = Loc.T("Dash_NotAvailable");
             DiskCard.Unit = string.Empty;
             DiskCard.SubText = string.Empty;
             DiskCard.ProgressPercent = double.NaN;
@@ -186,7 +187,7 @@ public partial class DashboardPage : UserControl
 
         DiskCard.Value = BytesToSizeConverter.Format(_diskFreeBytes);
         DiskCard.Unit = string.Empty;
-        DiskCard.SubText = "sur " + BytesToSizeConverter.Format(_diskTotalBytes);
+        DiskCard.SubText = Loc.T("Dash_OutOf", BytesToSizeConverter.Format(_diskTotalBytes));
         var freePercent = _diskFreeBytes * 100.0 / _diskTotalBytes;
         DiskCard.ProgressPercent = freePercent;
         DiskCard.Level = FreeLevel(freePercent);
@@ -215,12 +216,12 @@ public partial class DashboardPage : UserControl
             var report = await HardwareDetector.Instance.CollectAsync();
             _hardwareLoaded = true;
             FillHardware(report);
-            ShellState.Status("Matériel détecté.");
+            ShellState.Status(Loc.T("Dash_StatusHardwareReady"));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Détection du matériel impossible", ex);
-            ShellState.Status("Détection du matériel impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Dash_StatusHardwareFail", ex.Message));
             FillHardware(null);
         }
         finally
@@ -235,41 +236,41 @@ public partial class DashboardPage : UserControl
     {
         if (report is null)
         {
-            HwCpuText.Text = "Non disponible";
-            HwGpuText.Text = "Non disponible";
+            HwCpuText.Text = Loc.T("Dash_NotAvailable");
+            HwGpuText.Text = Loc.T("Dash_NotAvailable");
             HwGpuSubText.Text = string.Empty;
-            HwRamText.Text = "Non disponible";
-            HwOsText.Text = "Non disponible";
-            HwDisplayText.Text = "Non disponible";
+            HwRamText.Text = Loc.T("Dash_NotAvailable");
+            HwOsText.Text = Loc.T("Dash_NotAvailable");
+            HwDisplayText.Text = Loc.T("Dash_NotAvailable");
             return;
         }
 
         var cpuName = Known(report.Cpu.Name);
         var cores = report.Cpu.PhysicalCores > 0
-            ? report.Cpu.PhysicalCores + " cœurs / " + report.Cpu.LogicalCores + " threads"
-            : "Cœurs non disponibles";
-        HwCpuText.Text = cpuName == "Non disponible" ? cpuName : cpuName + " · " + cores;
+            ? Loc.T("Dash_CoresThreads", report.Cpu.PhysicalCores, report.Cpu.LogicalCores)
+            : Loc.T("Dash_CoresUnavailable");
+        HwCpuText.Text = cpuName == Loc.T("Dash_NotAvailable") ? cpuName : cpuName + " · " + cores;
 
         HwGpuText.Text = Known(report.Gpu.Name) + " · " +
                          (report.Gpu.DedicatedVramBytes > 0
                              ? BytesToSizeConverter.Format(report.Gpu.DedicatedVramBytes)
-                             : "VRAM non disponible");
+                             : Loc.T("Dash_VramUnavailable"));
         HwGpuSubText.Text = VendorLabel(report.Gpu.Vendor) + " · " +
-                            (Known(report.Gpu.DriverVersion) == "Non disponible"
-                                ? "pilote non disponible"
-                                : "pilote " + report.Gpu.DriverVersion);
+                            (Known(report.Gpu.DriverVersion) == Loc.T("Dash_NotAvailable")
+                                ? Loc.T("Dash_DriverUnavailable")
+                                : Loc.T("Dash_Driver", report.Gpu.DriverVersion));
 
         HwRamText.Text = report.Ram.TotalBytes > 0
             ? BytesToSizeConverter.Format(report.Ram.TotalBytes)
-            : "Non disponible";
+            : Loc.T("Dash_NotAvailable");
 
         HwOsText.Text = Known(report.Os.Caption) +
-                        (Known(report.Os.Build) == "Non disponible" ? string.Empty : " (build " + report.Os.Build + ")") +
+                        (Known(report.Os.Build) == Loc.T("Dash_NotAvailable") ? string.Empty : Loc.T("Dash_Build", report.Os.Build)) +
                         " · DirectX " + Known(report.DirectXVersion);
 
         var display = report.Displays.FirstOrDefault(d => d.Primary) ?? report.Displays.FirstOrDefault();
         HwDisplayText.Text = display is null || display.Width <= 0 || display.Height <= 0
-            ? "Non disponible"
+            ? Loc.T("Dash_NotAvailable")
             : display.Width + " × " + display.Height +
               (display.RefreshRate > 0 ? " @ " + display.RefreshRate + " Hz" : string.Empty);
     }
@@ -299,7 +300,7 @@ public partial class DashboardPage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Lecture de l'espace disque impossible", ex);
-            ShellState.Status("Espace disque indisponible : " + ex.Message);
+            ShellState.Status(Loc.T("Dash_StatusDiskFail", ex.Message));
             return false;
         }
         finally
@@ -311,7 +312,7 @@ public partial class DashboardPage : UserControl
     private async void OnRefreshDisksClick(object sender, RoutedEventArgs e)
     {
         var ok = await LoadDisksAsync();
-        ShellState.Status(ok ? "Espace disque libre actualisé." : "Espace disque non disponible.");
+        ShellState.Status(ok ? Loc.T("Dash_StatusDiskRefreshed") : Loc.T("Dash_StatusDiskNone"));
     }
 
     private async Task LoadProcessesAsync()
@@ -331,7 +332,7 @@ public partial class DashboardPage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Lecture des processus impossible", ex);
-            ShellState.Status("Processus indisponibles : " + ex.Message);
+            ShellState.Status(Loc.T("Dash_StatusProcessesFail", ex.Message));
         }
         finally
         {
@@ -372,13 +373,13 @@ public partial class DashboardPage : UserControl
                 VerticalAlignment = VerticalAlignment.Center,
                 Margin = new Thickness(0, 0, 7, 0)
             };
-            if (!canClose) warning.ToolTip = string.IsNullOrWhiteSpace(reason) ? "Fermeture impossible" : reason;
+            if (!canClose) warning.ToolTip = string.IsNullOrWhiteSpace(reason) ? Loc.T("Dash_CloseImpossible") : reason;
             row.Children.Add(warning);
 
             var name = new TextBlock
             {
                 Style = StyleOf("Body"),
-                Text = string.IsNullOrWhiteSpace(process.Name) ? "Processus sans nom" : process.Name,
+                Text = string.IsNullOrWhiteSpace(process.Name) ? Loc.T("Dash_UnnamedProcess") : process.Name,
                 TextTrimming = TextTrimming.CharacterEllipsis,
                 VerticalAlignment = VerticalAlignment.Center
             };
@@ -437,7 +438,7 @@ public partial class DashboardPage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Lecture de la bibliothèque de jeux impossible", ex);
-            ShellState.Status("Bibliothèque de jeux indisponible : " + ex.Message);
+            ShellState.Status(Loc.T("Dash_StatusLibraryFail", ex.Message));
         }
     }
 
@@ -456,7 +457,7 @@ public partial class DashboardPage : UserControl
             Margin = new Thickness(0, 0, 0, 9),
             Padding = new Thickness(12),
             Cursor = Cursors.Hand,
-            ToolTip = "Ouvrir la fiche « Jeux » de GameBoost"
+            ToolTip = Loc.T("Dash_GameCardTip")
         };
         card.MouseLeftButtonUp += (_, _) => NavigationService.Navigate("games");
 
@@ -475,7 +476,7 @@ public partial class DashboardPage : UserControl
         text.Children.Add(new TextBlock
         {
             Style = StyleOf("Body"),
-            Text = string.IsNullOrWhiteSpace(game.Name) ? "Jeu sans nom" : game.Name,
+            Text = string.IsNullOrWhiteSpace(game.Name) ? Loc.T("Dash_UnnamedGame") : game.Name,
             TextTrimming = TextTrimming.CharacterEllipsis
         });
         text.Children.Add(new TextBlock
@@ -533,17 +534,17 @@ public partial class DashboardPage : UserControl
         _scanningGames = true;
         ScanGamesButton.IsEnabled = false;
         ScanProgress.Visibility = Visibility.Visible;
-        ShellState.Status("Recherche de vos jeux en cours (environ 12 secondes)…");
+        ShellState.Status(Loc.T("Dash_StatusScanRunning"));
         try
         {
             var found = await Task.Run(() => GameScanner.Instance.Scan());
-            ShellState.Status("Recherche terminée : " + found.Count + " jeu(s) détecté(s).");
+            ShellState.Status(Loc.T("Dash_StatusScanDone", found.Count));
             await LoadGamesAsync();
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Recherche des jeux impossible", ex);
-            ShellState.Status("La recherche de jeux a échoué : " + ex.Message);
+            ShellState.Status(Loc.T("Dash_StatusScanFail", ex.Message));
         }
         finally
         {
@@ -562,8 +563,8 @@ public partial class DashboardPage : UserControl
             var available = plan.Steps.Any(step => step.Enabled);
             BoosterButton.IsEnabled = available;
             BoosterButton.ToolTip = available
-                ? "Ouvrir l'assistant de boost : chaque étape est résumée avant application, sans modification sans votre accord."
-                : "Aucune optimisation n'est possible pour le moment : aucune étape du boost ne serait appliquée.";
+                ? Loc.T("Dash_BoostAvailableTip")
+                : Loc.T("Dash_BoostUnavailableTip");
         }
         catch (Exception ex)
         {
@@ -590,7 +591,7 @@ public partial class DashboardPage : UserControl
     private async void OnRestorePendingClick(object sender, RoutedEventArgs e)
     {
         var answer = MessageBox.Show(
-            "Une session Boost précédente n'a pas été terminée. Terminer la session et remettre les réglages d'origine ?",
+            Loc.T("Dash_RestoreConfirm"),
             "GameBoost", MessageBoxButton.YesNo, MessageBoxImage.Question);
         if (answer != MessageBoxResult.Yes) return;
 
@@ -599,13 +600,13 @@ public partial class DashboardPage : UserControl
             BoostService.Instance.LoadPendingSession();
             var session = await BoostService.Instance.EndSessionAsync();
             ShellState.Status(session.IsActive
-                ? "La session en attente n'a pas pu être terminée."
-                : "Session Boost en attente terminée : les réglages d'origine sont restaurés.");
+                ? Loc.T("Dash_StatusPendingEndFail")
+                : Loc.T("Dash_StatusPendingRestored"));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Restauration de la session impossible", ex);
-            ShellState.Status("Restauration impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Dash_StatusRestoreFail", ex.Message));
         }
         finally
         {
@@ -633,28 +634,28 @@ public partial class DashboardPage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Ouverture de l'assistant de boost impossible", ex);
-            ShellState.Status("Impossible d'ouvrir l'assistant de boost : " + ex.Message);
+            ShellState.Status(Loc.T("Dash_StatusWizardFail", ex.Message));
         }
     }
 
     private static string PlatformLabel(GamePlatform platform) => platform switch
     {
-        GamePlatform.Manual => "Manuel",
+        GamePlatform.Manual => Loc.T("Dash_PlatformManual"),
         GamePlatform.Gog => "GOG",
         GamePlatform.BattleNet => "Battle.net",
-        GamePlatform.Other => "Autre",
+        GamePlatform.Other => Loc.T("Dash_PlatformOther"),
         _ => platform.ToString()
     };
 
     private static string Known(string? value)
     {
-        if (string.IsNullOrWhiteSpace(value)) return "Non disponible";
+        if (string.IsNullOrWhiteSpace(value)) return Loc.T("Dash_NotAvailable");
         var trimmed = value.Trim();
         if (trimmed.Equals("Inconnu", StringComparison.OrdinalIgnoreCase) ||
             trimmed.Equals("Inconnue", StringComparison.OrdinalIgnoreCase) ||
             trimmed.Equals("Inconnus", StringComparison.OrdinalIgnoreCase) ||
             trimmed.Equals("Inconnues", StringComparison.OrdinalIgnoreCase))
-            return "Non disponible";
+            return Loc.T("Dash_NotAvailable");
         return trimmed;
     }
 
@@ -663,8 +664,8 @@ public partial class DashboardPage : UserControl
         GpuVendor.Nvidia => "NVIDIA",
         GpuVendor.Amd => "AMD",
         GpuVendor.Intel => "Intel",
-        GpuVendor.Other => "Autre constructeur",
-        _ => "Constructeur inconnu"
+        GpuVendor.Other => Loc.T("Dash_VendorOther"),
+        _ => Loc.T("Dash_VendorUnknown")
     };
 
     private static Style? StyleOf(string key) => Application.Current?.TryFindResource(key) as Style;

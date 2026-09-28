@@ -1,6 +1,7 @@
 using System.Windows;
 using System.Windows.Threading;
 using GameBoost.App.Controls;
+using GameBoost.Core.Localization;
 using GameBoost.Core.Logging;
 using GameBoost.Core.Models;
 using GameBoost.Core.Monitoring;
@@ -104,7 +105,7 @@ public partial class OverlayWindow : Window
 
             var low = stats?.OnePercentLow;
             LowText.Text = low is double lowValue && lowValue > 0 && !double.IsNaN(lowValue)
-                ? "1 % low : " + lowValue.ToString("F0") + " FPS"
+                ? Loc.T("Ov_OnePercentLow", lowValue.ToString("F0"))
                 : string.Empty;
             LowText.Visibility = _settings.ShowFps && LowText.Text.Length > 0
                 ? Visibility.Visible

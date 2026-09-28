@@ -14,7 +14,6 @@
     <Product>GameBoost</Product>
     <Company>GameBoost</Company>
     <Description>Centre de diagnostic et d'optimisation des performances gaming</Description>
-    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
   </PropertyGroup>
 
   <ItemGroup>

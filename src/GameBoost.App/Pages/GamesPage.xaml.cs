@@ -6,6 +6,7 @@ using System.Windows.Input;
 using GameBoost.App.Pages.Games;
 using GameBoost.App.Services;
 using GameBoost.Core.Games;
+using GameBoost.Core.Localization;
 using GameBoost.Core.Logging;
 using GameBoost.Core.Models;
 using GameBoost.Core.Overlay;
@@ -38,7 +39,7 @@ public partial class GamesPage : UserControl
     private async void LoadLibrary()
     {
         if (_busy) return;
-        SetBusy(true, "Lecture de la bibliothèque de jeux…");
+        SetBusy(true, Loc.T("Games_StatusReading"));
         try
         {
             var games = await Task.Run(() =>
@@ -57,13 +58,13 @@ public partial class GamesPage : UserControl
             BuildPlatformFilter();
             ApplyFilter();
             ShellState.Status(_games.Count == 0
-                ? "Aucun jeu enregistré : lancez un scan."
-                : _games.Count + " jeu(s) dans la bibliothèque.");
+                ? Loc.T("Games_StatusNoGames")
+                : Loc.T("Games_StatusCount", _games.Count));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Lecture de la bibliothèque de jeux", ex);
-            ShellState.Status("Lecture de la bibliothèque impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Games_StatusLibFail", ex.Message));
         }
         finally
         {
@@ -74,7 +75,7 @@ public partial class GamesPage : UserControl
     private async void OnScanClick(object sender, RoutedEventArgs e)
     {
         if (_busy) return;
-        SetBusy(true, "Analyse des plateformes en cours (environ 12 secondes)…");
+        SetBusy(true, Loc.T("Games_StatusScanning"));
         try
         {
             var games = await Task.Run(() =>
@@ -92,12 +93,12 @@ public partial class GamesPage : UserControl
             _games.AddRange(games);
             BuildPlatformFilter();
             ApplyFilter();
-            ShellState.Status("Analyse terminée : " + _games.Count + " jeu(s) détecté(s).");
+            ShellState.Status(Loc.T("Games_StatusScanDone", _games.Count));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Analyse des jeux", ex);
-            ShellState.Status("Analyse impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Games_StatusScanFail", ex.Message));
         }
         finally
         {
@@ -111,18 +112,17 @@ public partial class GamesPage : UserControl
         {
             var dialog = new OpenFileDialog
             {
-                Title = "Choisir l'exécutable du jeu",
-                Filter = "Application (*.exe)|*.exe"
+                Title = Loc.T("Games_DialogExeTitle"),
+                Filter = Loc.T("Games_DialogExeFilter")
             };
             if (dialog.ShowDialog() != true) return;
 
             var game = GameScanner.Instance.AddManualExecutable(dialog.FileName);
             if (game is null)
             {
-                MessageBox.Show(
-                    "Ce fichier n'a pas pu être ajouté.\n\nVérifiez qu'il s'agit bien d'un fichier .exe existant sur ce PC.",
-                    "Ajout impossible", MessageBoxButton.OK, MessageBoxImage.Warning);
-                ShellState.Status("Ajout refusé : exécutable non valide.");
+                MessageBox.Show(Loc.T("Games_AddFailBody"), Loc.T("Games_AddFailTitle"),
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                ShellState.Status(Loc.T("Games_StatusAddRefused"));
                 return;
             }
 
@@ -131,12 +131,12 @@ public partial class GamesPage : UserControl
             _games.Add(game);
             ApplyFilter();
             SelectCard(_cards.FirstOrDefault(c => string.Equals(c.Game.Id, game.Id, StringComparison.Ordinal)));
-            ShellState.Status("Jeu ajouté : " + game.Name);
+            ShellState.Status(Loc.T("Games_StatusAdded", game.Name));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Ajout manuel d'un exécutable", ex);
-            ShellState.Status("Ajout impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Games_StatusAddFail", ex.Message));
         }
     }
 
@@ -154,14 +154,15 @@ public partial class GamesPage : UserControl
 
     private void BuildPlatformFilter()
     {
+        var all = Loc.T("Games_PlatformAll");
         var current = PlatformFilter.SelectedItem as string;
-        var labels = new List<string> { "Toutes" };
+        var labels = new List<string> { all };
         foreach (var platform in _games.Select(g => g.Platform).Distinct().OrderBy(p => p))
         {
             labels.Add(PlatformLabel(platform));
         }
         PlatformFilter.ItemsSource = labels;
-        PlatformFilter.SelectedItem = current is not null && labels.Contains(current) ? current : "Toutes";
+        PlatformFilter.SelectedItem = current is not null && labels.Contains(current) ? current : all;
     }
 
     private static string PlatformLabel(GamePlatform platform) => platform switch
@@ -173,19 +174,20 @@ public partial class GamesPage : UserControl
         GamePlatform.Gog => "GOG",
         GamePlatform.BattleNet => "Battle.net",
         GamePlatform.Riot => "Riot",
-        GamePlatform.Manual => "Ajouté manuellement",
-        _ => "Autre"
+        GamePlatform.Manual => Loc.T("Games_PlatformManual"),
+        _ => Loc.T("Games_PlatformOther")
     };
 
     private void ApplyFilter()
     {
+        var all = Loc.T("Games_PlatformAll");
         var query = (SearchBox.Text ?? string.Empty).Trim();
-        var platform = PlatformFilter.SelectedItem as string ?? "Toutes";
+        var platform = PlatformFilter.SelectedItem as string ?? all;
 
         _cards.Clear();
         foreach (var game in _games)
         {
-            if (platform != "Toutes" && !string.Equals(PlatformLabel(game.Platform), platform, StringComparison.Ordinal))
+            if (platform != all && !string.Equals(PlatformLabel(game.Platform), platform, StringComparison.Ordinal))
                 continue;
             if (query.Length > 0)
             {
@@ -198,7 +200,9 @@ public partial class GamesPage : UserControl
 
         GamesList.ItemsSource = _cards;
         EmptyState.Visibility = _cards.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
-        ResultCount.Text = _cards.Count <= 1 ? _cards.Count + " jeu" : _cards.Count + " jeux";
+        ResultCount.Text = _cards.Count <= 1
+            ? Loc.T("Games_CountOne", _cards.Count)
+            : Loc.T("Games_CountMany", _cards.Count);
 
         if (_selected is not null)
         {
@@ -239,7 +243,7 @@ public partial class GamesPage : UserControl
         var game = _selected.Game;
         DetailPanel.DataContext = _selected;
         ConfigText.Text = string.IsNullOrWhiteSpace(game.KnownSettingsSummary)
-            ? "Aucune information connue pour ce jeu : GameBoost ne modifie rien tant qu'aucun fichier de configuration reconnu n'a été trouvé."
+            ? Loc.T("Games_ConfigUnknown")
             : game.KnownSettingsSummary;
         RunningBadge.Visibility = game.IsRunning ? Visibility.Visible : Visibility.Collapsed;
 
@@ -248,14 +252,14 @@ public partial class GamesPage : UserControl
         {
             var settings = OverlayService.Instance.GetForGame(game.Id);
             OverlayToggle.IsChecked = settings.Enabled;
-            OverlayLabel.Text = settings.Enabled ? "Overlay activé" : "Overlay désactivé";
+            OverlayLabel.Text = settings.Enabled ? Loc.T("Games_OverlayEnabled") : Loc.T("Games_OverlayDisabled");
             ArgsBox.Text = game.LaunchArguments ?? string.Empty;
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Lecture du détail du jeu", ex);
             OverlayToggle.IsChecked = false;
-            OverlayLabel.Text = "Non disponible";
+            OverlayLabel.Text = Loc.T("Ctrl_Unknown");
             ArgsBox.Text = game.LaunchArguments ?? string.Empty;
         }
         finally
@@ -276,15 +280,15 @@ public partial class GamesPage : UserControl
             OverlayService.Instance.SaveForGame(game.Id, settings);
             game.OverlayEnabled = enabled;
             GameScanner.Instance.UpdateGame(game);
-            OverlayLabel.Text = enabled ? "Overlay activé" : "Overlay désactivé";
+            OverlayLabel.Text = enabled ? Loc.T("Games_OverlayEnabled") : Loc.T("Games_OverlayDisabled");
             ShellState.Status(enabled
-                ? "Overlay FPS activé pour « " + game.Name + " »."
-                : "Overlay FPS désactivé pour « " + game.Name + " ».");
+                ? Loc.T("Games_StatusOverlayOn", game.Name)
+                : Loc.T("Games_StatusOverlayOff", game.Name));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Enregistrement de l'overlay du jeu", ex);
-            ShellState.Status("Enregistrement de l'overlay impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Games_StatusOverlayFail", ex.Message));
         }
     }
 
@@ -297,12 +301,12 @@ public partial class GamesPage : UserControl
             game.LaunchArguments = ArgsBox.Text ?? string.Empty;
             GameScanner.Instance.UpdateGame(game);
             _selected.Refresh();
-            ShellState.Status("Jeu enregistré : " + game.Name);
+            ShellState.Status(Loc.T("Games_StatusGameSaved", game.Name));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Enregistrement du jeu", ex);
-            ShellState.Status("Enregistrement impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Games_StatusSaveFail", ex.Message));
         }
     }
 
@@ -313,7 +317,7 @@ public partial class GamesPage : UserControl
         {
             if (string.IsNullOrWhiteSpace(game.ExecutablePath) || !File.Exists(game.ExecutablePath))
             {
-                ShellState.Status("Aucun exécutable lisible pour « " + game.Name + " ».");
+                ShellState.Status(Loc.T("Games_StatusNoExe", game.Name));
                 return;
             }
 
@@ -326,19 +330,19 @@ public partial class GamesPage : UserControl
             game.LastLaunch = DateTime.Now;
             GameScanner.Instance.UpdateGame(game);
             ApplyFilter();
-            ShellState.Status("Lancement de « " + game.Name + " ».");
+            ShellState.Status(Loc.T("Games_StatusLaunching", game.Name));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Lancement du jeu " + game.Name, ex);
-            ShellState.Status("Lancement impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Games_StatusLaunchFail", ex.Message));
         }
     }
 
     private void OnProfilesClick(object sender, RoutedEventArgs e)
     {
         NavigationService.Navigate("profiles");
-        ShellState.Status("Page des profils graphiques.");
+        ShellState.Status(Loc.T("Games_StatusProfilesPage"));
     }
 
     private void OnOpenFolderClick(object sender, RoutedEventArgs e)
@@ -352,7 +356,7 @@ public partial class GamesPage : UserControl
 
             if (string.IsNullOrWhiteSpace(target) || (!File.Exists(target) && !Directory.Exists(target)))
             {
-                ShellState.Status("Dossier introuvable pour « " + game.Name + " ».");
+                ShellState.Status(Loc.T("Games_StatusFolderMissing", game.Name));
                 return;
             }
 
@@ -370,12 +374,12 @@ public partial class GamesPage : UserControl
                     UseShellExecute = true
                 });
             }
-            ShellState.Status("Explorateur ouvert sur « " + game.Name + " ».");
+            ShellState.Status(Loc.T("Games_StatusExplorerOpened", game.Name));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Ouverture du dossier du jeu", ex);
-            ShellState.Status("Ouverture du dossier impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Games_StatusOpenFail", ex.Message));
         }
     }
 
@@ -383,11 +387,11 @@ public partial class GamesPage : UserControl
     {
         if (sender is not Button { Tag: GameInfo game }) return;
         var answer = MessageBox.Show(
-            "Retirer « " + game.Name + " » de GameBoost ?\n\nSeule l'entrée de la bibliothèque est supprimée : aucun fichier du jeu n'est touché.",
-            "Retirer le jeu", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            Loc.T("Games_RemoveBody", game.Name),
+            Loc.T("Games_RemoveTitle"), MessageBoxButton.YesNo, MessageBoxImage.Question);
         if (answer != MessageBoxResult.Yes)
         {
-            ShellState.Status("Retrait annulé.");
+            ShellState.Status(Loc.T("Games_StatusRemoveCancelled"));
             return;
         }
 
@@ -396,19 +400,19 @@ public partial class GamesPage : UserControl
             var removed = GameScanner.Instance.RemoveGame(game.Id);
             if (!removed)
             {
-                ShellState.Status("Retrait impossible pour « " + game.Name + " ».");
+                ShellState.Status(Loc.T("Games_StatusRemoveFail2", game.Name));
                 return;
             }
             _games.RemoveAll(g => string.Equals(g.Id, game.Id, StringComparison.Ordinal));
             if (_selected is not null && string.Equals(_selected.Game.Id, game.Id, StringComparison.Ordinal))
                 SelectCard(null);
             ApplyFilter();
-            ShellState.Status("« " + game.Name + " » retiré de la bibliothèque.");
+            ShellState.Status(Loc.T("Games_StatusRemoved", game.Name));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Retrait du jeu", ex);
-            ShellState.Status("Retrait impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Games_StatusRemoveFail", ex.Message));
         }
     }
 

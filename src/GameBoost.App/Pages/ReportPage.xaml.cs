@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using GameBoost.App.Services;
 using GameBoost.Core.Data;
 using GameBoost.Core.History;
+using GameBoost.Core.Localization;
 using GameBoost.Core.Logging;
 using GameBoost.Core.Models;
 using GameBoost.Core.Reports;
@@ -55,18 +56,18 @@ public partial class ReportPage : UserControl
             if (report is null)
             {
                 NoAnalysisPanel.Visibility = Visibility.Visible;
-                ShellState.Status("Aucune analyse enregistrée : lancez d'abord une analyse pour exporter un rapport.");
+                ShellState.Status(Loc.T("Rep_StatusNoAnalysis"));
                 return;
             }
 
             var result = ReportGenerator.Instance.ExportHtml(report, report.Hardware,
                 HistoryService.Instance.GetSessions(20));
-            HandleResult(result, "Rapport d'analyse exporté.");
+            HandleResult(result, Loc.T("Rep_StatusAnalysisExported"));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Export du rapport d'analyse", ex);
-            ShellState.Status("Export impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Rep_StatusExportFail", ex.Message));
         }
     }
 
@@ -77,17 +78,17 @@ public partial class ReportPage : UserControl
             var sessions = HistoryService.Instance.GetSessions(50);
             if (sessions.Count == 0)
             {
-                ShellState.Status("Aucune session à exporter : lancez d'abord une partie depuis le Monitoring.");
+                ShellState.Status(Loc.T("Rep_StatusNoSessions"));
                 return;
             }
 
             var result = ReportGenerator.Instance.ExportSessionHtml(sessions);
-            HandleResult(result, "Sessions exportées : " + sessions.Count + " session(s).");
+            HandleResult(result, Loc.T("Rep_StatusSessionsExported", sessions.Count));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Export des sessions", ex);
-            ShellState.Status("Export impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Rep_StatusExportFail", ex.Message));
         }
     }
 
@@ -95,12 +96,12 @@ public partial class ReportPage : UserControl
     {
         if (!result.Success)
         {
-            ShellState.Status("Export impossible : " + result.Error);
+            ShellState.Status(Loc.T("Rep_StatusExportFail", result.Error));
             return;
         }
 
         _lastExportPath = result.FilePath;
-        ExportResultTitle.Text = "Fichier généré";
+        ExportResultTitle.Text = Loc.T("Rep_GeneratedFile");
         ExportResultPath.Text = result.FilePath;
         ExportResultPanel.Visibility = Visibility.Visible;
         NoAnalysisPanel.Visibility = Visibility.Collapsed;
@@ -112,18 +113,18 @@ public partial class ReportPage : UserControl
     {
         if (string.IsNullOrWhiteSpace(_lastExportPath) || !File.Exists(_lastExportPath))
         {
-            ShellState.Status("Aucun fichier à ouvrir : exportez un rapport d'abord.");
+            ShellState.Status(Loc.T("Rep_StatusNoFile"));
             return;
         }
         try
         {
             Process.Start(new ProcessStartInfo(_lastExportPath) { UseShellExecute = true });
-            ShellState.Status("Ouverture du fichier dans le navigateur.");
+            ShellState.Status(Loc.T("Rep_StatusOpeningFile"));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Ouverture du fichier exporte", ex);
-            ShellState.Status("Ouverture impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Rep_StatusOpenFail", ex.Message));
         }
     }
 
@@ -134,25 +135,25 @@ public partial class ReportPage : UserControl
             var directory = ReportGenerator.Instance.GetExportDirectory();
             Directory.CreateDirectory(directory);
             Process.Start(new ProcessStartInfo(directory) { UseShellExecute = true });
-            ShellState.Status("Dossier des rapports : " + directory);
+            ShellState.Status(Loc.T("Rep_StatusFolder", directory));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Ouverture du dossier des rapports", ex);
-            ShellState.Status("Ouverture impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Rep_StatusOpenFail", ex.Message));
         }
     }
 
     private void OnGoAnalysisClick(object sender, RoutedEventArgs e)
     {
         NavigationService.Navigate("analysis");
-        ShellState.Status("Ouverture de l'Analyse : lancez une vérification pour créer un rapport.");
+        ShellState.Status(Loc.T("Rep_StatusGoAnalysis"));
     }
 
     private void OnRefreshClick(object sender, RoutedEventArgs e)
     {
         LoadFiles();
-        ShellState.Status("Dossier des rapports relu.");
+        ShellState.Status(Loc.T("Rep_StatusFolderReloaded"));
     }
 
     private void LoadFiles()
@@ -160,7 +161,7 @@ public partial class ReportPage : UserControl
         try
         {
             var directory = ReportGenerator.Instance.GetExportDirectory();
-            FilesFolderText.Text = "Dossier : " + directory;
+            FilesFolderText.Text = Loc.T("Rep_FolderPath", directory);
 
             var files = Directory.Exists(directory)
                 ? new DirectoryInfo(directory)
@@ -181,7 +182,7 @@ public partial class ReportPage : UserControl
         {
             Log.Error("UI", "Lecture du dossier des rapports", ex);
             FilesPanel.Children.Clear();
-            EmptyFilesText.Text = "Dossier des rapports illisible : " + ex.Message;
+            EmptyFilesText.Text = Loc.T("Rep_StatusFolderReadFail", ex.Message);
             EmptyFilesText.Visibility = Visibility.Visible;
         }
     }
@@ -221,10 +222,10 @@ public partial class ReportPage : UserControl
             VerticalAlignment = VerticalAlignment.Center,
             Margin = new Thickness(12, 0, 0, 0)
         };
-        actions.Children.Add(BuildRowButton("&#xE774;", "Ouvrir", OnOpenFile, file,
-            "Ouvre ce fichier HTML dans le navigateur par défaut."));
-        actions.Children.Add(BuildRowButton("&#xE838;", "Dossier", OnOpenFolderClick, file,
-            "Ouvre le dossier qui contient ce fichier."));
+        actions.Children.Add(BuildRowButton("&#xE774;", Loc.T("Rep_Open"), OnOpenFile, file,
+            Loc.T("Rep_OpenFileTip")));
+        actions.Children.Add(BuildRowButton("&#xE838;", Loc.T("Rep_Folder"), OnOpenFolderClick, file,
+            Loc.T("Rep_OpenFileFolderTip")));
         Grid.SetColumn(actions, 3);
         grid.Children.Add(actions);
 
@@ -266,18 +267,18 @@ public partial class ReportPage : UserControl
     {
         if (sender is not Button { Tag: FileInfo file } || !file.Exists)
         {
-            ShellState.Status("Ce fichier n'existe plus.");
+            ShellState.Status(Loc.T("Rep_StatusFileMissing"));
             return;
         }
         try
         {
             Process.Start(new ProcessStartInfo(file.FullName) { UseShellExecute = true });
-            ShellState.Status("Ouverture de " + file.Name);
+            ShellState.Status(Loc.T("Rep_StatusOpeningNamed", file.Name));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Ouverture d'un rapport", ex);
-            ShellState.Status("Ouverture impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Rep_StatusOpenFail", ex.Message));
         }
     }
 

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Shell_CpuTip" xml:space="preserve"><value>Processor usage (updated every second)</value></data>
+  <data name="Shell_RamTip" xml:space="preserve"><value>Memory in use</value></data>
+  <data name="Shell_GpuTip" xml:space="preserve"><value>GPU temperature and load</value></data>
+  <data name="Shell_ThemeTip" xml:space="preserve"><value>Switch between dark and light theme</value></data>
+  <data name="Shell_MinimizeTip" xml:space="preserve"><value>Minimize</value></data>
+  <data name="Shell_MaximizeTip" xml:space="preserve"><value>Maximize or restore</value></data>
+  <data name="Shell_CloseTip" xml:space="preserve"><value>Close</value></data>
+  <data name="Shell_Tagline" xml:space="preserve"><value>ANALYZE · OPTIMIZE</value></data>
+  <data name="Shell_ElevationTip" xml:space="preserve"><value>Current privilege level. Without administrator rights, temperatures, some priorities and SMART health are unavailable. The Settings page offers an elevated relaunch.</value></data>
+  <data name="Shell_User" xml:space="preserve"><value>User</value></data>
+  <data name="Shell_Admin" xml:space="preserve"><value>Administrator</value></data>
+  <data name="Shell_LocalNote" xml:space="preserve"><value>Local data · no account required</value></data>
+  <data name="Shell_MonitoringTip" xml:space="preserve"><value>Monitoring is active</value></data>
+  <data name="Shell_Welcome" xml:space="preserve"><value>Welcome to GameBoost — open “Analysis” to diagnose your PC.</value></data>
+  <data name="Shell_ThemeLight" xml:space="preserve"><value>Light theme enabled.</value></data>
+  <data name="Shell_ThemeDark" xml:space="preserve"><value>Dark theme enabled.</value></data>
+  <data name="Shell_PageError" xml:space="preserve"><value>Unable to open this page: {0}</value></data>
+  <data name="Shell_NavDashboard" xml:space="preserve"><value>Home</value></data>
+  <data name="Shell_NavAnalysis" xml:space="preserve"><value>Analysis</value></data>
+  <data name="Shell_NavHardware" xml:space="preserve"><value>My PC</value></data>
+  <data name="Shell_NavGpu" xml:space="preserve"><value>GPU</value></data>
+  <data name="Shell_NavStorage" xml:space="preserve"><value>Storage</value></data>
+  <data name="Shell_NavGames" xml:space="preserve"><value>Games</value></data>
+  <data name="Shell_NavProfiles" xml:space="preserve"><value>Profiles</value></data>
+  <data name="Shell_NavProcesses" xml:space="preserve"><value>Apps</value></data>
+  <data name="Shell_NavMonitoring" xml:space="preserve"><value>Monitoring</value></data>
+  <data name="Shell_NavHistory" xml:space="preserve"><value>History</value></data>
+  <data name="Shell_NavReports" xml:space="preserve"><value>Reports</value></data>
+  <data name="Shell_NavSettings" xml:space="preserve"><value>Settings</value></data>
+  <data name="Shell_NavDashboard_Tip" xml:space="preserve"><value>Dashboard: real-time PC status</value></data>
+  <data name="Shell_NavAnalysis_Tip" xml:space="preserve"><value>Full system diagnostics and fixes</value></data>
+  <data name="Shell_NavHardware_Tip" xml:space="preserve"><value>Detailed sheet of detected hardware</value></data>
+  <data name="Shell_NavGpu_Tip" xml:space="preserve"><value>Graphics card, driver and supported technologies</value></data>
+  <data name="Shell_NavStorage_Tip" xml:space="preserve"><value>Disks, free space, health and temperatures</value></data>
+  <data name="Shell_NavGames_Tip" xml:space="preserve"><value>Detected games (Steam, Epic, Ubisoft, Xbox…)</value></data>
+  <data name="Shell_NavProfiles_Tip" xml:space="preserve"><value>Per-game graphics profiles (Quality, Balanced, Performance)</value></data>
+  <data name="Shell_NavProcesses_Tip" xml:space="preserve"><value>Running processes, resource usage, targeted close</value></data>
+  <data name="Shell_NavMonitoring_Tip" xml:space="preserve"><value>FPS, frame time and in-game overlay</value></data>
+  <data name="Shell_NavHistory_Tip" xml:space="preserve"><value>Recorded sessions and A/B comparison</value></data>
+  <data name="Shell_NavReports_Tip" xml:space="preserve"><value>HTML export of analyses and measurements</value></data>
+  <data name="Shell_NavSettings_Tip" xml:space="preserve"><value>GameBoost settings</value></data>
+  <data name="Ctrl_Good" xml:space="preserve"><value>Optimal</value></data>
+  <data name="Ctrl_Warning" xml:space="preserve"><value>Watch</value></data>
+  <data name="Ctrl_Critical" xml:space="preserve"><value>Problem detected</value></data>
+  <data name="Ctrl_Unknown" xml:space="preserve"><value>Unavailable</value></data>
+  <data name="App_ErrorTitle" xml:space="preserve"><value>GameBoost — error</value></data>
+  <data name="App_ErrorBody" xml:space="preserve"><value>An unexpected error occurred:
+
+{0}
+
+The application will keep running. Details were written to the log.</value></data>
+  <data name="Unit_MB" xml:space="preserve"><value>MB</value></data>
+  <data name="Unit_B" xml:space="preserve"><value>B</value></data>
+  <data name="Unit_MBs" xml:space="preserve"><value>MB/s</value></data>
+  <data name="Unit_TB" xml:space="preserve"><value>TB</value></data>
+  <data name="Unit_GB" xml:space="preserve"><value>GB</value></data>
+  <data name="Unit_KB" xml:space="preserve"><value>KB</value></data>
+  <data name="Unit_GBs" xml:space="preserve"><value>GB/s</value></data>
+  <data name="Unit_KBs" xml:space="preserve"><value>KB/s</value></data>
+  <data name="Unit_Bs" xml:space="preserve"><value>B/s</value></data>
+</root>

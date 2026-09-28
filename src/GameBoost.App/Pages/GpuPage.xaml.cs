@@ -5,6 +5,7 @@ using System.Windows.Media;
 using GameBoost.App.Controls;
 using GameBoost.App.Services;
 using GameBoost.Core.Hardware;
+using GameBoost.Core.Localization;
 using GameBoost.Core.Logging;
 using GameBoost.Core.Models;
 using GameBoost.Core.Monitoring;
@@ -13,7 +14,7 @@ namespace GameBoost.App.Pages;
 
 public partial class GpuPage : UserControl
 {
-    private const string DriverTip = "Un pilote très ancien peut réduire les performances dans les jeux récents.";
+    private static string DriverTip => Loc.T("Gpu_DriverAgeTip");
 
     private bool _subscribed;
     private bool _busy;
@@ -48,7 +49,7 @@ public partial class GpuPage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Démarrage des mesures GPU impossible", ex);
-            ShellState.Status("Mesures GPU indisponibles : " + ex.Message);
+            ShellState.Status(Loc.T("Gpu_StatusLiveFail", ex.Message));
         }
 
         ApplyColumns();
@@ -74,7 +75,7 @@ public partial class GpuPage : UserControl
 
     private async void OnRefreshClick(object sender, RoutedEventArgs e)
     {
-        ShellState.Status("Nouvelle détection de la carte graphique…");
+        ShellState.Status(Loc.T("Gpu_StatusDetecting"));
         await LoadHardwareAsync();
     }
 
@@ -89,12 +90,12 @@ public partial class GpuPage : UserControl
             var report = await HardwareDetector.Instance.CollectAsync();
             Fill(report);
             _loaded = true;
-            ShellState.Status("Carte graphique détectée : " + Known(report.Gpu.Name) + ".");
+            ShellState.Status(Loc.T("Gpu_StatusDetected", Known(report.Gpu.Name)));
         }
         catch (Exception ex)
         {
             Log.Error("UI", "Détection de la carte graphique impossible", ex);
-            ShellState.Status("Détection de la carte graphique impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Gpu_StatusDetectFail", ex.Message));
             Fill(new HardwareReport());
             _loaded = true;
         }
@@ -112,7 +113,7 @@ public partial class GpuPage : UserControl
         {
             var gpu = report.Gpu;
             _dedicatedVram = gpu.DedicatedVramBytes;
-            var known = Known(gpu.Name) != "Non disponible";
+            var known = Known(gpu.Name) != Loc.T("Hw_NotAvailable");
             EmptyPanel.Visibility = known ? Visibility.Collapsed : Visibility.Visible;
             ContentPanel.Visibility = known ? Visibility.Visible : Visibility.Collapsed;
             if (!known)
@@ -133,13 +134,13 @@ public partial class GpuPage : UserControl
                 Style = StyleOf("Body")
             });
             driverPanel.Children.Add(DriverAgeBadge(gpu.DriverDate));
-            BannerFields.Children.Add(Row("PILOTE", driverPanel,
-                "Le pilote fait le lien entre Windows et la carte graphique. Un pilote à jour corrige des bugs et débloque des fonctions."));
-            BannerFields.Children.Add(Row("DATE DU PILOTE", Known(gpu.DriverDate)));
-            BannerFields.Children.Add(Row("MÉMOIRE DÉDIÉE", _dedicatedVram > 0 ? FormatSize(_dedicatedVram) : "Non disponible",
-                "Mémoire vidéo physique installée sur la carte, distincte de la mémoire vive du PC."));
-            BannerFields.Children.Add(Row("IDENTIFIANT PNP", Known(gpu.PnpDeviceId),
-                "Identifiant technique de la carte dans Windows, utilisé pour retrouver le bon pilote.", true));
+            BannerFields.Children.Add(Row(Loc.T("Gpu_Driver"), driverPanel,
+                Loc.T("Gpu_DriverTip")));
+            BannerFields.Children.Add(Row(Loc.T("Gpu_DriverDate"), Known(gpu.DriverDate)));
+            BannerFields.Children.Add(Row(Loc.T("Gpu_DedicatedVram"), _dedicatedVram > 0 ? FormatSize(_dedicatedVram) : Loc.T("Hw_NotAvailable"),
+                Loc.T("Gpu_DedicatedVramTip")));
+            BannerFields.Children.Add(Row(Loc.T("Gpu_PnpId"), Known(gpu.PnpDeviceId),
+                Loc.T("Gpu_PnpIdTip"), true));
 
             FillCapabilities(gpu.Capabilities);
             FillAdapters(gpu.AllAdapters, gpu);
@@ -148,7 +149,7 @@ public partial class GpuPage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Affichage de la fiche GPU impossible", ex);
-            ShellState.Status("Affichage du GPU impossible : " + ex.Message);
+            ShellState.Status(Loc.T("Gpu_StatusRenderFail", ex.Message));
         }
     }
 
@@ -157,16 +158,16 @@ public partial class GpuPage : UserControl
         TechPanel.Children.Clear();
         var missing = new List<string>();
 
-        AddCapability("DLSS", "Reconstruction d'image par intelligence artificielle : l'image est calculée à plus basse résolution puis améliorée, ce qui augmente les FPS dans les jeux compatibles.", capabilities.Dlss, "DLSS", missing);
-        AddCapability("Frame Generation", "Génération d'images intermédiaires par l'IA pour lisser l'affichage. Elle dépend de la génération de la carte et des jeux qui la prennent en charge.", capabilities.FrameGeneration, "Frame Generation", missing);
-        AddCapability("Ray Tracing", "Simulation de la lumière réelle : reflets, ombres et éclairage plus fidèles, au prix d'une consommation d'images plus élevée.", capabilities.RayTracing, "Ray Tracing", missing);
-        AddCapability("Reflex", "Réduit le délai entre l'entrée de votre souris ou manette et l'image affichée. Sert surtout en jeu compétitif.", capabilities.Reflex, "Reflex", missing);
-        AddCapability("FSR", "Amélioration d'image par mise à l'échelle, ouverte à plusieurs cartes graphiques. Elle se règle dans les jeux compatibles.", capabilities.Fsr, "FSR", missing);
-        AddCapability("XeSS", "Amélioration d'image par intelligence artificielle, utilisable dans les jeux qui la prennent en charge.", capabilities.Xess, "XeSS", missing);
+        AddCapability("DLSS", Loc.T("Gpu_TechDlss"), capabilities.Dlss, "DLSS", missing);
+        AddCapability("Frame Generation", Loc.T("Gpu_TechFrameGen"), capabilities.FrameGeneration, "Frame Generation", missing);
+        AddCapability("Ray Tracing", Loc.T("Gpu_TechRayTracing"), capabilities.RayTracing, "Ray Tracing", missing);
+        AddCapability("Reflex", Loc.T("Gpu_TechReflex"), capabilities.Reflex, "Reflex", missing);
+        AddCapability("FSR", Loc.T("Gpu_TechFsr"), capabilities.Fsr, "FSR", missing);
+        AddCapability("XeSS", Loc.T("Gpu_TechXess"), capabilities.Xess, "XeSS", missing);
 
         if (missing.Count > 0)
         {
-            TechUnavailable.Text = "Non disponible sur ce matériel : " + string.Join(", ", missing) + ".";
+            TechUnavailable.Text = Loc.T("Gpu_TechUnavailable", string.Join(", ", missing));
             TechUnavailable.Visibility = Visibility.Visible;
         }
         else
@@ -203,9 +204,9 @@ public partial class GpuPage : UserControl
             Style = StyleOf("Body"),
             FontWeight = FontWeights.SemiBold
         });
-        panel.Children.Add(Badge("Compatible avec votre matériel",
+        panel.Children.Add(Badge(Loc.T("Gpu_Compatible"),
             BrushOf("GoodBgBrush"), BrushOf("GoodBrush"),
-            "La compatibilité est déduite du modèle de la carte graphique détecté.", new Thickness(0, 7, 0, 0)));
+            Loc.T("Gpu_CompatibleTip"), new Thickness(0, 7, 0, 0)));
         card.Child = panel;
         TechPanel.Children.Add(card);
     }
@@ -216,7 +217,7 @@ public partial class GpuPage : UserControl
         var list = adapters ?? new List<GpuInfo>();
         if (list.Count == 0)
         {
-            AdaptersList.Children.Add(new TextBlock { Text = "Non disponible", Style = StyleOf("BodyMuted") });
+            AdaptersList.Children.Add(new TextBlock { Text = Loc.T("Hw_NotAvailable"), Style = StyleOf("BodyMuted") });
             return;
         }
 
@@ -238,8 +239,8 @@ public partial class GpuPage : UserControl
                 FontWeight = FontWeights.SemiBold
             });
             if (adapter.IsPrimary || ReferenceEquals(adapter, primary))
-                title.Children.Add(Badge("Principal", BrushOf("GoodBgBrush"), BrushOf("GoodBrush"),
-                    "Cet adaptateur pilote l'écran principal.", new Thickness(9, 0, 0, 0)));
+                title.Children.Add(Badge(Loc.T("Gpu_Primary"), BrushOf("GoodBgBrush"), BrushOf("GoodBrush"),
+                    Loc.T("Gpu_PrimaryTip"), new Thickness(9, 0, 0, 0)));
             panel.Children.Add(title);
 
             panel.Children.Add(new TextBlock
@@ -276,7 +277,7 @@ public partial class GpuPage : UserControl
         catch (Exception ex)
         {
             Log.Error("UI", "Lecture des capteurs GPU impossible", ex);
-            ShellState.Status("Capteurs GPU indisponibles : " + ex.Message);
+            ShellState.Status(Loc.T("Gpu_StatusSensorsFail", ex.Message));
         }
     }
 
@@ -319,7 +320,7 @@ public partial class GpuPage : UserControl
                 TempCard.Value = temperature.ToString("F0", CultureInfo.CurrentCulture);
                 TempCard.Unit = "°C";
                 TempCard.SubText = _hotspot is double hotspot
-                    ? "point chaud " + hotspot.ToString("F0", CultureInfo.CurrentCulture) + " °C"
+                    ? Loc.T("Gpu_Hotspot", hotspot.ToString("F0", CultureInfo.CurrentCulture))
                     : string.Empty;
                 TempCard.ProgressPercent = Math.Clamp(temperature, 0, 120) * 100.0 / 120;
                 TempCard.Level = temperature >= 85 ? HealthLevel.Critical
@@ -328,9 +329,9 @@ public partial class GpuPage : UserControl
             }
             else
             {
-                TempCard.Value = "Non disponible";
+                TempCard.Value = Loc.T("Hw_NotAvailable");
                 TempCard.Unit = string.Empty;
-                TempCard.SubText = "nécessite l'administrateur";
+                TempCard.SubText = Loc.T("Gpu_RequiresAdmin");
                 TempCard.ProgressPercent = double.NaN;
                 TempCard.Level = null;
             }
@@ -347,7 +348,7 @@ public partial class GpuPage : UserControl
             }
             else
             {
-                LoadCard.Value = "Non disponible";
+                LoadCard.Value = Loc.T("Hw_NotAvailable");
                 LoadCard.Unit = string.Empty;
                 LoadCard.SubText = string.Empty;
                 LoadCard.ProgressPercent = double.NaN;
@@ -364,7 +365,7 @@ public partial class GpuPage : UserControl
             }
             else
             {
-                ClockCard.Value = "Non disponible";
+                ClockCard.Value = Loc.T("Hw_NotAvailable");
                 ClockCard.Unit = string.Empty;
                 ClockCard.SubText = string.Empty;
                 ClockCard.ProgressPercent = double.NaN;
@@ -381,7 +382,7 @@ public partial class GpuPage : UserControl
             }
             else
             {
-                FanCard.Value = "Non disponible";
+                FanCard.Value = Loc.T("Hw_NotAvailable");
                 FanCard.Unit = string.Empty;
                 FanCard.SubText = string.Empty;
                 FanCard.ProgressPercent = double.NaN;
@@ -395,7 +396,7 @@ public partial class GpuPage : UserControl
                 var percent = Math.Clamp(used * 100.0 / total, 0, 100);
                 VramUsedCard.Value = FormatSize(used);
                 VramUsedCard.Unit = string.Empty;
-                VramUsedCard.SubText = "sur " + FormatSize(total);
+                VramUsedCard.SubText = Loc.T("Gpu_VramOfTotal", FormatSize(total));
                 VramUsedCard.ProgressPercent = percent;
                 VramUsedCard.Level = percent >= 90 ? HealthLevel.Critical
                     : percent >= 75 ? HealthLevel.Warning
@@ -403,7 +404,7 @@ public partial class GpuPage : UserControl
             }
             else
             {
-                VramUsedCard.Value = "Non disponible";
+                VramUsedCard.Value = Loc.T("Hw_NotAvailable");
                 VramUsedCard.Unit = string.Empty;
                 VramUsedCard.SubText = string.Empty;
                 VramUsedCard.ProgressPercent = double.NaN;
@@ -414,13 +415,13 @@ public partial class GpuPage : UserControl
             {
                 VramTotalCard.Value = FormatSize(total);
                 VramTotalCard.Unit = string.Empty;
-                VramTotalCard.SubText = "déclarée par le pilote";
+                VramTotalCard.SubText = Loc.T("Gpu_VramDeclaredByDriver");
                 VramTotalCard.ProgressPercent = double.NaN;
                 VramTotalCard.Level = null;
             }
             else
             {
-                VramTotalCard.Value = "Non disponible";
+                VramTotalCard.Value = Loc.T("Hw_NotAvailable");
                 VramTotalCard.Unit = string.Empty;
                 VramTotalCard.SubText = string.Empty;
                 VramTotalCard.ProgressPercent = double.NaN;
@@ -473,19 +474,19 @@ public partial class GpuPage : UserControl
         {
             case GpuVendor.Nvidia:
                 return Badge("NVIDIA", BrushOf("CardAltBrush"), Frozen("#76B900"),
-                    "Constructeur identifié à partir de l'identifiant PCI du pilote.", new Thickness(10, 0, 0, 0));
+                    Loc.T("Gpu_VendorPciTip"), new Thickness(10, 0, 0, 0));
             case GpuVendor.Amd:
                 return Badge("AMD", BrushOf("DangerBgBrush"), BrushOf("DangerBrush"),
-                    "Constructeur identifié à partir de l'identifiant PCI du pilote.", new Thickness(10, 0, 0, 0));
+                    Loc.T("Gpu_VendorPciTip"), new Thickness(10, 0, 0, 0));
             case GpuVendor.Intel:
                 return Badge("Intel", BrushOf("InfoBgBrush"), BrushOf("InfoBrush"),
-                    "Constructeur identifié à partir de l'identifiant PCI du pilote.", new Thickness(10, 0, 0, 0));
+                    Loc.T("Gpu_VendorPciTip"), new Thickness(10, 0, 0, 0));
             case GpuVendor.Other:
-                return Badge("Autre constructeur", BrushOf("CardAltBrush"), BrushOf("TextMutedBrush"),
-                    "Le constructeur n'a pas pu être rattaché à NVIDIA, AMD ou Intel.", new Thickness(10, 0, 0, 0));
+                return Badge(Loc.T("Gpu_OtherVendor"), BrushOf("CardAltBrush"), BrushOf("TextMutedBrush"),
+                    Loc.T("Gpu_OtherVendorTip"), new Thickness(10, 0, 0, 0));
             default:
-                return Badge("Constructeur inconnu", BrushOf("CardAltBrush"), BrushOf("TextMutedBrush"),
-                    "Le constructeur n'a pas pu être identifié.", new Thickness(10, 0, 0, 0));
+                return Badge(Loc.T("Gpu_UnknownVendor"), BrushOf("CardAltBrush"), BrushOf("TextMutedBrush"),
+                    Loc.T("Gpu_UnknownVendorTip"), new Thickness(10, 0, 0, 0));
         }
     }
 
@@ -493,7 +494,7 @@ public partial class GpuPage : UserControl
     {
         var date = ParseDriverDate(driverDate);
         if (date is null)
-            return Badge("Âge du pilote : non disponible", BrushOf("CardAltBrush"), BrushOf("TextMutedBrush"),
+            return Badge(Loc.T("Gpu_DriverAgeNa"), BrushOf("CardAltBrush"), BrushOf("TextMutedBrush"),
                 DriverTip, new Thickness(9, 0, 0, 0));
 
         var months = (int)Math.Round((DateTime.Now - date.Value).TotalDays / 30.44);
@@ -517,7 +518,7 @@ public partial class GpuPage : UserControl
             foreground = BrushOf("DangerBrush");
         }
 
-        return Badge("Âge du pilote : " + months.ToString(CultureInfo.CurrentCulture) + " mois",
+        return Badge(Loc.T("Gpu_DriverAgeMonths", months.ToString(CultureInfo.CurrentCulture)),
             background, foreground, DriverTip, new Thickness(9, 0, 0, 0));
     }
 
@@ -538,10 +539,11 @@ public partial class GpuPage : UserControl
     {
         var knownVersion = Known(version);
         var knownDate = Known(date);
-        if (knownVersion == "Non disponible" && knownDate == "Non disponible") return "Pilote non disponible";
-        if (knownDate == "Non disponible") return "Pilote " + knownVersion;
-        if (knownVersion == "Non disponible") return knownDate;
-        return "Pilote " + knownVersion + " · " + knownDate;
+        var na = Loc.T("Hw_NotAvailable");
+        if (knownVersion == na && knownDate == na) return Loc.T("Gpu_DriverNa");
+        if (knownDate == na) return Loc.T("Gpu_DriverValue", knownVersion);
+        if (knownVersion == na) return knownDate;
+        return Loc.T("Gpu_DriverValueDate", knownVersion, knownDate);
     }
 
     private static Border Badge(string text, Brush background, Brush foreground, string? tip = null,
@@ -571,14 +573,14 @@ public partial class GpuPage : UserControl
 
     private static string Known(string? value)
     {
-        if (string.IsNullOrWhiteSpace(value)) return "Non disponible";
+        if (string.IsNullOrWhiteSpace(value)) return Loc.T("Hw_NotAvailable");
         var trimmed = value.Trim();
         if (trimmed.Equals("Inconnu", StringComparison.OrdinalIgnoreCase) ||
             trimmed.Equals("Inconnue", StringComparison.OrdinalIgnoreCase) ||
             trimmed.Equals("Inconnus", StringComparison.OrdinalIgnoreCase) ||
             trimmed.Equals("Inconnues", StringComparison.OrdinalIgnoreCase) ||
             trimmed.Equals("Unknown", StringComparison.OrdinalIgnoreCase))
-            return "Non disponible";
+            return Loc.T("Hw_NotAvailable");
         return trimmed;
     }
 
