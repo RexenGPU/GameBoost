@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
 using System.Resources;
+using GameBoost.Core.Logging;
 
 namespace GameBoost.Core.Localization;
 
@@ -103,9 +104,20 @@ public static class Loc
                 var satellite = Path.Combine(dir, culture, assemblyName + ".resources.dll");
                 if (File.Exists(satellite))
                 {
-                    try { LoadResources(Assembly.LoadFrom(satellite), culture); }
-                    catch { }
+                    try
+                    {
+                        var before = ByCulture.TryGetValue(culture, out var probe) ? probe.Count : 0;
+                        LoadResources(Assembly.LoadFrom(satellite), culture);
+                        var after = ByCulture.TryGetValue(culture, out var probe2) ? probe2.Count : 0;
+                        Log.Info("Loc", "Satellite " + culture + " charge : " + (after - before) + " cles (" + satellite + ")");
+                    }
+                    catch (Exception ex) { Log.Error("Loc", "Satellite " + culture + " illisible", ex); }
                 }
+            }
+            foreach (var culture in KnownCultures)
+            {
+                if (ByCulture.TryGetValue(culture, out var counted) && counted.Count > 0)
+                    Log.Info("Loc", "Culture " + culture + " : " + counted.Count + " cles chargees");
             }
         }
     }

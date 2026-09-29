@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Threading;
 using GameBoost.App.Services;
 using GameBoost.Core.Data;
@@ -19,6 +19,7 @@ public partial class App : Application
         Loc.RegisterAssembly(typeof(GameBoost.Core.Logging.Log).Assembly);
         Loc.RegisterAssembly(typeof(App).Assembly);
         Loc.SetCulture(SettingsService.Current.Language);
+        Log.Info("App", "Langue demandee : " + SettingsService.Current.Language + " -> culture active : " + Loc.CultureCode);
         Log.Init(AppPaths.LogsDir, SettingsService.Current.LogRetentionDays);
         Log.Info("App", "Démarrage de GameBoost " + AssemblyVersion());
 
