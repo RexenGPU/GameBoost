@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>  <data name="Bdlg_Applied" xml:space="preserve"><value>Angewendete Optimierungen</value></data>
+  <data name="Bdlg_Apply" xml:space="preserve"><value>ANWENDEN</value></data>
+  <data name="Bdlg_ApplyConfirmTip" xml:space="preserve"><value>Aktivieren Sie „Ich habe verstanden", um die Optimierungen anzuwenden.</value></data>
+  <data name="Bdlg_ApplyNoStepsTip" xml:space="preserve"><value>Mit dieser Konfiguration kann kein Boost-Schritt angewendet werden.</value></data>
+  <data name="Bdlg_ApplyProfile" xml:space="preserve"><value>Aktives Profil des Spiels anwenden</value></data>
+  <data name="Bdlg_ApplyProfileSub" xml:space="preserve"><value>Auflösung, Qualität, V-Sync gemäß dem gewählten Profil.</value></data>
+  <data name="Bdlg_ApplyReadyTip" xml:space="preserve"><value>Die im Überblick aufgeführten Optimierungen anwenden.</value></data>
+  <data name="Bdlg_ApplyTip" xml:space="preserve"><value>Die im Überblick aufgeführten Optimierungen anwenden</value></data>
+  <data name="Bdlg_Back" xml:space="preserve"><value>Zurück</value></data>
+  <data name="Bdlg_BackTip" xml:space="preserve"><value>Zurück zur Konfiguration</value></data>
+  <data name="Bdlg_Backups" xml:space="preserve"><value>Erstellte Sicherungen</value></data>
+  <data name="Bdlg_BadgeIrreversible" xml:space="preserve"><value>nicht umkehrbar</value></data>
+  <data name="Bdlg_BadgeReversible" xml:space="preserve"><value>wird automatisch wiederhergestellt</value></data>
+  <data name="Bdlg_Cancel" xml:space="preserve"><value>Abbrechen</value></data>
+  <data name="Bdlg_CancelTip" xml:space="preserve"><value>Assistent schließen, ohne etwas zu ändern</value></data>
+  <data name="Bdlg_CleanTemp" xml:space="preserve"><value>Temporäre Dateien über 48 h bereinigen</value></data>
+  <data name="Bdlg_CleanTempSub" xml:space="preserve"><value>Standardmäßig deaktiviert: Dateien älter als 48 Stunden werden endgültig gelöscht.</value></data>
+  <data name="Bdlg_Close" xml:space="preserve"><value>Schließen</value></data>
+  <data name="Bdlg_CloseApps" xml:space="preserve"><value>Die ausgewählten Anwendungen schließen</value></data>
+  <data name="Bdlg_CloseAppsLabel" xml:space="preserve"><value>ZU SCHLIESSENDE ANWENDUNGEN</value></data>
+  <data name="Bdlg_CloseAppsSub" xml:space="preserve"><value>Gibt Prozessor und Speicher während der Sitzung frei.</value></data>
+  <data name="Bdlg_CloseConfirm" xml:space="preserve"><value>Eine Boost-Sitzung ist auf Ihrem PC aktiv. Sitzung beenden und die ursprünglichen Einstellungen wiederherstellen?</value></data>
+  <data name="Bdlg_CloseRuleFail" xml:space="preserve"><value>Schließregel nicht lesbar</value></data>
+  <data name="Bdlg_CloseTip" xml:space="preserve"><value>Assistent schließen</value></data>
+  <data name="Bdlg_CloseToggleTip" xml:space="preserve"><value>Schließt nur die oben markierten Anwendungen</value></data>
+  <data name="Bdlg_ElevationNote" xml:space="preserve"><value>Einige Messungen (Temperaturen, Prozesspriorität) erfordern erweiterte Rechte. Starten Sie GameBoost über die Seite Einstellungen als Administrator neu, um sie zu aktivieren.</value></data>
+  <data name="Bdlg_EndRestored" xml:space="preserve"><value>Sitzung beendet: die ursprünglichen Einstellungen sind wiederhergestellt.</value></data>
+  <data name="Bdlg_EndSession" xml:space="preserve"><value>SITZUNG BEENDEN UND WIEDERHERSTELLEN</value></data>
+  <data name="Bdlg_EndSessionTip" xml:space="preserve"><value>Stromplan, Spielmodus, Prioritäten und Overlay in den ursprünglichen Zustand zurückversetzen</value></data>
+  <data name="Bdlg_EndStillActive" xml:space="preserve"><value>Die Sitzung ist noch aktiv: prüfen Sie die Meldungen unten.</value></data>
+  <data name="Bdlg_FreeMemory" xml:space="preserve"><value>Arbeitsspeicher im Hintergrund freigeben</value></data>
+  <data name="Bdlg_FreeMemorySub" xml:space="preserve"><value>Geschützte Anwendungen und das Spiel selbst sind ausgenommen.</value></data>
+  <data name="Bdlg_GameComboTip" xml:space="preserve"><value>Wählen Sie das zu optimierende Spiel oder lassen Sie „Kein bestimmtes Spiel" für einen allgemeinen Boost</value></data>
+  <data name="Bdlg_GameLabel" xml:space="preserve"><value>ZIELSPIEL</value></data>
+  <data name="Bdlg_GameMode" xml:space="preserve"><value>Windows-Spielmodus aktivieren</value></data>
+  <data name="Bdlg_GameModeSub" xml:space="preserve"><value>Windows priorisiert Spiele und schaltet Benachrichtigungen stumm.</value></data>
+  <data name="Bdlg_GameModeTip" xml:space="preserve"><value>Aktiviert den Windows-Spielmodus (Registry): der frühere Wert wird am Ende der Sitzung wiederhergestellt</value></data>
+  <data name="Bdlg_Header" xml:space="preserve"><value>Boost-Assistent</value></data>
+  <data name="Bdlg_HeaderHint" xml:space="preserve"><value>Keine Änderung ohne vorherigen Überblick</value></data>
+  <data name="Bdlg_MemoryTip" xml:space="preserve"><value>Leert den Arbeitsspeicher von Hintergrundanwendungen: sie fordern ihn bei Bedarf wieder an</value></data>
+  <data name="Bdlg_NoBackups" xml:space="preserve"><value>Es war keine Sicherung nötig.</value></data>
+  <data name="Bdlg_NoSpecificGame" xml:space="preserve"><value>Kein bestimmtes Spiel</value></data>
+  <data name="Bdlg_NothingApplied" xml:space="preserve"><value>Es konnte keine Optimierung angewendet werden.</value></data>
+  <data name="Bdlg_NothingToRestore" xml:space="preserve"><value>Nichts wiederherzustellen: es wurde nichts geändert.</value></data>
+  <data name="Bdlg_OptimizationsLabel" xml:space="preserve"><value>OPTIMIERUNGEN</value></data>
+  <data name="Bdlg_OverlayTip" xml:space="preserve"><value>Zeigt FPS und Temperaturen während der Sitzung: die Einstellung wird am Ende wiederhergestellt</value></data>
+  <data name="Bdlg_PowerPlan" xml:space="preserve"><value>Temporärer Stromplan (Hohe Leistung)</value></data>
+  <data name="Bdlg_PowerSub" xml:space="preserve"><value>Verhindert Frequenzabsenkungen während der Sitzung.</value></data>
+  <data name="Bdlg_PowerTip" xml:space="preserve"><value>Wechselt vorübergehend zum Plan „Hohe Leistung": der frühere Plan wird am Ende der Sitzung wiederhergestellt</value></data>
+  <data name="Bdlg_Preparing" xml:space="preserve"><value>Vorbereitung.</value></data>
+  <data name="Bdlg_PresetBalanced" xml:space="preserve"><value>Ausgewogen</value></data>
+  <data name="Bdlg_PresetCustom" xml:space="preserve"><value>Benutzerdefiniert</value></data>
+  <data name="Bdlg_PresetMaxQuality" xml:space="preserve"><value>Maximale Qualität</value></data>
+  <data name="Bdlg_PresetPerformance" xml:space="preserve"><value>Leistung</value></data>
+  <data name="Bdlg_ProcessCloseTip" xml:space="preserve"><value>Markiert: diese Anwendung wird während der Sitzung geschlossen und am Ende wieder geöffnet, sofern die Einstellung aktiv ist</value></data>
+  <data name="Bdlg_ProcessCount" xml:space="preserve"><value>{0} Anwendung(en) läuft/laufen, {1} können geschlossen werden.</value></data>
+  <data name="Bdlg_ProcessListFail" xml:space="preserve"><value>Prozessliste nicht verfügbar.</value></data>
+  <data name="Bdlg_ProcessNoCloseTip" xml:space="preserve"><value>Kann nicht geschlossen werden: {0}</value></data>
+  <data name="Bdlg_ProcessNone" xml:space="preserve"><value>Keine laufende Anwendung erkannt.</value></data>
+  <data name="Bdlg_ProfileActive" xml:space="preserve"><value>Aktives Profil: {0} ({1}).</value></data>
+  <data name="Bdlg_ProfileNone" xml:space="preserve"><value>Kein aktives Profil für dieses Spiel: der Profilschritt wird übersprungen.</value></data>
+  <data name="Bdlg_ProfileTip" xml:space="preserve"><value>Bearbeitet die Konfigurationsdatei des Spiels (eine Sicherungskopie wird erstellt und am Ende wiederhergestellt)</value></data>
+  <data name="Bdlg_ProfileUnavailable" xml:space="preserve"><value>Aktives Profil nicht verfügbar.</value></data>
+  <data name="Bdlg_ReadingProcesses" xml:space="preserve"><value>Prozesse werden gelesen.</value></data>
+  <data name="Bdlg_Restore" xml:space="preserve"><value>Wiederherstellen</value></data>
+  <data name="Bdlg_Results" xml:space="preserve"><value>Ergebnisse</value></data>
+  <data name="Bdlg_RunDone" xml:space="preserve"><value>Ausführung abgeschlossen.</value></data>
+  <data name="Bdlg_RunFail" xml:space="preserve"><value>Fehlgeschlagen: {0}</value></data>
+  <data name="Bdlg_RunSessionActive" xml:space="preserve"><value>Sitzung aktiv: die Optimierungen bleiben bis zum Sitzungsende bestehen.</value></data>
+  <data name="Bdlg_SeeSummary" xml:space="preserve"><value>Überblick anzeigen</value></data>
+  <data name="Bdlg_SeeSummaryTip" xml:space="preserve"><value>Zeigt die genaue Liste der Änderungen, bevor etwas angewendet wird</value></data>
+  <data name="Bdlg_SessionName" xml:space="preserve"><value>Boost-Sitzung</value></data>
+  <data name="Bdlg_ShowFpsOverlay" xml:space="preserve"><value>FPS-Overlay anzeigen</value></data>
+  <data name="Bdlg_ShowFpsOverlaySub" xml:space="preserve"><value>Bildschirmzähler, der beim Spielen eingeblendet wird.</value></data>
+  <data name="Bdlg_StatusBoostApplied" xml:space="preserve"><value>Boost angewendet: {0} Optimierung(en) aktiv.</value></data>
+  <data name="Bdlg_StatusBoostDone" xml:space="preserve"><value>Boost ohne aktive Sitzung abgeschlossen.</value></data>
+  <data name="Bdlg_StatusBoostFail" xml:space="preserve"><value>Der Boost ist fehlgeschlagen: {0}</value></data>
+  <data name="Bdlg_StatusEndCancel" xml:space="preserve"><value>Die Sitzung konnte nicht beendet werden: Schließen abgebrochen.</value></data>
+  <data name="Bdlg_StatusEnded" xml:space="preserve"><value>Boost-Sitzung beendet: Einstellungen wiederhergestellt.</value></data>
+  <data name="Bdlg_StatusEndFail" xml:space="preserve"><value>Die Sitzung konnte nicht beendet werden.</value></data>
+  <data name="Bdlg_StatusEndSessionFail" xml:space="preserve"><value>Sitzung konnte nicht beendet werden: {0}</value></data>
+  <data name="Bdlg_StatusLibraryFail" xml:space="preserve"><value>Spielbibliothek nicht verfügbar: {0}</value></data>
+  <data name="Bdlg_StatusPlanFail" xml:space="preserve"><value>Überblick konnte nicht erstellt werden: {0}</value></data>
+  <data name="Bdlg_StatusProcessListFail" xml:space="preserve"><value>Prozessliste nicht verfügbar: {0}</value></data>
+  <data name="Bdlg_StatusRestoreFail" xml:space="preserve"><value>Wiederherstellung fehlgeschlagen: {0}</value></data>
+  <data name="Bdlg_StatusRestoreSlow" xml:space="preserve"><value>Die Wiederherstellung dauert zu lange: Schließen abgebrochen.</value></data>
+  <data name="Bdlg_StatusSettingsFail" xml:space="preserve"><value>Einstellungen nicht verfügbar: {0}</value></data>
+  <data name="Bdlg_StatusWait" xml:space="preserve"><value>Bitte warten Sie, bis der laufende Vorgang abgeschlossen ist.</value></data>
+  <data name="Bdlg_StepConfig" xml:space="preserve"><value>1. Konfiguration</value></data>
+  <data name="Bdlg_StepRun" xml:space="preserve"><value>3. Ausführung</value></data>
+  <data name="Bdlg_StepSkipped" xml:space="preserve"><value>Schritt übersprungen - {0}</value></data>
+  <data name="Bdlg_StepSummary" xml:space="preserve"><value>2. Überblick</value></data>
+  <data name="Bdlg_SummaryIntro" xml:space="preserve"><value>GameBoost wird folgende Optimierungen durchführen:</value></data>
+  <data name="Bdlg_SummaryNote" xml:space="preserve"><value>Noch wurde nichts auf Ihrem PC geändert. Prüfen Sie die folgende Liste, bevor Sie anwenden.</value></data>
+  <data name="Bdlg_TempTip" xml:space="preserve"><value>Nicht umkehrbar: temporäre Dateien älter als 48 Stunden können nach dem Löschen nicht wiederhergestellt werden</value></data>
+  <data name="Bdlg_Title" xml:space="preserve"><value>GameBoost - Boost-Assistent</value></data>
+  <data name="Bdlg_Understood" xml:space="preserve"><value>Ich habe verstanden</value></data>
+  <data name="Bdlg_UnderstoodTip" xml:space="preserve"><value>Bestätigen Sie, den Überblick gelesen zu haben, bevor Änderungen angewendet werden</value></data>
+  <data name="Bdlg_Waiting" xml:space="preserve"><value>Warten.</value></data>
+  <data name="Dash_Analyze" xml:space="preserve"><value>ANALYSIEREN</value></data>
+  <data name="Dash_AnalyzeTip" xml:space="preserve"><value>Führt eine vollständige Diagnose Ihres PCs aus und zeigt die vorgeschlagenen Korrekturen</value></data>
+  <data name="Dash_BoostAvailableTip" xml:space="preserve"><value>Öffnet den Boost-Assistenten: jeder Schritt wird vor der Ausführung zusammengefasst, nichts ändert sich ohne Ihre Zustimmung.</value></data>
+  <data name="Dash_BoostGame" xml:space="preserve"><value>MEIN SPIEL BOOSTEN</value></data>
+  <data name="Dash_BoostGameTip" xml:space="preserve"><value>Öffnet den Boost-Assistenten: jeder Schritt wird vor jeder Änderung zusammengefasst</value></data>
+  <data name="Dash_BoostUnavailableTip" xml:space="preserve"><value>Derzeit ist keine Optimierung möglich: kein Boost-Schritt würde angewendet.</value></data>
+  <data name="Dash_Build" xml:space="preserve"><value> (Build {0})</value></data>
+  <data name="Dash_CloseImpossible" xml:space="preserve"><value>Kann nicht geschlossen werden</value></data>
+  <data name="Dash_CoresThreads" xml:space="preserve"><value>{0} Kerne / {1} Threads</value></data>
+  <data name="Dash_CoresUnavailable" xml:space="preserve"><value>Kerne nicht verfügbar</value></data>
+  <data name="Dash_CpuTemp" xml:space="preserve"><value>CPU-Temperatur</value></data>
+  <data name="Dash_CpuTempTip" xml:space="preserve"><value>Prozessortemperatur: zum Lesen sind erweiterte Rechte nötig</value></data>
+  <data name="Dash_CpuUsage" xml:space="preserve"><value>CPU-Auslastung</value></data>
+  <data name="Dash_CpuUsageTip" xml:space="preserve"><value>Anteil der genutzten Prozessorressourcen, jede Sekunde erfasst</value></data>
+  <data name="Dash_DiskFree" xml:space="preserve"><value>Freier Speicherplatz</value></data>
+  <data name="Dash_DiskFreeTip" xml:space="preserve"><value>Freier Speicher auf dem Systemvolume (Windows), über die Schaltfläche Aktualisieren erneuerbar</value></data>
+  <data name="Dash_Driver" xml:space="preserve"><value>Treiber {0}</value></data>
+  <data name="Dash_DriverUnavailable" xml:space="preserve"><value>Treiber nicht verfügbar</value></data>
+  <data name="Dash_ElevationRequired" xml:space="preserve"><value>erweiterte Rechte erforderlich</value></data>
+  <data name="Dash_GameCardTip" xml:space="preserve"><value>Öffnet die Spiele-Seite von GameBoost</value></data>
+  <data name="Dash_GamesEmpty" xml:space="preserve"><value>Noch kein Spiel erkannt. GameBoost durchsucht Steam, Epic, Ubisoft, Xbox, GOG, Battle.net und Riot sowie die von Ihnen hinzugefügten Ordner.</value></data>
+  <data name="Dash_GpuTemp" xml:space="preserve"><value>GPU-Temperatur</value></data>
+  <data name="Dash_GpuTempTip" xml:space="preserve"><value>Grafikkartentemperatur: zum Lesen sind erweiterte Rechte nötig</value></data>
+  <data name="Dash_GpuUsage" xml:space="preserve"><value>GPU-Auslastung</value></data>
+  <data name="Dash_GpuUsageTip" xml:space="preserve"><value>Anteil der genutzten Grafikkarte, jede Sekunde erfasst</value></data>
+  <data name="Dash_Hardware" xml:space="preserve"><value>Hardware</value></data>
+  <data name="Dash_HardwareDetails" xml:space="preserve"><value>Alle Details</value></data>
+  <data name="Dash_HardwareDetailsTip" xml:space="preserve"><value>Öffnet die Seite „Mein PC" mit der detaillierten Hardwareübersicht</value></data>
+  <data name="Dash_HardwareLoading" xml:space="preserve"><value>Hardware wird erkannt.</value></data>
+  <data name="Dash_HwCpu" xml:space="preserve"><value>PROZESSOR</value></data>
+  <data name="Dash_HwDisplay" xml:space="preserve"><value>HAUPTBILDSCHIRM</value></data>
+  <data name="Dash_HwGpu" xml:space="preserve"><value>GRAFIKKARTE</value></data>
+  <data name="Dash_HwOs" xml:space="preserve"><value>SYSTEM</value></data>
+  <data name="Dash_HwRam" xml:space="preserve"><value>ARBEITSSPEICHER</value></data>
+  <data name="Dash_ManageAll" xml:space="preserve"><value>Alle verwalten</value></data>
+  <data name="Dash_ManageAllTip" xml:space="preserve"><value>Öffnet die Seite „Anwendungen", um jeden Prozess zu sehen und ausgewählte zu schließen</value></data>
+  <data name="Dash_MyGames" xml:space="preserve"><value>Meine Spiele</value></data>
+  <data name="Dash_NetFps" xml:space="preserve"><value>Netzwerk &amp; Bilder</value></data>
+  <data name="Dash_NetFpsTip" xml:space="preserve"><value>Bilder pro Sekunde des verfolgten Spiels und aktuelle Netzwerkrate (Download und Upload)</value></data>
+  <data name="Dash_NetworkRates" xml:space="preserve"><value>Download {0} · Upload {1}</value></data>
+  <data name="Dash_NoGame" xml:space="preserve"><value>kein Spiel erkannt</value></data>
+  <data name="Dash_NotAvailable" xml:space="preserve"><value>Nicht verfügbar</value></data>
+  <data name="Dash_OutOf" xml:space="preserve"><value>von {0}</value></data>
+  <data name="Dash_PendingBody" xml:space="preserve"><value>Einige Einstellungen Ihres PCs sind möglicherweise noch geändert. Beenden Sie die Sitzung, um alles in den ursprünglichen Zustand zurückzuversetzen.</value></data>
+  <data name="Dash_PendingTitle" xml:space="preserve"><value>Eine vorherige Boost-Sitzung wurde nicht beendet</value></data>
+  <data name="Dash_PlatformManual" xml:space="preserve"><value>Manuell</value></data>
+  <data name="Dash_PlatformOther" xml:space="preserve"><value>Andere</value></data>
+  <data name="Dash_ProcessEmpty" xml:space="preserve"><value>Derzeit nutzt kein Prozess mehr als 0,5 % CPU.</value></data>
+  <data name="Dash_RamUsed" xml:space="preserve"><value>RAM belegt</value></data>
+  <data name="Dash_RamUsedTip" xml:space="preserve"><value>Von laufenden Anwendungen genutzter Speicher</value></data>
+  <data name="Dash_Realtime" xml:space="preserve"><value>Echtzeit</value></data>
+  <data name="Dash_Refresh" xml:space="preserve"><value>Aktualisieren</value></data>
+  <data name="Dash_RefreshDisksTip" xml:space="preserve"><value>Freien Speicher des Systemvolumes erneut prüfen</value></data>
+  <data name="Dash_RestoreConfirm" xml:space="preserve"><value>Eine vorherige Boost-Sitzung wurde nicht beendet. Sitzung beenden und die ursprünglichen Einstellungen wiederherstellen?</value></data>
+  <data name="Dash_RestoreNow" xml:space="preserve"><value>Jetzt wiederherstellen</value></data>
+  <data name="Dash_RestoreNowTip" xml:space="preserve"><value>Beendet die ausstehende Sitzung und stellt den ursprünglichen Stromplan, Spielmodus, Prioritäten und Overlay wieder her</value></data>
+  <data name="Dash_ScanGames" xml:space="preserve"><value>Meine Spiele durchsuchen</value></data>
+  <data name="Dash_ScanGamesTip" xml:space="preserve"><value>Vollständige Suche über alle installierten Plattformen (etwa 12 Sekunden)</value></data>
+  <data name="Dash_StatusDiskFail" xml:space="preserve"><value>Speicherplatz nicht verfügbar: {0}</value></data>
+  <data name="Dash_StatusDiskNone" xml:space="preserve"><value>Speicherplatz nicht verfügbar.</value></data>
+  <data name="Dash_StatusDiskRefreshed" xml:space="preserve"><value>Freier Speicherplatz aktualisiert.</value></data>
+  <data name="Dash_StatusHardwareFail" xml:space="preserve"><value>Hardwareerkennung fehlgeschlagen: {0}</value></data>
+  <data name="Dash_StatusHardwareReady" xml:space="preserve"><value>Hardware erkannt.</value></data>
+  <data name="Dash_StatusLibraryFail" xml:space="preserve"><value>Spielbibliothek nicht verfügbar: {0}</value></data>
+  <data name="Dash_StatusMonitorsFail" xml:space="preserve"><value>Echtzeitmessungen nicht verfügbar: {0}</value></data>
+  <data name="Dash_StatusPendingEndFail" xml:space="preserve"><value>Die ausstehende Sitzung konnte nicht beendet werden.</value></data>
+  <data name="Dash_StatusPendingRestored" xml:space="preserve"><value>Ausstehende Boost-Sitzung beendet: die ursprünglichen Einstellungen sind wiederhergestellt.</value></data>
+  <data name="Dash_StatusProcessesFail" xml:space="preserve"><value>Prozesse nicht verfügbar: {0}</value></data>
+  <data name="Dash_StatusRestoreFail" xml:space="preserve"><value>Wiederherstellung fehlgeschlagen: {0}</value></data>
+  <data name="Dash_StatusScanDone" xml:space="preserve"><value>Suche abgeschlossen: {0} Spiel(e) erkannt.</value></data>
+  <data name="Dash_StatusScanFail" xml:space="preserve"><value>Die Spielsuche ist fehlgeschlagen: {0}</value></data>
+  <data name="Dash_StatusScanRunning" xml:space="preserve"><value>Ihre Spiele werden gesucht (etwa 12 Sekunden).</value></data>
+  <data name="Dash_StatusWizardFail" xml:space="preserve"><value>Boost-Assistent konnte nicht geöffnet werden: {0}</value></data>
+  <data name="Dash_Subtitle" xml:space="preserve"><value>Analysieren Sie Ihren PC. Optimieren Sie Ihr Erlebnis.</value></data>
+  <data name="Dash_TopProcesses" xml:space="preserve"><value>Prozesse mit höchster Last</value></data>
+  <data name="Dash_UnnamedGame" xml:space="preserve"><value>Unbenanntes Spiel</value></data>
+  <data name="Dash_UnnamedProcess" xml:space="preserve"><value>Unbenannter Prozess</value></data>
+  <data name="Dash_VendorOther" xml:space="preserve"><value>Anderer Hersteller</value></data>
+  <data name="Dash_VendorUnknown" xml:space="preserve"><value>Unbekannter Hersteller</value></data>
+  <data name="Dash_VramUnavailable" xml:space="preserve"><value>VRAM nicht verfügbar</value></data>
+  <data name="Dash_VramUsed" xml:space="preserve"><value>VRAM belegt</value></data>
+  <data name="Dash_VramUsedTip" xml:space="preserve"><value>Von der Grafikkarte genutzter dedizierter Bildspeicher</value></data>
+</root>

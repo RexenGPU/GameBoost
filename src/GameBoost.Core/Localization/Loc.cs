@@ -27,15 +27,7 @@ public static class Loc
         new("en", "English"),
         new("fr", "Français"),
         new("de", "Deutsch"),
-        new("es", "Español"),
-        new("it", "Italiano"),
-        new("pt-BR", "Português (Brasil)"),
-        new("nl", "Nederlands"),
-        new("pl", "Polski"),
-        new("ru", "Русский"),
-        new("tr", "Türkçe"),
-        new("ja", "日本語"),
-        new("zh-Hans", "简体中文")
+        new("es", "Español")
     };
 
     private static readonly string[] KnownCultures = { "en", "fr", "de", "es", "it", "pt-BR", "nl", "pl", "ru", "tr", "ja", "zh-Hans" };

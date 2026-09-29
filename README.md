@@ -1,104 +1,120 @@
 # GameBoost
 
-Assistant local d'analyse et d'optimisation de PC pour jouer, sous Windows.
-Tout fonctionne **sans compte, sans connexion, sans envoi de données** : les mesures
-sont réelles, lues depuis votre matériel.
+A local Windows assistant that analyzes and optimizes your PC for gaming.
+Everything runs **without an account, without a network connection, without any data leaving your machine** — all measurements are real, read from your hardware.
 
-## Ce que fait GameBoost
+## What GameBoost does
 
-- **Mon PC** : fiche complète du matériel (processeur, mémoire, carte mère, écrans, DirectX, périphériques).
-- **GPU** : pilote, âge du pilote, températures et technologies compatibles (DLSS, FSR, ray tracing…).
-- **Stockage** : espace libre, état SMART, températures, type de disque, débits observés.
-- **Jeux** : détection automatique des jeux installés (Steam, Epic, Ubisoft, Xbox, GOG, Battle.net, Riot, dossiers personnalisés) avec icônes réelles.
-- **Profils par jeu** : réglages graphiques enregistrés et réappliqués (141 réglages réversibles testés).
-- **Applications** : processus en cours, tri par consommation, fermeture ciblée (processus critiques protégés).
-- **Analyse** : 18 vérifications de votre configuration avec explication, impact et solution ; corrections automatiques quand elles sont sûres.
-- **Boost** : assistant en 3 étapes (configuration, résumé, exécution). Chaque modification est
-  expliquée avant d'être appliquée, sauvegardée, et **totalement réversible** en un clic
-  (« Terminer la session et restaurer »).
-- **Monitoring** : FPS réels (via les événements de présentation Windows), frametime, CPU, GPU, RAM, températures, overlay pendant le jeu.
-- **Historique** : sessions enregistrées localement, comparaison A/B de deux sessions.
-- **Rapports** : export HTML lisible dans n'importe quel navigateur (imprimable en PDF).
+- **My PC**: complete hardware sheet (CPU, memory, motherboard, displays, DirectX, peripherals).
+- **GPU**: driver, driver age, temperatures and supported technologies (DLSS, FSR, ray tracing…).
+- **Storage**: free space, SMART health, temperatures, disk type, measured throughput.
+- **Games**: automatic detection of installed games (Steam, Epic, Ubisoft, Xbox, GOG, Battle.net, Riot, custom folders) with real icons.
+- **Profiles**: per-game graphics settings, saved and re-applied (141 reversible settings tested).
+- **Applications**: running processes, sorted by usage, targeted close (critical processes are protected).
+- **Analysis**: 18 checks of your configuration with explanation, impact and fix; automatic corrections only when they are safe.
+- **Boost**: a 3-step wizard (configuration, summary, execution). Every change is explained
+  before being applied, backed up, and **fully reversible in one click**
+  ("End session and restore").
+- **Monitoring**: real FPS (from Windows presentation events), frame time, CPU, GPU, RAM, temperatures, in-game overlay.
+- **History**: sessions recorded locally, A/B comparison of two sessions.
+- **Reports**: HTML export readable in any browser (printable to PDF).
 
-## Principes respectés
+## Principles
 
-- Aucun gain inventé : si une valeur n'est pas mesurable, l'interface affiche « Non disponible ».
-- Rien n'est modifié sans résumé préalable et confirmation.
-- Toutes les modifications sont réversibles et sauvegardées dans `%LOCALAPPDATA%\GameBoost\backups`.
-- Jamais de toucher à Defender, au pare-feu, aux fichiers système ou aux processus critiques.
-- Aucune donnée ne quitte votre PC (la base et les journaux sont locaux).
+- No invented numbers: if a value cannot be measured, the interface says "Not available".
+- Nothing is changed without a summary and your confirmation.
+- Every modification is reversible and backed up in `%LOCALAPPDATA%\GameBoost\backups`.
+- Defender, the firewall, system files and critical processes are never touched.
+- No data ever leaves your PC (the database and logs are local).
 
-## Prérequis
+## Languages
 
-- Windows 10 ou 11, 64 bits.
-- [.NET 10 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/10.0) si vous utilisez
-  la version compilée ; rien à installer si vous compilez avec le SDK.
+The interface language is chosen in **Settings → Interface language** and applied instantly (no restart).
 
-## Compiler
+- Automatic (follows the Windows language)
+- English
+- Français
+- Deutsch
+- Español
 
-Avec le script :
+Adding a language: duplicate the `.resx` files in `src\GameBoost.App\Resources\`,
+name the copies `Strings_<Group>.<culture>.resx` (e.g. `Strings_Shell.de.resx`),
+translate the values, and add the culture to the list in `src\GameBoost.Core\Localization\Loc.cs`.
+Missing keys automatically fall back to English.
+
+## Requirements
+
+- Windows 10 or 11, 64-bit.
+- [.NET 10 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/10.0) if you use the
+  compiled build; nothing to install if you build with the SDK.
+
+## Build
+
+With the script:
 
 ```powershell
 .\build.ps1
 ```
 
-Ou directement :
+Or directly:
 
 ```powershell
 dotnet build GameBoost.slnx -c Release
 ```
 
-L'exécutable est produit dans `artifacts\build\GameBoost.App\release\GameBoost.exe`
-(ou `src\GameBoost.App\bin\Release\net10.0-windows\GameBoost.exe` selon la méthode).
+The executable is produced in `artifacts\build\GameBoost.App\release\GameBoost.exe`
+(or `src\GameBoost.App\bin\Release\net10.0-windows\GameBoost.exe` depending on the method).
 
-Pour publier une version autonome dans `publish\` :
+To publish a self-contained build into `publish\`:
 
 ```powershell
 .\build.ps1 -Publish
 ```
 
-## Droits administrateur
+## Administrator rights
 
-GameBoost démarre normalement. Sans administrateur, tout fonctionne **sauf** :
-- les températures CPU et certains capteurs matériels ;
-- l'état SMART complet des disques.
+GameBoost starts as a normal user. Without administrator rights everything works **except**:
+- CPU temperatures and some hardware sensors;
+- the full SMART health of disks.
 
-Deux options (page Paramètres) :
-- « Relancer en administrateur maintenant » ;
-- « Démarrer en administrateur » (l'app relance alors elevated au prochain lancement,
-  Windows affichera la demande d'autorisation habituelle).
+Two options (Settings page):
+- "Relaunch as administrator now";
+- "Start as administrator" (the app then relaunches elevated at the next start,
+  Windows shows the usual authorization prompt).
 
-## Données locales
+## Local data
 
-Tout est stocké dans `%LOCALAPPDATA%\GameBoost` :
+Everything is stored in `%LOCALAPPDATA%\GameBoost`:
 
-| Dossier / fichier | Contenu |
+| Folder / file | Content |
 |---|---|
-| `gameboost.db` | jeux, profils, sessions, analyses, réglages overlay |
-| `settings.json` | préférences de l'application |
-| `logs\` | journal détaillé (utile en cas de problème) |
-| `exports\` | rapports HTML générés |
-| `backups\` | sauvegardes faites avant chaque modification système |
-| `cache\` | icônes des jeux et des processus |
+| `gameboost.db` | games, profiles, sessions, analyses, overlay settings |
+| `settings.json` | application preferences |
+| `logs\` | detailed log (useful when troubleshooting) |
+| `exports\` | generated HTML reports |
+| `backups\` | backups made before each system change |
+| `cache\` | game and process icons |
 
-Pour tout supprimer : fermer GameBoost puis supprimer ce dossier.
+To delete everything: close GameBoost and remove that folder.
 
-## Limites connues (affichées honnêtement dans l'application)
+## Known limitations (stated honestly in the application too)
 
-- Les FPS ne sont mesurables que pour un jeu **en cours d'exécution** suivi par le monitoring ;
-  sans jeu suivi, la page affiche « — ».
-- L'overlay ne s'affiche pas par-dessus certains jeux en plein écran exclusif.
-- Les capteurs matériels dépendent de votre carte mère ; certaines valeurs peuvent être absentes
-  même en administrateur.
+- FPS is only measurable for a game that is **running** and tracked by the monitoring page;
+  without a tracked game the page shows "—".
+- The overlay does not appear over some exclusive-fullscreen games.
+- Hardware sensors depend on your motherboard; some values may be missing
+  even with administrator rights.
+- The analysis engine currently produces its detail texts (check explanations, boost step
+  descriptions, HTML report content) in French only; the entire interface itself is localized.
 
-## Organisation du code
+## Code layout
 
 ```
-src\GameBoost.Core      logique métier (matériel, disques, monitoring, processus,
-                        jeux, profils, analyse, boost, historique, rapports, overlay)
-src\GameBoost.App       interface WPF (12 pages, thème clair/sombre, overlay)
-tools\make-icon.ps1     régénère l'icône de l'application
-tools\dbinspect         petit utilitaire d'inspection de la base locale
+src\GameBoost.Core      business logic (hardware, disks, monitoring, processes,
+                        games, profiles, analysis, boost, history, reports, overlay)
+src\GameBoost.App       WPF interface (12 pages, light/dark theme, FPS overlay)
+tools\make-icon.ps1     regenerates the application icon
+tools\dbinspect         small utility to inspect the local database
 ```
 
-Projet personnel : utilisez, modifiez, compilez librement.
+Personal project: use, modify and build freely.

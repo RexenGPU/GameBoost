@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>  <data name="Mon_Title" xml:space="preserve"><value>Monitoring</value></data>
+  <data name="Mon_Subtitle" xml:space="preserve"><value>Echte Messungen Ihres PCs: FPS, Framezeit, Temperaturen und Auslastung beim Spielen.</value></data>
+  <data name="Mon_MonitorBadgeTip" xml:space="preserve"><value>Die Überwachung erfasst während der Aktivität jede Sekunde einen Wert.</value></data>
+  <data name="Mon_MonitorActive" xml:space="preserve"><value>Überwachung aktiv</value></data>
+  <data name="Mon_MonitorInactive" xml:space="preserve"><value>Überwachung inaktiv</value></data>
+  <data name="Mon_Start" xml:space="preserve"><value>Starten</value></data>
+  <data name="Mon_Stop" xml:space="preserve"><value>Beenden</value></data>
+  <data name="Mon_MonitorToggleTip" xml:space="preserve"><value>Startet oder stoppt die Messungserfassung (Sekundenintervall).</value></data>
+  <data name="Mon_StatusLoadFail" xml:space="preserve"><value>Überwachung konnte nicht geladen werden: {0}</value></data>
+  <data name="Mon_StatusMonitorStartFail" xml:space="preserve"><value>Überwachung konnte nicht gestartet werden: {0}</value></data>
+  <data name="Mon_StatusStopped" xml:space="preserve"><value>Überwachung beendet: Messungen pausiert.</value></data>
+  <data name="Mon_StatusStarted" xml:space="preserve"><value>Überwachung gestartet: eine Messung pro Sekunde.</value></data>
+  <data name="Mon_StatusToggleFail" xml:space="preserve"><value>Zustandswechsel fehlgeschlagen: {0}</value></data>
+  <data name="Mon_StatusNoGames" xml:space="preserve"><value>Kein Spiel erkannt: fügen Sie eines über die Seite Spiele hinzu.</value></data>
+  <data name="Mon_StatusGamesFail" xml:space="preserve"><value>Spiele nicht verfügbar: {0}</value></data>
+  <data name="Mon_TrackingTitle" xml:space="preserve"><value>Spiel-Verfolgung</value></data>
+  <data name="Mon_TrackingNote" xml:space="preserve"><value>Wählen Sie ein Spiel, um FPS und Framezeit zu messen. Die Verfolgung liefert nur Bilder, wenn das Spiel läuft.</value></data>
+  <data name="Mon_GameComboTip" xml:space="preserve"><value>Auf diesem PC erkannte Spiele (weitere über die Seite Spiele hinzufügen).</value></data>
+  <data name="Mon_TrackTip" xml:space="preserve"><value>Findet den Prozess des gewählten Spiels und misst dessen Bilder pro Sekunde.</value></data>
+  <data name="Mon_TrackButton" xml:space="preserve"><value>Dieses Spiel verfolgen</value></data>
+  <data name="Mon_StatusPickGame" xml:space="preserve"><value>Wählen Sie zuerst ein Spiel zur Verfolgung.</value></data>
+  <data name="Mon_StatusGameNotRunning" xml:space="preserve"><value>Das Spiel läuft nicht — starten Sie es und versuchen Sie es erneut.</value></data>
+  <data name="Mon_StatusTracked" xml:space="preserve"><value>Verfolgung gestartet: {0} (PID {1}).</value></data>
+  <data name="Mon_StatusTrackFail" xml:space="preserve"><value>Verfolgung fehlgeschlagen: {0}</value></data>
+  <data name="Mon_UntrackTip" xml:space="preserve"><value>Beendet die Bildmessung des verfolgten Spiels. Berechnete Statistiken bleiben erhalten.</value></data>
+  <data name="Mon_UntrackButton" xml:space="preserve"><value>Verfolgung beenden</value></data>
+  <data name="Mon_StatusUntracked" xml:space="preserve"><value>Verfolgung beendet: kein Spiel wird gemessen.</value></data>
+  <data name="Mon_StatusUntrackFail" xml:space="preserve"><value>Verfolgung konnte nicht beendet werden: {0}</value></data>
+  <data name="Mon_TrackedGame" xml:space="preserve"><value>Verfolgung: {0} · PID {1}</value></data>
+  <data name="Mon_TrackedPid" xml:space="preserve"><value>Verfolgung: PID {0}</value></data>
+  <data name="Mon_TrackedNone" xml:space="preserve"><value>Verfolgung: kein Prozess</value></data>
+  <data name="Mon_FpsTitle" xml:space="preserve"><value>Bilder pro Sekunde</value></data>
+  <data name="Mon_FpsNoMeasure" xml:space="preserve"><value>Noch keine Bildmessung verfügbar.</value></data>
+  <data name="Mon_FpsNoMeasureHint" xml:space="preserve"><value>Keine Bildmessung: verfolgen Sie ein laufendes Spiel, um FPS zu erhalten.</value></data>
+  <data name="Mon_FpsInstantHint" xml:space="preserve"><value>Sofortwert des Monitors: verfolgen Sie ein Spiel für detaillierte Statistiken.</value></data>
+  <data name="Mon_FpsStatsHint" xml:space="preserve"><value>Statistiken über {0} Messung(en) des verfolgten Spiels.</value></data>
+  <data name="Mon_FrameTimeLabel" xml:space="preserve"><value>Aktuelle Framezeit</value></data>
+  <data name="Mon_OnePercentLow" xml:space="preserve"><value>1 % Low</value></data>
+  <data name="Mon_Median" xml:space="preserve"><value>Median</value></data>
+  <data name="Mon_Minimum" xml:space="preserve"><value>Minimum</value></data>
+  <data name="Mon_Maximum" xml:space="preserve"><value>Maximum</value></data>
+  <data name="Mon_Samples" xml:space="preserve"><value>Messungen</value></data>
+  <data name="Mon_ResetStatsTip" xml:space="preserve"><value>Leert die gesammelten Bildstatistiken (Durchschnitt, Minimum, 1 % Low) und startet neu.</value></data>
+  <data name="Mon_ResetStats" xml:space="preserve"><value>Statistiken zurücksetzen</value></data>
+  <data name="Mon_StatusStatsReset" xml:space="preserve"><value>Bildstatistiken zurückgesetzt.</value></data>
+  <data name="Mon_StatusResetFail" xml:space="preserve"><value>Zurücksetzen fehlgeschlagen: {0}</value></data>
+  <data name="Mon_FrameTimeChartTitle" xml:space="preserve"><value>Framezeit (ms)</value></data>
+  <data name="Mon_FrameTimeChartNote" xml:space="preserve"><value>Zeit zwischen zwei Bildern: je niedriger und gleichmäßiger, desto flüssiger das Spiel.</value></data>
+  <data name="Mon_ChartTip" xml:space="preserve"><value>Messungen jede Sekunde, die letzten 300 Punkte.</value></data>
+  <data name="Mon_FpsChartNote" xml:space="preserve"><value>Bilder pro Sekunde des verfolgten Spiels. Kein Wert wird geschätzt.</value></data>
+  <data name="Mon_CpuUsage" xml:space="preserve"><value>CPU-Auslastung</value></data>
+  <data name="Mon_CpuUsageTip" xml:space="preserve"><value>Anteil des genutzten Prozessors, jede Sekunde erfasst.</value></data>
+  <data name="Mon_GpuUsage" xml:space="preserve"><value>GPU-Auslastung</value></data>
+  <data name="Mon_GpuUsageTip" xml:space="preserve"><value>Anteil der genutzten Grafikkarte, jede Sekunde erfasst.</value></data>
+  <data name="Mon_RamUsage" xml:space="preserve"><value>RAM belegt</value></data>
+  <data name="Mon_RamUsageTip" xml:space="preserve"><value>Von allen laufenden Anwendungen genutzter Speicher.</value></data>
+  <data name="Mon_CpuTemp" xml:space="preserve"><value>CPU-Temperatur</value></data>
+  <data name="Mon_CpuTempTip" xml:space="preserve"><value>Prozessortemperatur: nicht verfügbar, wenn kein Sensor lesbar ist.</value></data>
+  <data name="Mon_GpuTemp" xml:space="preserve"><value>GPU-Temperatur</value></data>
+  <data name="Mon_GpuTempTip" xml:space="preserve"><value>Grafikkartentemperatur: nicht verfügbar, wenn kein Sensor lesbar ist.</value></data>
+  <data name="Mon_VramUsage" xml:space="preserve"><value>VRAM belegt</value></data>
+  <data name="Mon_VramUsageTip" xml:space="preserve"><value>Von der Grafikkarte genutzter dedizierter Bildspeicher.</value></data>
+  <data name="Mon_OutOf" xml:space="preserve"><value>von {0}</value></data>
+  <data name="Mon_SessionTitle" xml:space="preserve"><value>Sitzungsaufzeichnung</value></data>
+  <data name="Mon_SessionNote" xml:space="preserve"><value>Die Sitzung erfasst FPS, Temperaturen und Auslastung, um sie später im Verlauf zu vergleichen.</value></data>
+  <data name="Mon_SessionNone" xml:space="preserve"><value>Keine Sitzung im Gang.</value></data>
+  <data name="Mon_SessionActive" xml:space="preserve"><value>Sitzung läuft seit {0}.</value></data>
+  <data name="Mon_SessionGameNone" xml:space="preserve"><value>Spiel: keines ausgewählt</value></data>
+  <data name="Mon_SessionGameIdle" xml:space="preserve"><value>Spiel: {0}</value></data>
+  <data name="Mon_SessionGameRecording" xml:space="preserve"><value>Spiel: {0} · Aufzeichnung läuft</value></data>
+  <data name="Mon_ManualSession" xml:space="preserve"><value>Manuelle Sitzung</value></data>
+  <data name="Mon_StartRecordingTip" xml:space="preserve"><value>Startet die Messaufzeichnung für das gewählte oder verfolgte Spiel.</value></data>
+  <data name="Mon_StartRecording" xml:space="preserve"><value>Aufzeichnung starten</value></data>
+  <data name="Mon_StopRecordingTip" xml:space="preserve"><value>Beendet die Aufzeichnung, berechnet Statistiken und speichert die Sitzung lokal.</value></data>
+  <data name="Mon_StopRecording" xml:space="preserve"><value>Beenden und speichern</value></data>
+  <data name="Mon_OpenHistoryTip" xml:space="preserve"><value>Öffnet die Seite Verlauf, um aufgezeichnete Sitzungen zu betrachten und zu vergleichen.</value></data>
+  <data name="Mon_OpenHistory" xml:space="preserve"><value>Sitzungsverlauf ansehen</value></data>
+  <data name="Mon_StatusRecordingStarted" xml:space="preserve"><value>Aufzeichnung gestartet: {0}.</value></data>
+  <data name="Mon_StatusSessionStartFail" xml:space="preserve"><value>Start fehlgeschlagen: {0}</value></data>
+  <data name="Mon_StatusNoActiveSession" xml:space="preserve"><value>Es wird keine Sitzung aufgezeichnet.</value></data>
+  <data name="Mon_StatusSessionSaved" xml:space="preserve"><value>Sitzung gespeichert: {0} · im Schnitt {1} FPS.</value></data>
+  <data name="Mon_StatusSessionSavedNoFps" xml:space="preserve"><value>Sitzung gespeichert: {0} · FPS nicht aufgezeichnet.</value></data>
+  <data name="Mon_StatusSessionStopFail" xml:space="preserve"><value>Beenden fehlgeschlagen: {0}</value></data>
+  <data name="Mon_OverlayTitle" xml:space="preserve"><value>Overlay</value></data>
+  <data name="Mon_OverlayStateTip" xml:space="preserve"><value>Zustand des GameBoost-Overlays beim Spielen.</value></data>
+  <data name="Mon_OverlayActive" xml:space="preserve"><value>Overlay: aktiv</value></data>
+  <data name="Mon_OverlayInactive" xml:space="preserve"><value>Overlay: inaktiv</value></data>
+  <data name="Mon_OverlayNote" xml:space="preserve"><value>Zeigt Ihre Messungen über dem Spiel, ohne das Spielfenster zu verlassen.</value></data>
+  <data name="Mon_ShowOverlayInGame" xml:space="preserve"><value>Overlay während des Spiels anzeigen</value></data>
+  <data name="Mon_OverlayEnabledTip" xml:space="preserve"><value>Aktiviert die automatische Erkennung eines laufenden Spiels und die Overlay-Anzeige.</value></data>
+  <data name="Mon_ContentLabel" xml:space="preserve"><value>Angezeigter Inhalt</value></data>
+  <data name="Mon_OverlayFpsTip" xml:space="preserve"><value>Zeigt gemessene Bilder pro Sekunde und das 1 % Low.</value></data>
+  <data name="Mon_LblFrametime" xml:space="preserve"><value>Framezeit</value></data>
+  <data name="Mon_OverlayFrameTimeTip" xml:space="preserve"><value>Zeigt die Zeit zwischen zwei Bildern in Millisekunden.</value></data>
+  <data name="Mon_OverlayCpuTip" xml:space="preserve"><value>Zeigt die Prozessorlast.</value></data>
+  <data name="Mon_OverlayGpuTip" xml:space="preserve"><value>Zeigt die Grafikkartenlast.</value></data>
+  <data name="Mon_OverlayRamTip" xml:space="preserve"><value>Zeigt den belegten Arbeitsspeicher.</value></data>
+  <data name="Mon_Temperatures" xml:space="preserve"><value>Temperaturen</value></data>
+  <data name="Mon_OverlayTempTip" xml:space="preserve"><value>Zeigt CPU- und GPU-Temperaturen, wenn messbar.</value></data>
+  <data name="Mon_OpacityLabel" xml:space="preserve"><value>Deckkraft</value></data>
+  <data name="Mon_OpacityTip" xml:space="preserve"><value>Transparenz des Overlay-Fensters: 30 % = sehr durchscheinend, 100 % = deckend.</value></data>
+  <data name="Mon_PositionLabel" xml:space="preserve"><value>Bildschirmposition</value></data>
+  <data name="Mon_CornerTopLeft" xml:space="preserve"><value>Oben links</value></data>
+  <data name="Mon_CornerTopLeftTip" xml:space="preserve"><value>In der oberen linken Bildschirmecke.</value></data>
+  <data name="Mon_CornerTopRight" xml:space="preserve"><value>Oben rechts</value></data>
+  <data name="Mon_CornerTopRightTip" xml:space="preserve"><value>In der oberen rechten Bildschirmecke.</value></data>
+  <data name="Mon_CornerBottomLeft" xml:space="preserve"><value>Unten links</value></data>
+  <data name="Mon_CornerBottomLeftTip" xml:space="preserve"><value>In der unteren linken Bildschirmecke.</value></data>
+  <data name="Mon_CornerBottomRight" xml:space="preserve"><value>Unten rechts</value></data>
+  <data name="Mon_CornerBottomRightTip" xml:space="preserve"><value>In der unteren rechten Bildschirmecke.</value></data>
+  <data name="Mon_PreviewTip" xml:space="preserve"><value>Zeigt das Overlay mit den Einstellungen des gewählten Spiels sofort an oder blendet es aus.</value></data>
+  <data name="Mon_Preview" xml:space="preserve"><value>Overlay-Vorschau</value></data>
+  <data name="Mon_OpenGamesTip" xml:space="preserve"><value>Öffnet die Spielbibliothek, um ein Spiel hinzuzufügen oder zu bearbeiten.</value></data>
+  <data name="Mon_OpenGamesButton" xml:space="preserve"><value>Seite Spiele öffnen</value></data>
+  <data name="Mon_OpenLibraryTip" xml:space="preserve"><value>Öffnet die Spielbibliothek.</value></data>
+  <data name="Mon_OverlaySaveNote" xml:space="preserve"><value>Overlay-Einstellungen werden für das gewählte Spiel gespeichert oder als Standard, wenn kein Spiel gewählt ist.</value></data>
+  <data name="Mon_StatusOverlayOn" xml:space="preserve"><value>Overlay aktiviert: GameBoost überwacht laufende Spiele.</value></data>
+  <data name="Mon_StatusOverlayOff" xml:space="preserve"><value>Overlay deaktiviert.</value></data>
+  <data name="Mon_StatusOverlaySettingsFail" xml:space="preserve"><value>Overlay-Einstellungen nicht verfügbar: {0}</value></data>
+  <data name="Mon_StatusOverlayFail" xml:space="preserve"><value>Overlay fehlgeschlagen: {0}</value></data>
+  <data name="Mon_StatusOverlaySetFail" xml:space="preserve"><value>Overlay-Einstellung fehlgeschlagen: {0}</value></data>
+  <data name="Mon_StatusOpacityFail" xml:space="preserve"><value>Deckkraft nicht einstellbar: {0}</value></data>
+  <data name="Mon_StatusPositionSaved" xml:space="preserve"><value>Overlay-Position aktualisiert.</value></data>
+  <data name="Mon_StatusPositionFail" xml:space="preserve"><value>Position nicht anwendbar: {0}</value></data>
+  <data name="Mon_StatusOverlaySaveFail" xml:space="preserve"><value>Overlay-Einstellungen nicht gespeichert: {0}</value></data>
+  <data name="Mon_StatusOverlayHidden" xml:space="preserve"><value>Overlay ausgeblendet.</value></data>
+  <data name="Mon_StatusOverlayShown" xml:space="preserve"><value>Overlay eingeblendet.</value></data>
+  <data name="Mon_StatusOverlayShownFor" xml:space="preserve"><value>Overlay für {0} eingeblendet.</value></data>
+  <data name="Mon_StatusOverlayNotShown" xml:space="preserve"><value>Das Overlay erschien nicht: prüfen Sie, ob es für dieses Spiel aktiviert ist.</value></data>
+  <data name="Mon_StatusDetectionStarted" xml:space="preserve"><value>Überwachung gestartet: das Overlay erscheint, sobald ein Spiel mit aktivem Overlay erkannt wird.</value></data>
+  <data name="Mon_StatusPreviewFail" xml:space="preserve"><value>Vorschau fehlgeschlagen: {0}</value></data>
+  <data name="Hist_Title" xml:space="preserve"><value>Verlauf</value></data>
+  <data name="Hist_Subtitle" xml:space="preserve"><value>Lokal aufgezeichnete Spielsitzungen</value></data>
+  <data name="Hist_RefreshTip" xml:space="preserve"><value>Liest die auf diesem PC aufgezeichneten Sitzungen neu ein.</value></data>
+  <data name="Hist_Refresh" xml:space="preserve"><value>Aktualisieren</value></data>
+  <data name="Hist_ExportSelectionTip" xml:space="preserve"><value>Exportiert die mit A und B markierten Sitzungen in eine im Browser lesbare HTML-Datei.</value></data>
+  <data name="Hist_ExportSelection" xml:space="preserve"><value>Auswahl exportieren (HTML)</value></data>
+  <data name="Hist_ClearTip" xml:space="preserve"><value>Löscht dauerhaft alle Sitzungen auf diesem PC. Zwei Bestätigungen sind erforderlich.</value></data>
+  <data name="Hist_Clear" xml:space="preserve"><value>Verlauf leeren</value></data>
+  <data name="Hist_EmptyTitle" xml:space="preserve"><value>Keine Sitzung aufgezeichnet</value></data>
+  <data name="Hist_EmptyNote" xml:space="preserve"><value>Sitzungen entstehen auf der Seite Monitoring: sie erfassen FPS, Temperaturen und die Auslastung Ihres PCs beim Spielen.</value></data>
+  <data name="Hist_HowToRecordTip" xml:space="preserve"><value>Öffnet die Seite Monitoring mit den Aufzeichnungsschaltflächen.</value></data>
+  <data name="Hist_HowToRecord" xml:space="preserve"><value>Wie aufzeichnen?</value></data>
+  <data name="Hist_SessionsTitle" xml:space="preserve"><value>Sitzungen</value></data>
+  <data name="Hist_SelectionTip" xml:space="preserve"><value>Markieren Sie eine Sitzung als A und eine andere als B, um sie zu vergleichen.</value></data>
+  <data name="Hist_SelectionSummary" xml:space="preserve"><value>A: {0} · B: {1}</value></data>
+  <data name="Hist_SelectionNoneSummary" xml:space="preserve"><value>A: keine · B: keine</value></data>
+  <data name="Hist_SelectionNone" xml:space="preserve"><value>keine</value></data>
+  <data name="Hist_SessionTitle" xml:space="preserve"><value>Sitzung</value></data>
+  <data name="Hist_SessionWord" xml:space="preserve"><value>Sitzung</value></data>
+  <data name="Hist_SortedNote" xml:space="preserve"><value>Von neu nach alt sortiert</value></data>
+  <data name="Hist_AvgFps" xml:space="preserve"><value>Durchschnittliche FPS</value></data>
+  <data name="Hist_LowMinMax" xml:space="preserve"><value>1 % Low · Min · Max</value></data>
+  <data name="Hist_GpuTempUsage" xml:space="preserve"><value>GPU max · Durchschnitt</value></data>
+  <data name="Hist_Duration" xml:space="preserve"><value>Dauer</value></data>
+  <data name="Hist_RowClickTip" xml:space="preserve"><value>Klicken Sie auf eine Zeile, um die vollständigen Sitzungsdetails anzuzeigen.</value></data>
+  <data name="Hist_EmptyList" xml:space="preserve"><value>Noch keine Sitzung anzuzeigen.</value></data>
+  <data name="Hist_FpsNotRecorded" xml:space="preserve"><value>FPS nicht aufgezeichnet</value></data>
+  <data name="Hist_RadioATip" xml:space="preserve"><value>Markiert diese Sitzung als Sitzung A des Vergleichs.</value></data>
+  <data name="Hist_RadioBTip" xml:space="preserve"><value>Markiert diese Sitzung als Sitzung B des Vergleichs.</value></data>
+  <data name="Hist_StatusLoadFail" xml:space="preserve"><value>Verlauf nicht verfügbar: {0}</value></data>
+  <data name="Hist_StatusSelectFail" xml:space="preserve"><value>Auswahl fehlgeschlagen: {0}</value></data>
+  <data name="Hist_StatusDetailFail" xml:space="preserve"><value>Details fehlgeschlagen: {0}</value></data>
+  <data name="Hist_CompareTitle" xml:space="preserve"><value>A-/B-Vergleich</value></data>
+  <data name="Hist_CompareLegendNote" xml:space="preserve"><value>Sitzung A in Blau, Sitzung B in Grün</value></data>
+  <data name="Hist_CompareTip" xml:space="preserve"><value>Zeigt sechs Messungen nebeneinander und die Differenz der beiden gewählten Sitzungen.</value></data>
+  <data name="Hist_Compare" xml:space="preserve"><value>A und B vergleichen</value></data>
+  <data name="Hist_CompareNote" xml:space="preserve"><value>Beide Sitzungen müssen auf vergleichbaren Setups gelaufen sein, um aussagekräftig zu sein.</value></data>
+  <data name="Hist_CompareChartTip" xml:space="preserve"><value>Im Zeitverlauf aufgezeichnete FPS beider Sitzungen (höchstens 300 Punkte).</value></data>
+  <data name="Hist_CompareChartUnavailable" xml:space="preserve"><value>Diagrammvergleich nicht möglich: mindestens eine der beiden Sitzungen hat keine FPS-Reihe.</value></data>
+  <data name="Hist_ExportDetailTip" xml:space="preserve"><value>Erzeugt eine diesem Sitzung gewidmete HTML-Datei und öffnet sie im Browser.</value></data>
+  <data name="Hist_ExportDetail" xml:space="preserve"><value>Diese Sitzung exportieren</value></data>
+  <data name="Hist_OnePercentLow" xml:space="preserve"><value>1 % Low</value></data>
+  <data name="Hist_MinMax" xml:space="preserve"><value>Min · max</value></data>
+  <data name="Hist_GpuDetail" xml:space="preserve"><value>GPU Durchschnitt · max</value></data>
+  <data name="Hist_CpuDetail" xml:space="preserve"><value>CPU Durchschnitt · max</value></data>
+  <data name="Hist_RamPeak" xml:space="preserve"><value>RAM-Spitze</value></data>
+  <data name="Hist_ProfileUsed" xml:space="preserve"><value>Verwendetes Profil</value></data>
+  <data name="Hist_FrameTimeTitle" xml:space="preserve"><value>Framezeit (ms)</value></data>
+  <data name="Hist_FrameTimeChartTip" xml:space="preserve"><value>Während der Sitzung aufgezeichnete Zeit zwischen zwei Bildern.</value></data>
+  <data name="Hist_FrameTimeHint" xml:space="preserve"><value>Für diese Sitzung wurde keine Framezeitmessung aufgezeichnet.</value></data>
+  <data name="Hist_Optimizations" xml:space="preserve"><value>Angewendete Optimierungen</value></data>
+  <data name="Hist_Notes" xml:space="preserve"><value>Notizen</value></data>
+  <data name="Hist_NoNotes" xml:space="preserve"><value>Keine Notizen zu dieser Sitzung.</value></data>
+  <data name="Hist_NoOptimizations" xml:space="preserve"><value>In dieser Sitzung wurde keine Optimierung angewendet.</value></data>
+  <data name="Hist_MetaProfile" xml:space="preserve"><value>Profil: {0}</value></data>
+  <data name="Hist_ProfileNone" xml:space="preserve"><value>keines</value></data>
+  <data name="Hist_Metric" xml:space="preserve"><value>Metrik</value></data>
+  <data name="Hist_SessionA" xml:space="preserve"><value>Sitzung A</value></data>
+  <data name="Hist_SessionB" xml:space="preserve"><value>Sitzung B</value></data>
+  <data name="Hist_Delta" xml:space="preserve"><value>Differenz (B - A)</value></data>
+  <data name="Hist_AvgGpuUsage" xml:space="preserve"><value>Durchschnittliche GPU-Last</value></data>
+  <data name="Hist_MaxGpuTemp" xml:space="preserve"><value>Max. GPU-Temperatur</value></data>
+  <data name="Hist_AvgCpuUsage" xml:space="preserve"><value>Durchschnittliche CPU-Last</value></data>
+  <data name="Hist_MaxCpuTemp" xml:space="preserve"><value>Max. CPU-Temperatur</value></data>
+  <data name="Hist_StatusCompared" xml:space="preserve"><value>Vergleich zwischen zwei Sitzungen angezeigt.</value></data>
+  <data name="Hist_StatusCompareFail" xml:space="preserve"><value>Vergleich fehlgeschlagen: {0}</value></data>
+  <data name="Hist_StatusCount" xml:space="preserve"><value>{0} Sitzung(en) im Verlauf.</value></data>
+  <data name="Hist_StatusSelectBeforeExport" xml:space="preserve"><value>Wählen Sie vor dem Export eine Sitzung für A und/oder B.</value></data>
+  <data name="Hist_StatusExportFail" xml:space="preserve"><value>Export fehlgeschlagen: {0}</value></data>
+  <data name="Hist_StatusSelectionExported" xml:space="preserve"><value>Auswahl exportiert: {0}</value></data>
+  <data name="Hist_StatusNoDetailExport" xml:space="preserve"><value>Keine Sitzung zum Exportieren gewählt.</value></data>
+  <data name="Hist_StatusSessionExported" xml:space="preserve"><value>Sitzung exportiert: {0}</value></data>
+  <data name="Hist_ConfirmClearBody" xml:space="preserve"><value>Den gesamten Sitzungsverlauf löschen?
+Die aufgezeichneten Messungen werden von diesem PC entfernt.</value></data>
+  <data name="Hist_ConfirmTitle" xml:space="preserve"><value>Bestätigung</value></data>
+  <data name="Hist_ConfirmClearFinalBody" xml:space="preserve"><value>Letzte Bestätigung: alle Sitzungen werden gelöscht und können nicht wiederhergestellt werden.
+Fortfahren?</value></data>
+  <data name="Hist_StatusClearCancelled" xml:space="preserve"><value>Löschen abgebrochen.</value></data>
+  <data name="Hist_StatusCleared" xml:space="preserve"><value>Verlauf geleert.</value></data>
+  <data name="Hist_StatusClearFail" xml:space="preserve"><value>Löschen fehlgeschlagen: {0}</value></data>
+  <data name="Hist_StatusGoMonitor" xml:space="preserve"><value>Monitoring wird geöffnet: nutzen Sie beim Spielen „Aufzeichnung starten".</value></data>
+  <data name="Rep_Title" xml:space="preserve"><value>Berichte</value></data>
+  <data name="Rep_Subtitle" xml:space="preserve"><value>HTML-Export Ihrer Analysen und Sitzungen, in jedem Browser lesbar.</value></data>
+  <data name="Rep_ExportAnalysisTip" xml:space="preserve"><value>Nimmt die zuletzt gespeicherte Analyse und legt sie in einer HTML-Datei dar.</value></data>
+  <data name="Rep_ExportAnalysis" xml:space="preserve"><value>Letzten Analysebericht exportieren</value></data>
+  <data name="Rep_ExportSessionsTip" xml:space="preserve"><value>Exportiert die letzten 50 aufgezeichneten Sitzungen in eine HTML-Datei.</value></data>
+  <data name="Rep_ExportSessions" xml:space="preserve"><value>Sitzungen exportieren</value></data>
+  <data name="Rep_OpenFolderTip" xml:space="preserve"><value>Öffnet den Ordner mit den erstellten HTML-Dateien.</value></data>
+  <data name="Rep_OpenReportsFolder" xml:space="preserve"><value>Berichte-Ordner öffnen</value></data>
+  <data name="Rep_NoAnalysisNote" xml:space="preserve"><value>Führen Sie zuerst eine Analyse aus: auf diesem PC ist noch kein Bericht gespeichert.</value></data>
+  <data name="Rep_GoAnalysisTip" xml:space="preserve"><value>Öffnet die Seite Analyse für eine erste Prüfung.</value></data>
+  <data name="Rep_GoAnalysis" xml:space="preserve"><value>Zur Analyse wechseln</value></data>
+  <data name="Rep_GeneratedFile" xml:space="preserve"><value>Erstellte Datei</value></data>
+  <data name="Rep_OpenResultTip" xml:space="preserve"><value>Öffnet die erstellte Datei im Standardbrowser.</value></data>
+  <data name="Rep_Open" xml:space="preserve"><value>Öffnen</value></data>
+  <data name="Rep_OpenReportsFolderTip" xml:space="preserve"><value>Öffnet den Berichte-Ordner.</value></data>
+  <data name="Rep_Folder" xml:space="preserve"><value>Ordner</value></data>
+  <data name="Rep_FilesTitle" xml:space="preserve"><value>Erstellte Dateien</value></data>
+  <data name="Rep_RefreshTip" xml:space="preserve"><value>Liest den Berichte-Ordner neu ein.</value></data>
+  <data name="Rep_Refresh" xml:space="preserve"><value>Aktualisieren</value></data>
+  <data name="Rep_ColumnName" xml:space="preserve"><value>Dateiname</value></data>
+  <data name="Rep_ColumnDate" xml:space="preserve"><value>Datum</value></data>
+  <data name="Rep_ColumnSize" xml:space="preserve"><value>Größe</value></data>
+  <data name="Rep_ColumnActions" xml:space="preserve"><value>Aktionen</value></data>
+  <data name="Rep_EmptyFiles" xml:space="preserve"><value>Noch kein HTML-Bericht: nutzen Sie die Schaltflächen oben, um einen zu erstellen.</value></data>
+  <data name="Rep_StatusFolderReadFail" xml:space="preserve"><value>Berichte-Ordner nicht lesbar: {0}</value></data>
+  <data name="Rep_ContentsTitle" xml:space="preserve"><value>Was ein Bericht enthält</value></data>
+  <data name="Rep_ContentsNote" xml:space="preserve"><value>Jede Datei ist eigenständig: zum Lesen ist keine Internetverbindung nötig.</value></data>
+  <data name="Rep_ItemConfig" xml:space="preserve"><value>Konfiguration</value></data>
+  <data name="Rep_ItemConfigDesc" xml:space="preserve"><value>: Prozessor, Grafikkarte, Speicher, Windows, Bildschirme und Laufwerke.</value></data>
+  <data name="Rep_ItemIssues" xml:space="preserve"><value>Erkannte Probleme</value></data>
+  <data name="Rep_ItemIssuesDesc" xml:space="preserve"><value>: jede Prüfung mit Schweregrad und gemessenem Wert.</value></data>
+  <data name="Rep_ItemRecommendations" xml:space="preserve"><value>Empfehlungen</value></data>
+  <data name="Rep_ItemRecommendationsDesc" xml:space="preserve"><value>: die Schritte zur Behebung der bemängelten Punkte.</value></data>
+  <data name="Rep_ItemOptimizations" xml:space="preserve"><value>Angewendete Optimierungen</value></data>
+  <data name="Rep_ItemOptimizationsDesc" xml:space="preserve"><value>: was während der aufgezeichneten Sitzungen geändert wurde.</value></data>
+  <data name="Rep_ItemBeforeAfter" xml:space="preserve"><value>Messungen vorher / nachher</value></data>
+  <data name="Rep_ItemBeforeAfterDesc" xml:space="preserve"><value>: Vergleich zweier Sitzungen, sobald Sie mindestens zwei haben.</value></data>
+  <data name="Rep_PrintNote" xml:space="preserve"><value>Der Bericht ist eine einfache HTML-Datei: Sie können sie im Browser als PDF drucken.</value></data>
+  <data name="Rep_StatusNoAnalysis" xml:space="preserve"><value>Keine Analyse gespeichert: führen Sie zuerst eine Analyse aus, um einen Bericht zu exportieren.</value></data>
+  <data name="Rep_StatusAnalysisExported" xml:space="preserve"><value>Analysebericht exportiert.</value></data>
+  <data name="Rep_StatusExportFail" xml:space="preserve"><value>Export fehlgeschlagen: {0}</value></data>
+  <data name="Rep_StatusNoSessions" xml:space="preserve"><value>Keine Sitzung zu exportieren: starten Sie zuerst ein Spiel über die Seite Monitoring.</value></data>
+  <data name="Rep_StatusSessionsExported" xml:space="preserve"><value>Sitzungen exportiert: {0} Sitzung(en).</value></data>
+  <data name="Rep_StatusNoFile" xml:space="preserve"><value>Keine Datei zu öffnen: exportieren Sie zuerst einen Bericht.</value></data>
+  <data name="Rep_StatusOpeningFile" xml:space="preserve"><value>Datei wird im Browser geöffnet.</value></data>
+  <data name="Rep_StatusOpenFail" xml:space="preserve"><value>Öffnen fehlgeschlagen: {0}</value></data>
+  <data name="Rep_StatusFolder" xml:space="preserve"><value>Berichte-Ordner: {0}</value></data>
+  <data name="Rep_StatusGoAnalysis" xml:space="preserve"><value>Analyse wird geöffnet: führen Sie eine Prüfung aus, um einen Bericht zu erstellen.</value></data>
+  <data name="Rep_StatusFolderReloaded" xml:space="preserve"><value>Berichte-Ordner neu geladen.</value></data>
+  <data name="Rep_FolderPath" xml:space="preserve"><value>Ordner: {0}</value></data>
+  <data name="Rep_OpenFileTip" xml:space="preserve"><value>Öffnet diese HTML-Datei im Standardbrowser.</value></data>
+  <data name="Rep_OpenFileFolderTip" xml:space="preserve"><value>Öffnet den Ordner, der diese Datei enthält.</value></data>
+  <data name="Rep_StatusFileMissing" xml:space="preserve"><value>Diese Datei existiert nicht mehr.</value></data>
+  <data name="Rep_StatusOpeningNamed" xml:space="preserve"><value>{0} wird geöffnet</value></data>
+  <data name="Ov_CardTip" xml:space="preserve"><value>GameBoost-Overlay: echte Messungen aus dem Monitoring, keine geschätzten Werte.</value></data>
+  <data name="Ov_OnePercentLow" xml:space="preserve"><value>1 % Low: {0} FPS</value></data>
+  <data name="Ov_StatusFail" xml:space="preserve"><value>Overlay fehlgeschlagen ({0}): {1}</value></data>
+  <data name="Ov_CtxStart" xml:space="preserve"><value>Start</value></data>
+  <data name="Ov_CtxStop" xml:space="preserve"><value>Stopp</value></data>
+  <data name="Ov_CtxToggle" xml:space="preserve"><value>Umschalten</value></data>
+  <data name="Ov_CtxRefresh" xml:space="preserve"><value>Aktualisieren</value></data>
+  <data name="Ov_CtxShow" xml:space="preserve"><value>Anzeige</value></data>
+  <data name="Ov_CtxHide" xml:space="preserve"><value>Ausblenden</value></data>
+  <data name="Ov_CtxDetectionStart" xml:space="preserve"><value>Start der Erkennung</value></data>
+  <data name="Ov_CtxWatch" xml:space="preserve"><value>Spielüberwachung</value></data>
+  <data name="Ov_CtxLibrary" xml:space="preserve"><value>Spielüberwachung</value></data>
+</root>

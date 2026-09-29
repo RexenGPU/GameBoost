@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>  <data name="Shell_CpuTip" xml:space="preserve"><value>Prozessorauslastung (jede Sekunde aktualisiert)</value></data>
+  <data name="Shell_RamTip" xml:space="preserve"><value>Belegter Arbeitsspeicher</value></data>
+  <data name="Shell_GpuTip" xml:space="preserve"><value>GPU-Temperatur und -Auslastung</value></data>
+  <data name="Shell_ThemeTip" xml:space="preserve"><value>Zwischen dunklem und hellem Design wechseln</value></data>
+  <data name="Shell_MinimizeTip" xml:space="preserve"><value>Minimieren</value></data>
+  <data name="Shell_MaximizeTip" xml:space="preserve"><value>Maximieren oder wiederherstellen</value></data>
+  <data name="Shell_CloseTip" xml:space="preserve"><value>Schließen</value></data>
+  <data name="Shell_Tagline" xml:space="preserve"><value>ANALYSIEREN · OPTIMIEREN</value></data>
+  <data name="Shell_ElevationTip" xml:space="preserve"><value>Aktuelle Berechtigungsstufe. Ohne Administratorrechte sind Temperaturen, bestimmte Prioritäten und der SMART-Zustand nicht verfügbar. Die Seite Einstellungen bietet einen Neustart mit erweiterten Rechten.</value></data>
+  <data name="Shell_User" xml:space="preserve"><value>Benutzer</value></data>
+  <data name="Shell_Admin" xml:space="preserve"><value>Administrator</value></data>
+  <data name="Shell_LocalNote" xml:space="preserve"><value>Lokale Daten · kein Konto erforderlich</value></data>
+  <data name="Shell_MonitoringTip" xml:space="preserve"><value>Die Überwachung ist aktiv</value></data>
+  <data name="Shell_Welcome" xml:space="preserve"><value>Willkommen bei GameBoost — öffnen Sie „Analyse", um Ihren PC zu diagnostizieren.</value></data>
+  <data name="Shell_ThemeLight" xml:space="preserve"><value>Helles Design aktiviert.</value></data>
+  <data name="Shell_ThemeDark" xml:space="preserve"><value>Dunkles Design aktiviert.</value></data>
+  <data name="Shell_PageError" xml:space="preserve"><value>Diese Seite kann nicht geöffnet werden: {0}</value></data>
+  <data name="Shell_NavDashboard" xml:space="preserve"><value>Start</value></data>
+  <data name="Shell_NavAnalysis" xml:space="preserve"><value>Analyse</value></data>
+  <data name="Shell_NavHardware" xml:space="preserve"><value>Mein PC</value></data>
+  <data name="Shell_NavGpu" xml:space="preserve"><value>GPU</value></data>
+  <data name="Shell_NavStorage" xml:space="preserve"><value>Speicher</value></data>
+  <data name="Shell_NavGames" xml:space="preserve"><value>Spiele</value></data>
+  <data name="Shell_NavProfiles" xml:space="preserve"><value>Profile</value></data>
+  <data name="Shell_NavProcesses" xml:space="preserve"><value>Apps</value></data>
+  <data name="Shell_NavMonitoring" xml:space="preserve"><value>Monitoring</value></data>
+  <data name="Shell_NavHistory" xml:space="preserve"><value>Verlauf</value></data>
+  <data name="Shell_NavReports" xml:space="preserve"><value>Berichte</value></data>
+  <data name="Shell_NavSettings" xml:space="preserve"><value>Einstellungen</value></data>
+  <data name="Shell_NavDashboard_Tip" xml:space="preserve"><value>Übersicht: PC-Status in Echtzeit</value></data>
+  <data name="Shell_NavAnalysis_Tip" xml:space="preserve"><value>Vollständige Systemdiagnose und Korrekturen</value></data>
+  <data name="Shell_NavHardware_Tip" xml:space="preserve"><value>Detaillierte Übersicht der erkannten Hardware</value></data>
+  <data name="Shell_NavGpu_Tip" xml:space="preserve"><value>Grafikkarte, Treiber und unterstützte Technologien</value></data>
+  <data name="Shell_NavStorage_Tip" xml:space="preserve"><value>Laufwerke, freier Speicher, Zustand und Temperaturen</value></data>
+  <data name="Shell_NavGames_Tip" xml:space="preserve"><value>Erkannte Spiele (Steam, Epic, Ubisoft, Xbox…)</value></data>
+  <data name="Shell_NavProfiles_Tip" xml:space="preserve"><value>Grafikprofile pro Spiel (Qualität, Ausgewogen, Leistung)</value></data>
+  <data name="Shell_NavProcesses_Tip" xml:space="preserve"><value>Laufende Prozesse, Ressourcennutzung, gezieltes Beenden</value></data>
+  <data name="Shell_NavMonitoring_Tip" xml:space="preserve"><value>FPS, Framezeit und Overlay im Spiel</value></data>
+  <data name="Shell_NavHistory_Tip" xml:space="preserve"><value>Aufgezeichnete Sitzungen und A/B-Vergleich</value></data>
+  <data name="Shell_NavReports_Tip" xml:space="preserve"><value>HTML-Export von Analysen und Messungen</value></data>
+  <data name="Shell_NavSettings_Tip" xml:space="preserve"><value>GameBoost-Einstellungen</value></data>
+  <data name="Ctrl_Good" xml:space="preserve"><value>Optimal</value></data>
+  <data name="Ctrl_Warning" xml:space="preserve"><value>Beobachten</value></data>
+  <data name="Ctrl_Critical" xml:space="preserve"><value>Problem erkannt</value></data>
+  <data name="Ctrl_Unknown" xml:space="preserve"><value>Nicht verfügbar</value></data>
+  <data name="App_ErrorTitle" xml:space="preserve"><value>GameBoost — Fehler</value></data>
+  <data name="App_ErrorBody" xml:space="preserve"><value>Ein unerwarteter Fehler ist aufgetreten:
+{0}
+Die Anwendung läuft weiter. Details wurden im Protokoll gespeichert.</value></data>
+  <data name="Unit_MB" xml:space="preserve"><value>MB</value></data>
+  <data name="Unit_B" xml:space="preserve"><value>B</value></data>
+  <data name="Unit_MBs" xml:space="preserve"><value>MB/s</value></data>
+  <data name="Unit_TB" xml:space="preserve"><value>TB</value></data>
+  <data name="Unit_GB" xml:space="preserve"><value>GB</value></data>
+  <data name="Unit_KB" xml:space="preserve"><value>KB</value></data>
+  <data name="Unit_GBs" xml:space="preserve"><value>GB/s</value></data>
+  <data name="Unit_KBs" xml:space="preserve"><value>KB/s</value></data>
+  <data name="Unit_Bs" xml:space="preserve"><value>B/s</value></data>
+</root>

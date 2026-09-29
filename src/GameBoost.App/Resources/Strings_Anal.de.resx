@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>  <data name="Anal_Title" xml:space="preserve"><value>Analyse</value></data>
+  <data name="Anal_Subtitle" xml:space="preserve"><value>Automatische Prüfungen Ihrer Konfiguration</value></data>
+  <data name="Anal_RunTip" xml:space="preserve"><value>Führt alle Prüfungen aus (Hardware, Temperaturen, Treiber, Laufwerk, Windows). Während der Analyse wird nichts geändert, nur gelesen.</value></data>
+  <data name="Anal_Run" xml:space="preserve"><value>ANALYSIEREN</value></data>
+  <data name="Anal_ProgressTip" xml:space="preserve"><value>Fortschritt der laufenden Analyse: Stufe und Detail stammen aus der Analyse-Engine.</value></data>
+  <data name="Anal_Running" xml:space="preserve"><value>Analyse läuft…</value></data>
+  <data name="Anal_GoodTip" xml:space="preserve"><value>Bestandene Prüfungen: keine Maßnahme nötig.</value></data>
+  <data name="Anal_GoodCount" xml:space="preserve"><value>🟢 {0} optimal</value></data>
+  <data name="Anal_WatchTip" xml:space="preserve"><value>Zu beobachtende Prüfungen: das System funktioniert, ließe sich aber verbessern.</value></data>
+  <data name="Anal_WatchCount" xml:space="preserve"><value>🟡 {0} zu beobachten</value></data>
+  <data name="Anal_CriticalTip" xml:space="preserve"><value>Kritische Prüfungen: diese Punkte begrenzen die Leistung unmittelbar.</value></data>
+  <data name="Anal_ProblemCount" xml:space="preserve"><value>🔴 {0} Probleme</value></data>
+  <data name="Anal_RerunTip" xml:space="preserve"><value>Führt eine vollständige Analyse von Grund auf erneut aus.</value></data>
+  <data name="Anal_Rerun" xml:space="preserve"><value>Erneut ausführen</value></data>
+  <data name="Anal_ExportTip" xml:space="preserve"><value>Erzeugt eine im Browser lesbare HTML-Datei aus dem angezeigten Bericht und Ihren letzten Sitzungen.</value></data>
+  <data name="Anal_Export" xml:space="preserve"><value>Bericht erstellen</value></data>
+  <data name="Anal_ElevateTip" xml:space="preserve"><value>Startet GameBoost mit Administratorrechten neu, die für manche Systemkorrekturen nötig sind.</value></data>
+  <data name="Anal_Elevate" xml:space="preserve"><value>Als Administrator neu starten</value></data>
+  <data name="Anal_FilterAll" xml:space="preserve"><value>Alle</value></data>
+  <data name="Anal_FilterAllTip" xml:space="preserve"><value>Zeigt alle Prüfungen des Berichts.</value></data>
+  <data name="Anal_FilterProblems" xml:space="preserve"><value>Probleme</value></data>
+  <data name="Anal_FilterProblemsTip" xml:space="preserve"><value>Zeigt nur Beobachtungspunkte und kritische Probleme.</value></data>
+  <data name="Anal_FilterGood" xml:space="preserve"><value>Optimal</value></data>
+  <data name="Anal_FilterGoodTip" xml:space="preserve"><value>Zeigt nur bereits bestandene Prüfungen.</value></data>
+  <data name="Anal_SortTip" xml:space="preserve"><value>Prüfungen sind nach Schwere sortiert: kritische Probleme zuerst.</value></data>
+  <data name="Anal_EmptyHint" xml:space="preserve"><value>Noch keine Analyse: klicken Sie auf ANALYSIEREN, um eine vollständige Diagnose Ihrer Konfiguration zu erhalten.</value></data>
+  <data name="Anal_Impact" xml:space="preserve"><value>Mögliche Auswirkung</value></data>
+  <data name="Anal_Solution" xml:space="preserve"><value>Lösung</value></data>
+  <data name="Anal_FixTip" xml:space="preserve"><value>Wendet die vorgeschlagene Korrektur an. GameBoost erstellt eine Sicherung, wo Windows es erlaubt.</value></data>
+  <data name="Anal_NoMatch" xml:space="preserve"><value>Keine Prüfung entspricht diesem Filter.</value></data>
+  <data name="Anal_ExportDone" xml:space="preserve"><value>HTML-Bericht erstellt</value></data>
+  <data name="Anal_OpenReportTip" xml:space="preserve"><value>Öffnet die erstellte HTML-Datei im Standardbrowser.</value></data>
+  <data name="Anal_OpenReport" xml:space="preserve"><value>Bericht öffnen</value></data>
+  <data name="Anal_OpenFolderTip" xml:space="preserve"><value>Öffnet den Ordner mit den exportierten Berichten.</value></data>
+  <data name="Anal_OpenFolder" xml:space="preserve"><value>Ordner öffnen</value></data>
+  <data name="Anal_RecentTitle" xml:space="preserve"><value>Letzte Analysen</value></data>
+  <data name="Anal_RecentHint" xml:space="preserve"><value>Klicken Sie auf eine Analyse, um ihre Details erneut zu sehen, ohne neue Prüfungen zu starten.</value></data>
+  <data name="Anal_RecentTip" xml:space="preserve"><value>Lädt diesen Bericht neu in die Ansicht: es wird keine neue Analyse gestartet.</value></data>
+  <data name="Anal_RecentCounters" xml:space="preserve"><value>🟢 {0} optimal   ·   🟡 {1} zu beobachten   ·   🔴 {2} Probleme</value></data>
+  <data name="Anal_RecentNoSummary" xml:space="preserve"><value>Übersicht nicht verfügbar</value></data>
+  <data name="Anal_CurrentValue" xml:space="preserve"><value>Wert: {0}</value></data>
+  <data name="Anal_ManualFix" xml:space="preserve"><value>Manuelle Korrektur: folgen Sie der Vorgehensweise oben.</value></data>
+  <data name="Anal_Backup" xml:space="preserve"><value>Sicherung: {0}</value></data>
+  <data name="Anal_ApplyFix" xml:space="preserve"><value>Korrektur anwenden</value></data>
+  <data name="Anal_StatusLatestShown" xml:space="preserve"><value>Letzte Analyse von {0} angezeigt, ohne neue Prüfungen.</value></data>
+  <data name="Anal_Preparing" xml:space="preserve"><value>Prüfungen werden vorbereitet…</value></data>
+  <data name="Anal_StatusDone" xml:space="preserve"><value>Analyse abgeschlossen: {0} optimal, {1} zu beobachten, {2} Probleme.</value></data>
+  <data name="Anal_StatusFail" xml:space="preserve"><value>Die Analyse ist fehlgeschlagen: {0}</value></data>
+  <data name="Anal_StatusSaveFail" xml:space="preserve"><value>Der Bericht konnte nicht gespeichert werden: {0}</value></data>
+  <data name="Anal_StatusHistoryFail" xml:space="preserve"><value>Analyseverlauf nicht verfügbar: {0}</value></data>
+  <data name="Anal_ReportDate" xml:space="preserve"><value>Analyse vom {0}</value></data>
+  <data name="Anal_SummaryMissing" xml:space="preserve"><value>Für diesen Bericht ist keine Übersicht verfügbar.</value></data>
+  <data name="Anal_CheckCount" xml:space="preserve"><value>{0} Prüfung(en)</value></data>
+  <data name="Anal_StatusPageMissing" xml:space="preserve"><value>Seite „{0}" nicht verfügbar: öffnen Sie sie über das Menü links.</value></data>
+  <data name="Anal_FollowSteps" xml:space="preserve"><value>Folgen Sie der Vorgehensweise auf dieser Seite.</value></data>
+  <data name="Anal_StatusNavigate" xml:space="preserve"><value>Seite „{0}" wird geöffnet — {1}</value></data>
+  <data name="Anal_ElevateHint" xml:space="preserve"><value>Starten Sie GameBoost als Administrator neu, um diese Korrektur anzuwenden.</value></data>
+  <data name="Anal_StatusFixFail" xml:space="preserve"><value>Die Korrektur ist fehlgeschlagen: {0}</value></data>
+  <data name="Anal_ExeMissing" xml:space="preserve"><value>GameBoost-Pfad nicht gefunden.</value></data>
+  <data name="Anal_StatusElevateAsked" xml:space="preserve"><value>Neustart als Administrator angefordert.</value></data>
+  <data name="Anal_StatusRelaunchFail" xml:space="preserve"><value>Neustart fehlgeschlagen: {0}</value></data>
+  <data name="Anal_StatusNothingToExport" xml:space="preserve"><value>Kein Analysebericht zu exportieren: führen Sie zuerst eine Analyse aus.</value></data>
+  <data name="Anal_StatusExportFail" xml:space="preserve"><value>Export fehlgeschlagen: {0}</value></data>
+  <data name="Anal_StatusExportDone" xml:space="preserve"><value>HTML-Bericht erstellt: {0}</value></data>
+  <data name="Anal_LblReport" xml:space="preserve"><value>Bericht</value></data>
+  <data name="Anal_LblReportsFolder" xml:space="preserve"><value>Berichte-Ordner</value></data>
+  <data name="Anal_StatusNothingToOpen" xml:space="preserve"><value>Kein {0} zu öffnen.</value></data>
+  <data name="Anal_StatusOpenFail" xml:space="preserve"><value>Öffnen fehlgeschlagen: {0}</value></data>
+  <data name="Anal_StatusRecentLoaded" xml:space="preserve"><value>Analyse von {0} ohne neue Prüfungen neu geladen.</value></data>
+  <data name="Anal_StatusLoadFail" xml:space="preserve"><value>Laden fehlgeschlagen: {0}</value></data>
+  <data name="Proc_Title" xml:space="preserve"><value>Anwendungen</value></data>
+  <data name="Proc_Subtitle" xml:space="preserve"><value>Laufende Prozesse, genutzte Ressourcen und gezieltes Beenden. Windows-Kernprozesse werden nie beendet.</value></data>
+  <data name="Proc_SearchTip" xml:space="preserve"><value>Nach Prozessname, Fenstertitel oder Herausgeber filtern</value></data>
+  <data name="Proc_AutoTip" xml:space="preserve"><value>Prozesse alle 2 Sekunden erfassen</value></data>
+  <data name="Proc_AutoLabel" xml:space="preserve"><value>Auto-Aktualisierung (2 s)</value></data>
+  <data name="Proc_RefreshTip" xml:space="preserve"><value>Prozesse sofort erfassen</value></data>
+  <data name="Proc_Refresh" xml:space="preserve"><value>Aktualisieren</value></data>
+  <data name="Proc_HungryTip" xml:space="preserve"><value>Markiert nur die beendbaren Prozesse, die mehr als 10 % CPU nutzen</value></data>
+  <data name="Proc_Hungry" xml:space="preserve"><value>Prozesse mit hoher Last auswählen (CPU &gt; 10 %)</value></data>
+  <data name="Proc_CloseTip" xml:space="preserve"><value>Beendet die markierten Prozesse nach Bestätigung</value></data>
+  <data name="Proc_CloseSelected" xml:space="preserve"><value>Auswahl beenden</value></data>
+  <data name="Proc_Loading" xml:space="preserve"><value>Prozesse werden geladen…</value></data>
+  <data name="Proc_SortName" xml:space="preserve"><value>Name</value></data>
+  <data name="Proc_SortCpu" xml:space="preserve"><value>CPU %</value></data>
+  <data name="Proc_SortRam" xml:space="preserve"><value>RAM</value></data>
+  <data name="Proc_SortGpu" xml:space="preserve"><value>GPU %</value></data>
+  <data name="Proc_StatusAutoOn" xml:space="preserve"><value>Automatische Aktualisierung aktiviert (2 s).</value></data>
+  <data name="Proc_StatusAutoOff" xml:space="preserve"><value>Automatische Aktualisierung deaktiviert.</value></data>
+  <data name="Proc_StatusReadFail" xml:space="preserve"><value>Prozesse konnten nicht gelesen werden: {0}</value></data>
+  <data name="Proc_Summary" xml:space="preserve"><value>{0} Prozesse · {1} % CPU gesamt</value></data>
+  <data name="Proc_SummaryFiltered" xml:space="preserve"><value> · {0} angezeigt</value></data>
+  <data name="Proc_SortKeyName" xml:space="preserve"><value>Name</value></data>
+  <data name="Proc_SortKeyRam" xml:space="preserve"><value>Speicher</value></data>
+  <data name="Proc_SortKeyGpu" xml:space="preserve"><value>GPU</value></data>
+  <data name="Proc_SortKeyCpu" xml:space="preserve"><value>Prozessor</value></data>
+  <data name="Proc_StatusSortAsc" xml:space="preserve"><value>Sortiert nach {0} aufsteigend.</value></data>
+  <data name="Proc_StatusSortDesc" xml:space="preserve"><value>Sortiert nach {0} absteigend.</value></data>
+  <data name="Proc_StatusRefreshed" xml:space="preserve"><value>Aktualisierung angefordert.</value></data>
+  <data name="Proc_StatusNotFound" xml:space="preserve"><value>Prozess nicht gefunden.</value></data>
+  <data name="Proc_StatusNoPath" xml:space="preserve"><value>Pfad für diesen Prozess nicht verfügbar.</value></data>
+  <data name="Proc_StatusExplorerOpened" xml:space="preserve"><value>Explorer geöffnet auf {0}.</value></data>
+  <data name="Proc_StatusFileNotFound" xml:space="preserve"><value>Datei nicht gefunden: {0}</value></data>
+  <data name="Proc_StatusOpenFail" xml:space="preserve"><value>Öffnen fehlgeschlagen: {0}</value></data>
+  <data name="Proc_StatusCopied" xml:space="preserve"><value>Pfad in die Zwischenablage kopiert.</value></data>
+  <data name="Proc_StatusCopyFail" xml:space="preserve"><value>Kopieren fehlgeschlagen: {0}</value></data>
+  <data name="Proc_SelectToClose" xml:space="preserve"><value>Zum Beenden dieses Prozesses markieren</value></data>
+  <data name="Proc_CriticalProtected" xml:space="preserve"><value>Kritischer oder geschützter Prozess: GameBoost beendet ihn nie</value></data>
+  <data name="Proc_StartUnknown" xml:space="preserve"><value>Startzeit unbekannt</value></data>
+  <data name="Proc_NoPath" xml:space="preserve"><value>Pfad nicht verfügbar</value></data>
+  <data name="Proc_NoWindow" xml:space="preserve"><value>Kein aktives Fenster</value></data>
+  <data name="Proc_Admin" xml:space="preserve"><value>Administrator</value></data>
+  <data name="Proc_StandardUser" xml:space="preserve"><value>Standardbenutzer</value></data>
+  <data name="Proc_ProcessName" xml:space="preserve"><value>Prozess {0}</value></data>
+</root>
