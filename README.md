@@ -3,6 +3,17 @@
 A local Windows assistant that analyzes and optimizes your PC for gaming.
 Everything runs **without an account, without a network connection, without any data leaving your machine** — all measurements are real, read from your hardware.
 
+## Download and run (no build needed)
+
+Get the ready-to-use build from the [Releases page](https://github.com/RexenCPU/GameBoost/releases):
+
+1. Download **GameBoost-1.0.0-win-x64.zip**
+2. Unzip it anywhere (keep all files together)
+3. Double-click **GameBoost.exe**
+
+The build is self-contained: no installation, no .NET runtime to install.
+SmartScreen may warn the first time (the executable is not code-signed): click "More info" then "Run anyway".
+
 ## What GameBoost does
 
 - **My PC**: complete hardware sheet (CPU, memory, motherboard, displays, DirectX, peripherals).
